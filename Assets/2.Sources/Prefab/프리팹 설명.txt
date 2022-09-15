@@ -8,3 +8,6 @@ SetVolume(float)를 이용하여 볼륨 조정.
 
 [TouchEffect]
 캔버스에 올릴경우 다른 이미지를 가리지 않도록 주의.
+
+[ScoreCase]
+캔버스에 올려서 사용. 게임 클리어시 일어날 이벤트 들을 SceneComplete에 담기
