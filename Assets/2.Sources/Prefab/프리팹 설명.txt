@@ -1,0 +1,7 @@
+[Speaker]
+씬에 올려 놓은 후 사용할 스크립트에서 FindObjectOfType<SpeakerHandler>(); 를 사용하여 등록
+이후 SoundByNum(int)로 공통 사운드 출력 SoundByClip(AudioClip)으로 다른 오디오 출력
+SetVolume(float)를 이용하여 볼륨 조정.
+
+[SceneManager]
+씬에 올려놓은 후 SceneChanger.Instance.ChangeScene(씬이름)으로 씬 전환
