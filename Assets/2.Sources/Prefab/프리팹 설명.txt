@@ -5,3 +5,6 @@ SetVolume(float)를 이용하여 볼륨 조정.
 
 [SceneManager]
 씬에 올려놓은 후 SceneChanger.Instance.ChangeScene(씬이름)으로 씬 전환
+
+[TouchEffect]
+캔버스에 올릴경우 다른 이미지를 가리지 않도록 주의.
