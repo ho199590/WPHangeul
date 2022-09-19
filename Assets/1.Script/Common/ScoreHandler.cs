@@ -30,9 +30,11 @@ public class ScoreHandler : MonoBehaviour
     [Header("클리어 파티클")]
     [SerializeField]
     GameObject[] particles;
+    #endregion
 
-    //완료 이벤트
+    #region 이벤트
     public event System.Action SceneComplete;
+    public event System.Action SceneStart;
     #endregion
 
     #region 함수
@@ -59,14 +61,16 @@ public class ScoreHandler : MonoBehaviour
         }
 
         SceneComplete += Comp;
+        SceneStart += OnScreenSaver;
     }
 
     public void SetScore()
     {   
         var filled = Instantiate(fillParticle);
         filled.transform.position = transform.GetChild(curScore).position;
+
         transform.GetChild(curScore).GetComponent<UnityEngine.UI.Image>().sprite = scoreFill;
-        transform.GetChild(curScore).GetComponent<UnityEngine.UI.Image>().DOFade(1, 1f).From(0);
+        transform.GetChild(curScore).GetComponent<UnityEngine.UI.Image>().DOFade(1, 4f).From(0);
 
         if(curScore < MaxScore - 1)
         {
@@ -116,8 +120,18 @@ public class ScoreHandler : MonoBehaviour
 
     public void Comp()
     {
-        ScreenSaver?.SetActive(true);
+        OnScreenSaver();
         StartCoroutine(ClearParticle());
+    }
+
+    public void OnScreenSaver()
+    {
+        ScreenSaver?.SetActive(true);
+    }
+
+    public void OffScreenSaver()
+    {
+        ScreenSaver?.SetActive(false);
     }
     #endregion
 }
