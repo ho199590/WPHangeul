@@ -11,16 +11,24 @@ public class WordBodyHandler : MonoBehaviour, IDragHandler, IBeginDragHandler, I
     List<DirectionFlag.Direction> directions;
     CheckDirectionScript dirCheck;
 
+    [SerializeField]
+    Transform Tuto;
+
+    [SerializeField]
+    Animator anim;
+
     int curLineIndex = 0;
     float time;
     bool onSprite = false;
 
     ScoreHandler score;
     SpeakerHandler speaker;
+    DecorationHandler decoration;
     LineDragController line;
+    LetterFillHandler letterFill;
 
     GraphicRaycaster raycaster;
-    
+
     [Header("클릭 효과음")]
     [SerializeField]
     AudioClip clips;
@@ -30,15 +38,16 @@ public class WordBodyHandler : MonoBehaviour, IDragHandler, IBeginDragHandler, I
     {
         GetComponent<Image>().alphaHitTestMinimumThreshold = 0.004f;
         
-        
-
-        
         raycaster = transform.root.GetComponent<GraphicRaycaster>();
 
-        dirCheck = GetComponent<CheckDirectionScript>();
+        dirCheck = GetComponent<CheckDirectionScript>();        
 
         score = FindObjectOfType<ScoreHandler>();
         speaker = FindObjectOfType<SpeakerHandler>();
+        letterFill = FindObjectOfType<LetterFillHandler>();
+        decoration = FindObjectOfType<DecorationHandler>();
+
+        decoration.SetLine(curLineIndex);
     }
 
     public void OnBeginDrag(PointerEventData eventData)
@@ -55,6 +64,8 @@ public class WordBodyHandler : MonoBehaviour, IDragHandler, IBeginDragHandler, I
                 if (clips)
                 {   
                     speaker.SoundByClip(clips);
+                    Tuto.GetComponent<Image>().enabled = false;
+                    SetParam(1);
                 }
                 else
                 {
@@ -78,7 +89,13 @@ public class WordBodyHandler : MonoBehaviour, IDragHandler, IBeginDragHandler, I
                     {
                         line = hit.gameObject.GetComponent<LineDragController>();                        
                         line.ShowMouse(eventData);
-                        time = 0;
+                        time = 0;                        
+                    }
+                    if (hit.gameObject.GetComponent<DecorationHit>())
+                    {
+                        
+                        letterFill.Fill(curLineIndex, hit.gameObject.GetComponent<DecorationHit>().GetParam().Item1, hit.gameObject.GetComponent<DecorationHit>().GetParam().Item2);
+                        hit.gameObject.GetComponentInParent<DecorationController>().SetIndex(hit.gameObject.GetComponent<DecorationHit>().GetParam().Item1);
                     }
                 }
                 else
@@ -96,8 +113,11 @@ public class WordBodyHandler : MonoBehaviour, IDragHandler, IBeginDragHandler, I
                     hit.gameObject.GetComponent<IPointer>().NextLine().Item2 ==
                     DirectionFlag.GetDirection(directions[hit.gameObject.GetComponent<IPointer>().NextLine().Item1]))
                     {
+                        letterFill.Fill(curLineIndex, 1, 1);
+
                         hit.gameObject.GetComponent<Image>().raycastTarget = false;
                         curLineIndex = hit.gameObject.GetComponent<IPointer>().NextLine().Item1;
+                        decoration.SetLine(curLineIndex);
 
                         if (hit.gameObject.GetComponent<IPointer>().NextLine().Item3)
                         {
@@ -109,6 +129,7 @@ public class WordBodyHandler : MonoBehaviour, IDragHandler, IBeginDragHandler, I
                             && hit.gameObject.GetComponent<IPointer>().NextLine().Item1 == curLineIndex + 1)
                     {
                         hit.gameObject.GetComponent<Image>().raycastTarget = false;
+                        letterFill.Fill(curLineIndex, 1, 1);
                         score.SetScore();
                     }
                 }
@@ -119,10 +140,7 @@ public class WordBodyHandler : MonoBehaviour, IDragHandler, IBeginDragHandler, I
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        if (onSprite)
-        {
-
-        }        
+        SetParam(0);
     }
 
     public void OnPointerClick(PointerEventData eventData)
@@ -146,6 +164,14 @@ public class WordBodyHandler : MonoBehaviour, IDragHandler, IBeginDragHandler, I
     public void OnPointerExit(PointerEventData eventData)
     {
         onSprite = false;
+        SetParam(0);
+    }
+    #endregion
+
+    #region 에니메이터 함수
+    public void SetParam(int num)
+    {
+        anim.SetInteger("Param", num);
     }
     #endregion
 }
