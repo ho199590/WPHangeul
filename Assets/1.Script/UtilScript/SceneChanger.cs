@@ -55,6 +55,8 @@ public class SceneChanger : MonoBehaviour
             Fade_img.blocksRaycasts = true;
         })
         .OnComplete(() => {
+            DOTween.CompleteAll();
+            DOTween.KillAll();
             StartCoroutine("LoadScene", sceneName);
         });
     }
