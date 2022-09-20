@@ -7,10 +7,13 @@ public class MoveController : MonoBehaviour
 {
     #region º¯¼ö
     [SerializeField]
-    Transform Word, WordCase ,TutoHand, TutoPoint;
+    Transform Word, WordCase ,TutoHand, TutoPoint, ObjPos , Cloud;
+    [SerializeField]
+    Transform[] Object;
 
     [SerializeField]
     AudioClip[] clips;
+ 
 
     ScoreHandler scoreHandler;
     SpeakerHandler speaker;
@@ -33,6 +36,18 @@ public class MoveController : MonoBehaviour
                 speaker.SoundByClip(clips[0]);
                 StartCoroutine(SceneWaiting());
                 });
+        foreach (var c in Object)
+        {
+            int r = Random.Range(-10, 10);
+            c.DOMoveX(ObjPos.position.x + r, 3200f);
+            c.DOMoveY(c.transform.position.y + r, 8).SetLoops(40, LoopType.Yoyo);
+        }
+        for(int i = 0; i < Cloud.childCount; i++)
+        {
+            int r = Random.Range(-10, 10);
+            Cloud.GetChild(i).DOMoveX(Cloud.GetChild(i).transform.position.x + r, 16).SetLoops(40, LoopType.Yoyo);
+            Cloud.GetChild(i).DOMoveY(Cloud.GetChild(i).transform.position.y + r, 8).SetLoops(40, LoopType.Yoyo);
+        }
     }
 
     IEnumerator SceneWaiting()

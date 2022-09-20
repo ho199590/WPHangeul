@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 462660}
   - component: {fileID: 19833380}
   - component: {fileID: 19997950}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Sparks
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4858,8 +4858,8 @@ GameObject:
   - component: {fileID: 19867606}
   - component: {fileID: 19938162}
   - component: {fileID: -6081407868211508289}
-  m_Layer: 0
-  m_Name: StunExplosion2
+  m_Layer: 5
+  m_Name: StunExplosionUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9776,7 +9776,7 @@ GameObject:
   - component: {fileID: 473666}
   - component: {fileID: 19868894}
   - component: {fileID: 19928688}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Stars
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14631,7 +14631,7 @@ GameObject:
   - component: {fileID: 4178631539049528}
   - component: {fileID: 198551463526208596}
   - component: {fileID: 199724279481417892}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Glow
   m_TagString: Untagged
   m_Icon: {fileID: 0}

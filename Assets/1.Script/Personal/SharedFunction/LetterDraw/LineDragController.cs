@@ -13,6 +13,9 @@ public class LineDragController : MonoBehaviour
     [SerializeField]
     Transform startPoint;
     Vector3 pos;
+
+    [SerializeField]
+    GameObject Particle;
     #endregion
     
     #region ÇÔ¼ö
@@ -35,6 +38,13 @@ public class LineDragController : MonoBehaviour
     public void SetStartPoint(int num)
     {
         transform.position = startPoint.GetChild(num).position;
+    }
+
+    public void ParticleMake()
+    {
+        var ex = Instantiate(Particle, transform.GetChild(0));
+        ex.transform.position = transform.position;
+        ex.transform.localScale = Vector3.one * 75;
     }
     #endregion
 }

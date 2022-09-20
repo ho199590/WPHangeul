@@ -69,7 +69,7 @@ public class WordBodyHandler : MonoBehaviour, IDragHandler, IBeginDragHandler, I
                 }
                 else
                 {
-                    print("PSP");
+                    print("PIP");
                 }
             }
         }        
@@ -92,10 +92,12 @@ public class WordBodyHandler : MonoBehaviour, IDragHandler, IBeginDragHandler, I
                         time = 0;                        
                     }
                     if (hit.gameObject.GetComponent<DecorationHit>())
-                    {
-                        
+                    {   
                         letterFill.Fill(curLineIndex, hit.gameObject.GetComponent<DecorationHit>().GetParam().Item1, hit.gameObject.GetComponent<DecorationHit>().GetParam().Item2);
                         hit.gameObject.GetComponentInParent<DecorationController>().SetIndex(hit.gameObject.GetComponent<DecorationHit>().GetParam().Item1);
+                        hit.gameObject.GetComponent<Image>().raycastTarget = false;
+                        hit.gameObject.GetComponent<Image>().color = new Color(0, 0, 0, 0);
+                        line.ParticleMake();                        
                     }
                 }
                 else

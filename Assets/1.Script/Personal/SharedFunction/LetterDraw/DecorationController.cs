@@ -36,7 +36,7 @@ public class DecorationController : MonoBehaviour
 
     public void CleanDecoration()
     {
-        for(int i = curIndex; i < transform.childCount; i++)
+        for(int i = 0; i < transform.childCount; i++)
         {
             transform.GetChild(i).GetComponent<Image>().color = new Color(0, 0, 0, 0);
         }
