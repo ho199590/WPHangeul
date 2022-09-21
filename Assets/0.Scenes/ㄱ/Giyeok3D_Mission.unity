@@ -13696,6 +13696,10 @@ PrefabInstance:
       propertyPath: ScreenSaver
       value: 
       objectReference: {fileID: 1938198444}
+    - target: {fileID: 6633742368514921681, guid: fe2a0576d3cc7e64bb96fe6ad110dce0, type: 3}
+      propertyPath: fillParticle
+      value: 
+      objectReference: {fileID: 184778, guid: 993420f779b38f749af2ccc695705d46, type: 3}
     - target: {fileID: 6633742368514921685, guid: fe2a0576d3cc7e64bb96fe6ad110dce0, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -13762,7 +13766,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6633742368514921685, guid: fe2a0576d3cc7e64bb96fe6ad110dce0, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -300
+      value: -380
       objectReference: {fileID: 0}
     - target: {fileID: 6633742368514921685, guid: fe2a0576d3cc7e64bb96fe6ad110dce0, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -14786,7 +14790,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1733899617
 RectTransform:
   m_ObjectHideFlags: 0
@@ -16328,7 +16332,7 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.1
+  near clip plane: 0
   far clip plane: 60
   field of view: 60
   orthographic: 1
@@ -16547,7 +16551,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1938198444}
   m_LocalRotation: {x: -0.19447288, y: 0.011090419, z: -0.004505384, w: -0.9808349}
-  m_LocalPosition: {x: 0, y: 0, z: -4.41}
+  m_LocalPosition: {x: 0, y: 0, z: -5.1}
   m_LocalScale: {x: 0.044814724, y: 0.033611115, z: 0.0022408094}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -16556,7 +16560,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -1.06, y: 1.22}
+  m_AnchoredPosition: {x: -1.05, y: 1.51}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1938198447
