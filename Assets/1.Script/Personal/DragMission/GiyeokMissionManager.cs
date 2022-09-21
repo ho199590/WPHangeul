@@ -7,11 +7,9 @@ using System;
 // https://flowtree.tistory.com/46
 // https://wolstar.tistory.com/5
 
-public class Change3DScript : MonoBehaviour
+public class GiyeokMissionManager : MonoBehaviour
 {
     #region 변수
-    [SerializeField]
-    ForCount forCount; //정답처리 관련 미션 갯수 카운트용 스크립트
     [SerializeField]
     ScoreHandler scoreCase; //미션완료시 공통 별 프리팹
     [SerializeField]

@@ -7125,67 +7125,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!1 &817715875
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 817715878}
-  - component: {fileID: 817715877}
-  - component: {fileID: 817715876}
-  m_Layer: 0
-  m_Name: Count
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!114 &817715876
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 817715875}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 545a02ba564239c46952cdf646a1ab4e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &817715877
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 817715875}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6f9610ba9c453534597c5f2469a18cb3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pico: {fileID: 1385454759}
-  zoom: {fileID: 1301254972}
-  zoomPosition: {fileID: 1982242328}
-  invisible: {fileID: 1938198444}
---- !u!4 &817715878
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 817715875}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 587.189, y: 303.8645, z: 23.451965}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 17
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &818307524
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11156,7 +11095,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8eeedaddf65bb54ea1a0ef3d0e8fd82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  forCount: {fileID: 817715876}
+  forCount: {fileID: 0}
   scoreCase: {fileID: 2050508785}
   pico: {fileID: 1385454759}
   hand: {fileID: 1733899616}
