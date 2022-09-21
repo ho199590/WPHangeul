@@ -30,6 +30,8 @@ public class ScoreHandler : MonoBehaviour
     [Header("클리어 파티클")]
     [SerializeField]
     GameObject[] particles;
+
+    bool CompleteCheck = false;
     #endregion
 
     #region 이벤트
@@ -80,6 +82,7 @@ public class ScoreHandler : MonoBehaviour
         else
         {
             SoundPlay(1);
+            CompleteCheck = true;
             OnComplete();
         }
     }
@@ -126,12 +129,22 @@ public class ScoreHandler : MonoBehaviour
 
     public void OnScreenSaver()
     {
-        ScreenSaver?.SetActive(true);
+        if(ScreenSaver != null)
+        {
+            ScreenSaver?.SetActive(true);
+        }        
     }
 
     public void OffScreenSaver()
     {
-        ScreenSaver?.SetActive(false);
+        if (ScreenSaver != null)
+            ScreenSaver?.SetActive(false);
     }
+
+    public bool CompCheck()
+    {
+        return CompleteCheck;
+    }
+        
     #endregion
 }

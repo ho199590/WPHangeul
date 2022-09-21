@@ -22,7 +22,7 @@ public class PointHandler : MonoBehaviour , IPointer
         return (nextIndex, nextDir, ChangeLine);
     }
 
-    public void RestoreRaycast()
+    public void Resurrect()
     {
         transform.GetComponent<UnityEngine.UI.Image>().raycastTarget = true;
     }
