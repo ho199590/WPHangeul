@@ -12,8 +12,8 @@ public class Change3DScript : MonoBehaviour
     #region 변수
     [SerializeField]
     ForCount forCount; //정답처리 관련 미션 갯수 카운트용 스크립트
-    //[SerializeField]
-    //StarCountHandler starCase; //미션완료시 공통 별 프리팹
+    [SerializeField]
+    ScoreHandler scoreCase; //미션완료시 공통 별 프리팹
     [SerializeField]
     GameObject pico; //피코 캐릭터
     [SerializeField]
@@ -179,11 +179,12 @@ public class Change3DScript : MonoBehaviour
                     print("ㄱ포함단어 확인");
                     animatorPico.SetInteger("PicoAction", 1);
                     animatorColl.SetInteger(collider.name + "Ani", 1);
-                    //starCase.SetStarScore(); //starCase프리팹
-                    forCount.countParameter.gameObject = collider.gameObject;
-                    forCount.countParameter.transformIndex = transform.GetSiblingIndex();
-                    int index = forCount.CountPro;
-                    forCount.CountPro++;
+                    scoreCase.SetScore();
+                    scoreCase.SceneComplete += MissionComplete;
+                    //forCount.countParameter.gameObject = collider.gameObject;
+                    //forCount.countParameter.transformIndex = transform.GetSiblingIndex();
+                    //int index = forCount.CountPro;
+                    //forCount.CountPro++;
                     collider.gameObject.GetComponent<CapsuleCollider>().enabled = false;
                 }
             }
@@ -199,6 +200,24 @@ public class Change3DScript : MonoBehaviour
     {
         playstart = false;
     }
+    //미션완료시 ScoreCase프리팹의 SceneComplete이벤트에 넣어줄 함수
+    void MissionComplete()
+    {
+        print("미션끝 : 피토 win(hi-host) 애니메이션 플레이");
+        transform.GetChild(0).gameObject.SetActive(false);
+        StartCoroutine(Delay_forZoom());
+        animatorPico.SetInteger("PicoAction", 3); //피코애니메이션 중에 3번 hi-host켜기
+
+        //미션완수시 돋보기가 조금 천천히 제자리로 가게끔 해주는 함수
+        IEnumerator Delay_forZoom()
+        {
+            //yield return new WaitForSeconds(2.5f);
+            transform.position = zoomPosition.transform.position;
+            GetComponent<CapsuleCollider>().enabled = false;
+            yield break;
+        }
+    }
+    
     //틀린 단어를 골랐을 경우에 돋보기가 제자리로 천천히 돌아가게 해주는 지연함수
     public IEnumerator Speed_forZoom()
     {
