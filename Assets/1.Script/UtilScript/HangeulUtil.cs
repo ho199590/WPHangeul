@@ -66,38 +66,46 @@ public static class HangeulUtil
         int dir = -1;
         bool piece = false;
 
-
-        switch ((int)source[1])
+        dir = (int)source[1] switch
         {
-            case 4449:
-            case 4450:
-            case 4451:
-            case 4452:
-            case 4453:
-            case 4454:
-            case 4455:
-            case 4456:
-            case 4469:
-                dir = 0;
-                break;
-            case 4457:
-            case 4458:
-            case 4459:
-            case 4460:
-            case 4461:
-            case 4462:
-            case 4463:
-            case 4464:
-            case 4465:
-            case 4466:
-            case 4467:
-            case 4468:
-                dir = 1;
-                break;
-            default:
-                dir = -1;
-                break;
-        }
+            >= 4449 and <= 4456 => 0,
+            4469 => 0,
+            >= 4457 and <= 4468 => 1,
+            _ => -1,
+        };
+        //switch ((int)source[1])
+        //{
+        //    case >= 4449 and <= 4456:
+        //    //case 4449:
+        //    //case 4450:
+        //    //case 4451:
+        //    //case 4452:
+        //    //case 4453:
+        //    //case 4454:
+        //    //case 4455:
+        //    //case 4456:
+        //    case 4469:
+        //        dir = 0;
+        //        break;
+        //    case >= 4457 and <= 4468:
+        //        //case 4457:
+        //        //case 4458:
+        //        //case 4459:
+        //        //case 4460:
+        //        //case 4461:
+        //        //case 4462:
+        //        //case 4463:
+        //        //case 4464:
+        //        //case 4465:
+        //        //case 4466:
+        //        //case 4467:
+        //        //case 4468:
+        //        dir = 1;
+        //        break;
+        //    default:
+        //        dir = -1;
+        //        break;
+        //}
 
         if (source.Length > 2) { piece = true; }
 

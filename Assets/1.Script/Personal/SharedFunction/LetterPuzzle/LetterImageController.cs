@@ -36,6 +36,7 @@ public class LetterImageController : MonoBehaviour
 
     List<Sprite> vowel = new List<Sprite>();
     List<Sprite> consonant = new List<Sprite>();
+    List<Sprite> LastConsonant = new List<Sprite>();
 
     private (int, bool) letterCheck;
     #endregion
@@ -60,6 +61,7 @@ public class LetterImageController : MonoBehaviour
         speaker.SoundByClip(clips[0]);
         vowel = hangeulSpriteContainer.GetVowel();
         consonant = hangeulSpriteContainer.GetConsonant();
+        LastConsonant = hangeulSpriteContainer.GetFinalConsonant;
         Recruit();
         yield break;
     }
@@ -126,12 +128,11 @@ public class LetterImageController : MonoBehaviour
         }
         if (letterCheck.Item2)
         {
-            puzzle[0].localRotation = Quaternion.Euler(new Vector3(0, 0, 90));
+            puzzle[0].localRotation = Quaternion.Euler(new Vector3(0, 0, 0));
             puzzle[1].gameObject.SetActive(true);
             puzzle[1].GetComponentInChildren<SpriteRenderer>().sprite = vowel[letterSplit[1] - 4449];
             puzzle[2].gameObject.SetActive(true);
-            puzzle[2].GetComponentInChildren<SpriteRenderer>().sprite = consonant[letterSplit[2] - 4524];
-            //print($"{(int)letterSplit[0]} / {(int)letterSplit[2]}" );
+            puzzle[2].GetComponentInChildren<SpriteRenderer>().sprite = LastConsonant[letterSplit[2] - 4519];
         }
     }
 

@@ -91,7 +91,7 @@ public class LetterDrawHandler : MonoBehaviour, IPointerExitHandler, IDragHandle
     {
         List<RaycastResult> result = new List<RaycastResult>();
         raycaster.Raycast(eventData, result);
-        if (onDraw && arrow.GetDraw())
+        if (onDraw)
         {
             if (dirCheck.CheckDir(eventData.delta, DirectionFlag.GetDirection(directions[curLineIndex])))
             {
@@ -137,6 +137,7 @@ public class LetterDrawHandler : MonoBehaviour, IPointerExitHandler, IDragHandle
                             if (transform.GetChild(curLineIndex) != null)
                             {   
                                 transform.GetChild(curLineIndex).GetComponent<Image>().fillAmount = 1;
+                                Reset(eventData);
                             }
 
                         }
@@ -146,14 +147,17 @@ public class LetterDrawHandler : MonoBehaviour, IPointerExitHandler, IDragHandle
             else
             {
                 outTime += Time.deltaTime * 10;
-                if (outTime > 1)
-                {                    
-
+                if (outTime > 0.5f)
+                {             
                     Reset?.Invoke(eventData);
                     Erase?.Invoke(eventData);
                     outTime = 0;
                 }
             }
+        }
+        else
+        {
+            print("asdf");
         }
     }
 
@@ -196,7 +200,8 @@ public class LetterDrawHandler : MonoBehaviour, IPointerExitHandler, IDragHandle
 
             if (!Success)
             {
-                Erase?.Invoke(eventData);                
+                Erase?.Invoke(eventData);
+                Reset?.Invoke(eventData);
             }
             onDraw = false;
         }

@@ -46,7 +46,7 @@ public class PUzzleMoveController : MonoBehaviour
     }
 
     public void StartSeqMaker()
-    {
+    {   
         StartSeq = DOTween.Sequence()
             .AppendInterval(1.5f)
             .OnStart(() => WordTarget.position = LetterPos[1].position)
@@ -60,7 +60,9 @@ public class PUzzleMoveController : MonoBehaviour
     public void SucessSeqMaker()
     {
         Vector3 mOne = new Vector3(-1, 1, 1);
-        SucessSeq = DOTween.Sequence()
+        if(LIController.GetLetterCheck().Item1 == 0)
+        {
+            SucessSeq = DOTween.Sequence()
             .AppendInterval(1f)
             .Append(WordTarget.DOScale(Vector3.one * 1.2f, 0.5f).From(Vector3.one).SetLoops(2, LoopType.Yoyo).OnStart(() => CallNa(1)))
             .Append(WordTarget.DOMove(PuzzlePos[0].position, 2).From(WordTarget.position))
@@ -71,7 +73,21 @@ public class PUzzleMoveController : MonoBehaviour
             .Append(WordImage.DOMove(LetterPos[0].position, 3f).From(LetterPos[2].position).SetEase(Ease.OutQuad).OnComplete(() => CallNa(2)))
             .Append(WordImage.DOScale(mOne * 1.2f, 1f).SetLoops(4, LoopType.Yoyo).From(mOne).OnComplete(() => NextSeqMaker()))
             ;
-
+        }
+        else if(LIController.GetLetterCheck().Item1 == 1)
+        {
+            SucessSeq = DOTween.Sequence()
+            .AppendInterval(1f)
+            .Append(WordTarget.DOScale(Vector3.one * 1.2f, 0.5f).From(Vector3.one).SetLoops(2, LoopType.Yoyo).OnStart(() => CallNa(1)))
+            .Append(WordTarget.DOMove(PuzzlePos[0].position, 2).From(WordTarget.position))
+            .Join(WordTarget.DOScale(Vector3.one * 0.75f, 2).From(Vector3.one))
+            .Join(WordImage.DOScale(mOne, 1f))
+            .Join(PuzzlePices[0].DOMove(PuzzlePos[2].position, 2f).From(LetterPos[2].position))
+            .Join(PuzzlePices[1].DOMove(PuzzlePos[3].position, 2f).From(LetterPos[4].position))
+            .Append(WordImage.DOMove(LetterPos[0].position, 3f).From(LetterPos[2].position).SetEase(Ease.OutQuad).OnComplete(() => CallNa(2)))
+            .Append(WordImage.DOScale(mOne * 1.2f, 1f).SetLoops(4, LoopType.Yoyo).From(mOne).OnComplete(() => NextSeqMaker()))
+            ;
+        }
     }
 
     public void NextSeqMaker()
@@ -80,17 +96,24 @@ public class PUzzleMoveController : MonoBehaviour
         {
             return;
         }
-        NextSeq = DOTween.Sequence()
+        if (LIController.GetLetterCheck().Item1 == 0)
+        {
+            NextSeq = DOTween.Sequence()
             .AppendInterval(2f)
             .Append(WordTarget.DOMove(LetterPos[3].position, 2f))
             .Join(WordImage.DOMove(LetterPos[2].position, 2f))
             .Join(PuzzlePices[0].DOMove(LetterPos[3].position, 2f).From(PuzzlePos[1].position))
-            .Join(PuzzlePices[1].DOMove(LetterPos[4].position, 2f).From(PuzzlePos[2].position)
-            .OnComplete(() =>{
-                WordTarget.localScale = Vector3.one;                
-                ReadyWord(false);
-                StartSeqMaker();})
-            );
+            .Join(PuzzlePices[1].DOMove(LetterPos[4].position, 2f).From(PuzzlePos[2].position));
+        }
+        else if (LIController.GetLetterCheck().Item1 == 1)
+        {
+            NextSeq = DOTween.Sequence()
+            .AppendInterval(2f)
+            .Append(WordTarget.DOMove(LetterPos[3].position, 2f))
+            .Join(WordImage.DOMove(LetterPos[2].position, 2f))
+            .Join(PuzzlePices[0].DOMove(LetterPos[3].position, 2f).From(PuzzlePos[2].position))
+            .Join(PuzzlePices[1].DOMove(LetterPos[4].position, 2f).From(PuzzlePos[3].position));
+        }
 
         StartCoroutine(NextSeqWait());
     }
@@ -98,7 +121,10 @@ public class PUzzleMoveController : MonoBehaviour
     IEnumerator NextSeqWait()
     {
         yield return new WaitWhile(() => NextSeq.IsPlaying());
+        WordTarget.localScale = Vector3.one;
+        ReadyWord(false);
         Next?.Invoke(LIDrawHandler.GetED());
+        StartSeqMaker();
         yield break;
     }
 
