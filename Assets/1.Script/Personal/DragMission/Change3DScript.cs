@@ -56,6 +56,7 @@ public class Change3DScript : MonoBehaviour
     //돋보기가 씬 안으로 천천히 들어오게 만들어주는 지연 함수
     public IEnumerator Speed_StartZoom()
     {
+        GetComponent<CapsuleCollider>().enabled = false;
         while (Vector3.Distance(transform.position, zoomPosition.transform.position) > 0.2f)//둘사이의 거리가 있는 동안 //첨에 0으로 했다가 너무 느려서 10으로 바꿈
         {
             transform.position = Vector3.Lerp(transform.position, zoomPosition.transform.position, Time.deltaTime * 0.7f);
@@ -68,6 +69,7 @@ public class Change3DScript : MonoBehaviour
         }
         transform.position = zoomPosition.transform.position;
         invisible.SetActive(false);
+        GetComponent<CapsuleCollider>().enabled = true;
         hand.SetActive(true);
         yield break;
     }
@@ -181,10 +183,6 @@ public class Change3DScript : MonoBehaviour
                     animatorColl.SetInteger(collider.name + "Ani", 1);
                     scoreCase.SetScore();
                     scoreCase.SceneComplete += MissionComplete;
-                    //forCount.countParameter.gameObject = collider.gameObject;
-                    //forCount.countParameter.transformIndex = transform.GetSiblingIndex();
-                    //int index = forCount.CountPro;
-                    //forCount.CountPro++;
                     collider.gameObject.GetComponent<CapsuleCollider>().enabled = false;
                 }
             }
@@ -194,7 +192,6 @@ public class Change3DScript : MonoBehaviour
                 StartCoroutine(Speed_forZoom());
             }
         }
-        invisible.SetActive(false);
     }
     private void OnMouseExit()
     {
@@ -204,21 +201,13 @@ public class Change3DScript : MonoBehaviour
     void MissionComplete()
     {
         print("미션끝 : 피토 win(hi-host) 애니메이션 플레이");
-        transform.GetChild(0).gameObject.SetActive(false);
-        StartCoroutine(Delay_forZoom());
-        animatorPico.SetInteger("PicoAction", 3); //피코애니메이션 중에 3번 hi-host켜기
-
-        //미션완수시 돋보기가 조금 천천히 제자리로 가게끔 해주는 함수
-        IEnumerator Delay_forZoom()
-        {
-            //yield return new WaitForSeconds(2.5f);
-            transform.position = zoomPosition.transform.position;
-            GetComponent<CapsuleCollider>().enabled = false;
-            yield break;
-        }
+        invisible.SetActive(true);
+        GetComponent<CapsuleCollider>().enabled = false; //돋보기 못하게 하기
+        transform.GetChild(0).gameObject.SetActive(false); //마스크 꺼주기
+        StartCoroutine(Speed_forZoom());
+        animatorPico.SetInteger("PicoAction", 3); //피코애니메이션 중에 3번 hi-host켜기   
     }
-    
-    //틀린 단어를 골랐을 경우에 돋보기가 제자리로 천천히 돌아가게 해주는 지연함수
+    //틀린 단어를 골랐을 경우, 미션 전체완료시에 돋보기가 제자리로 천천히 돌아가게 해주는 지연함수
     public IEnumerator Speed_forZoom()
     {
         //SoundInterface.instance.SoundPlay(10);
