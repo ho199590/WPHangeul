@@ -4,11 +4,4 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes:
-  - enabled: 1
-    path: Assets/0.Scenes/New Scene.unity
-    guid: 30b7e8010d0ed604b84097a0f0446063
-  - enabled: 1
-    path: Assets/0.Scenes/Consonant/LetterDrag.unity
-    guid: 78fbed61cffd6be4ba3a40c4e60f09c7
-  m_configObjects: {}
+  m_Scenes: []
