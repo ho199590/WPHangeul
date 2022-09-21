@@ -12,26 +12,37 @@ public class LetterArrowHandler : MonoBehaviour
 
     bool onDraw = false;
 
+    Vector3 originPos;
 
     LetterDrawHandler letter;
 
     private void Start()
     {
+        originPos = transform.position;
         letter = FindObjectOfType<LetterDrawHandler>();
 
-        letter.Draw += OnDraw;
+        letter.Draw += OnDraw;        
     }
 
     public void OnDraw(PointerEventData eventData)
     {
-
         Vector3 vec = new Vector3(
               eventData.position.x,
               eventData.position.y,
-              UICamera.nearClipPlane
-              );
+              originPos.z
+              ) ;
         transform.position = UICamera.ScreenToWorldPoint(vec);
         ArrowView.position = transform.position;
+    }
+
+    public void ArrowSpriteSetting()
+    {
+
+    }
+
+    public void HiddenView()
+    {
+        ArrowView.gameObject.SetActive(false);
     }
 
     public void SetPostion(Vector3 Pos)

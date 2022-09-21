@@ -14,6 +14,7 @@ public class LetterPaintHandler : MonoBehaviour
     RawImage paintOb;
 
     LetterDrawHandler letterDrawHandler;
+    PUzzleMoveController PuzzleMove;
 
     [SerializeField]
     Color setColor;
@@ -26,8 +27,14 @@ public class LetterPaintHandler : MonoBehaviour
         OnBrushSizeSlider(size);        
 
         letterDrawHandler = FindObjectOfType<LetterDrawHandler>();
+        PuzzleMove = FindObjectOfType<PUzzleMoveController>();
+
         letterDrawHandler.Draw += LetterPainting;
         letterDrawHandler.Ready += InputChange;
+        letterDrawHandler.Reset += RestorePaint;
+
+        PuzzleMove.Next += RestorePaint;
+
     }
 
     public void LetterPainting(PointerEventData eventData)

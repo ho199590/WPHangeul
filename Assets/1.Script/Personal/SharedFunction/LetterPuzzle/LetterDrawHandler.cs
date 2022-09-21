@@ -20,16 +20,19 @@ public class LetterDrawHandler : MonoBehaviour, IPointerExitHandler, IDragHandle
     ScoreHandler score;
     LetterArrowHandler arrow;
     SpeakerHandler speaker;
+    PUzzleMoveController moveCon;
 
     float outTime = 0;
     int curLineIndex = 0;
 
     bool onDraw = false;
     bool pressMouse = false;
+    bool Success = false;
 
     [SerializeField]
     Canvas canvas;
-    PointerEventData EE;
+    PointerEventData ED;
+    PointerEventData PD;
     #endregion
 
     #region ¿Ã∫•∆Æ
@@ -37,6 +40,8 @@ public class LetterDrawHandler : MonoBehaviour, IPointerExitHandler, IDragHandle
     public event System.Action<PointerEventData> Ready;
     public event System.Action<PointerEventData> Draw;
     public event System.Action<PointerEventData> Erase;
+    public event System.Action<PointerEventData> Comp;
+    public event System.Action<PointerEventData> Reset;
     #endregion
     private void Start()
     {
@@ -44,16 +49,27 @@ public class LetterDrawHandler : MonoBehaviour, IPointerExitHandler, IDragHandle
         score = FindObjectOfType<ScoreHandler>();
         speaker = FindObjectOfType<SpeakerHandler>();
         raycaster = canvas.GetComponent<GraphicRaycaster>();
+        moveCon = FindObjectOfType<PUzzleMoveController>();
 
         Erase += CleanWord;
+        Reset += ResetPlayer;
+
+
+        moveCon.Next += CleanWord;
+        moveCon.Next += ResetPlayer;
+        
 
         arrow = FindObjectOfType<LetterArrowHandler>();
-        arrow.SetPostion(LetterStartPosition[0].position);
+        DrawReady();
 
         transform.GetComponent<Image>().alphaHitTestMinimumThreshold = 0.004f;
     }
 
-
+    public void DrawReady()
+    {
+        arrow.SetPostion(LetterStartPosition[0].position);
+        arrow.ArrowSpriteSetting();
+    }
     public void OnBeginDrag(PointerEventData eventData)
     {
         List<RaycastResult> result = new List<RaycastResult>();
@@ -62,6 +78,8 @@ public class LetterDrawHandler : MonoBehaviour, IPointerExitHandler, IDragHandle
         {
             if (item.gameObject.GetComponent<LetterArrowHandler>() != null)
             {
+                PD = eventData;
+
                 Ready?.Invoke(eventData);
                 onDraw = true;
                 arrow.SetDraw(true);
@@ -78,7 +96,6 @@ public class LetterDrawHandler : MonoBehaviour, IPointerExitHandler, IDragHandle
             if (dirCheck.CheckDir(eventData.delta, DirectionFlag.GetDirection(directions[curLineIndex])))
             {
                 if (!arrow.GetDraw()) { return; }
-                print("CHECK!");
                 outTime = 0;
                 Draw?.Invoke(eventData);
 
@@ -90,9 +107,13 @@ public class LetterDrawHandler : MonoBehaviour, IPointerExitHandler, IDragHandle
                             item.gameObject.GetComponent<IPointer>().NextLine().Item2 ==
                            DirectionFlag.GetDirection(directions[item.gameObject.GetComponent<IPointer>().NextLine().Item1]))
                         {
+                            if (transform.GetChild(curLineIndex) != null)
+                            {
+                                transform.GetChild(curLineIndex).GetComponent<Image>().fillAmount = 1;
+                            }
+
                             item.gameObject.GetComponent<Image>().raycastTarget = false;
                             curLineIndex = item.gameObject.GetComponent<IPointer>().NextLine().Item1;
-
 
                             if (item.gameObject.GetComponent<IPointer>().NextLine().Item3)
                             {
@@ -102,10 +123,35 @@ public class LetterDrawHandler : MonoBehaviour, IPointerExitHandler, IDragHandle
                                 arrow.SetDraw(false);
 
                                 eventData.pointerDrag = null;
+
                                 break;
                             }
                         }
+                        else if (item.gameObject.GetComponent<IPointer>().NextLine().Item2 == Vector2.zero
+                                    && item.gameObject.GetComponent<IPointer>().NextLine().Item1 == curLineIndex + 1)
+                        {
+                            item.gameObject.GetComponent<Image>().raycastTarget = false;
+                            Success = true;                            
+                            score.SetScore();
+                            moveCon.SucessSeqMaker();
+                            if (transform.GetChild(curLineIndex) != null)
+                            {   
+                                transform.GetChild(curLineIndex).GetComponent<Image>().fillAmount = 1;
+                            }
+
+                        }
                     }
+                }
+            }
+            else
+            {
+                outTime += Time.deltaTime * 10;
+                if (outTime > 1)
+                {                    
+
+                    Reset?.Invoke(eventData);
+                    Erase?.Invoke(eventData);
+                    outTime = 0;
                 }
             }
         }
@@ -113,18 +159,45 @@ public class LetterDrawHandler : MonoBehaviour, IPointerExitHandler, IDragHandle
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        if (Success)
+        {
+            arrow.HiddenView();
+        }
+
+        ED = eventData;
+
+        pressMouse = false;        
+        onDraw = false;
+
         List<RaycastResult> result = new List<RaycastResult>();
         raycaster.Raycast(eventData, result);
 
+        bool Check = false;
+        foreach(RaycastResult r in result)
+        {
+            if (r.gameObject.GetComponent<PointHandler>())
+            {
+                Check = true;
+                break;
+            }
+        }
+        if (!Check && !Success)
+        {
+            Reset?.Invoke(eventData);
+            Erase?.Invoke(eventData);
+        }
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
         if (pressMouse)
         {
-            EE = eventData;
+            ED = eventData;
 
-            Erase?.Invoke(eventData);
+            if (!Success)
+            {
+                Erase?.Invoke(eventData);                
+            }
             onDraw = false;
         }
     }
@@ -137,8 +210,32 @@ public class LetterDrawHandler : MonoBehaviour, IPointerExitHandler, IDragHandle
                 if (transform.GetChild(i).GetComponent<Image>() != null)
                     transform.GetChild(i).GetComponent<Image>().fillAmount = 0;
         }
+        Success = false;
+        ResurrectPoint();
     }
 
+    public void ResetPlayer(PointerEventData eventData)
+    {
+        curLineIndex = 0;
+        onDraw = false;
+        pressMouse = false;
+        arrow.SetDraw(false);
+        arrow.SetPostion(LetterStartPosition[0].position);
+    }
+
+
+    public PointerEventData GetED()
+    {
+        return PD;
+    }
+    public void ResurrectPoint()
+    {
+        var ar =  FindObjectsOfType<PointHandler>();
+        foreach(PointHandler p in ar)
+        {
+            p.Resurrect();
+        }
+    }
     public void OnPointerDown(PointerEventData eventData)
     {
         pressMouse = true;

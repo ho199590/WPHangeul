@@ -36,6 +36,7 @@ public class NarrationSetContainer : ScriptableObject
     [Serializable]
     public class Narraition
     {
+        public string Name;
         public AudioClip[] Clips;
     }
     #endregion

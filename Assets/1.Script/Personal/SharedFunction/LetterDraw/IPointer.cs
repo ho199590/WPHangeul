@@ -5,5 +5,5 @@ using UnityEngine;
 public interface IPointer
 {
     (int, Vector2, bool) NextLine();
-
+    void Resurrect();
 }
