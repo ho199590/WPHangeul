@@ -14,6 +14,8 @@ public class HangeulSpriteContainer : ScriptableObject
     private List<Sprite> Consonant;
     [SerializeField]
     private List<Sprite> Vowel;
+    [SerializeField]
+    private List<Sprite> FinalConsonant;
     #endregion
 
     #region ÇÔ¼ö
@@ -40,6 +42,8 @@ public class HangeulSpriteContainer : ScriptableObject
     public Dictionary<int, List<Sprite>> GetDictionary(){return SpriteDictionary;}
 
     public List<Sprite> GetConsonant(){return Consonant;}
+    public List<Sprite> GetFinalConsonant { get => FinalConsonant; }
+
 
     public List<Sprite> GetVowel(){return Vowel;}
     #endregion

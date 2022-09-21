@@ -34,6 +34,8 @@ public class LetterPaintHandler : MonoBehaviour
         letterDrawHandler.Reset += RestorePaint;
 
         PuzzleMove.Next += RestorePaint;
+        PuzzleMove.Next += ResetTexture;
+
 
     }
 
