@@ -234,7 +234,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Fade_img: {fileID: 1714331242397117582}
-  fadeDuration: 2
+  fadeDuration: 1.5
   Loading: {fileID: 1714331241990419121}
   Loading_text: {fileID: 1714331241961093347}
 --- !u!114 &1714331242058704445

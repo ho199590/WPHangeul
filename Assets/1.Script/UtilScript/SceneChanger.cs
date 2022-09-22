@@ -27,8 +27,10 @@ public class SceneChanger : MonoBehaviour
     GameObject Loading;
     [SerializeField]
     Text Loading_text;
+
+    AudioSource[] AllAudio;
     #endregion
-    void Start()
+    void Awake()
     {
         if (instance != null)
         {
@@ -57,6 +59,7 @@ public class SceneChanger : MonoBehaviour
         .OnComplete(() => {
             DOTween.CompleteAll();
             DOTween.KillAll();
+            StopAllCoroutines();
             StartCoroutine("LoadScene", sceneName);
         });
     }
@@ -64,6 +67,9 @@ public class SceneChanger : MonoBehaviour
     IEnumerator LoadScene(string sceneName)
     {
         Loading.SetActive(true);
+
+        AllAudio = FindObjectsOfType<AudioSource>(); 
+        foreach(AudioSource audio in AllAudio){audio.Stop();}
 
         AsyncOperation async = SceneManager.LoadSceneAsync(sceneName);
         async.allowSceneActivation = false; 
