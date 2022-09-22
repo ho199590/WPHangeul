@@ -11,4 +11,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/0.Scenes/Consonant/LetterDrag.unity
     guid: 78fbed61cffd6be4ba3a40c4e60f09c7
+  - enabled: 1
+    path: Assets/0.Scenes/MiniGame/Digeud_MiniGame.unity
+    guid: 671a0ef4faa93b6448037932800e1cf0
+  - enabled: 1
+    path: Assets/0.Scenes/Consonant/LetterPuzzle.unity
+    guid: e580f586738d3fc40a93f012fdda0dfc
   m_configObjects: {}

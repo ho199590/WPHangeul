@@ -6345,6 +6345,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1572651839}
     m_Modifications:
+    - target: {fileID: 2819444990648598746, guid: 9ac3bc7cbd38da64d866c1898a4dd6a8, type: 3}
+      propertyPath: SceneName
+      value: LetterPuzzle
+      objectReference: {fileID: 0}
     - target: {fileID: 2819444990648598750, guid: 9ac3bc7cbd38da64d866c1898a4dd6a8, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

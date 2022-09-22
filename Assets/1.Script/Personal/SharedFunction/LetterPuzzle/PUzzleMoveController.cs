@@ -53,8 +53,7 @@ public class PUzzleMoveController : MonoBehaviour
             .Append(WordImage.DOMove(LetterPos[1].position, 2f).From(LetterPos[3].position))
             .Append(WordImage.DOScale(Vector3.one * 1.5f, 1f).From(Vector3.one).SetLoops(2, LoopType.Yoyo).OnStart(() => CallNa(0)))
             .Append(WordPuzzle.DOScale(TargetScale, 1f).SetEase(Ease.OutQuad).From(Vector3.zero).OnComplete(() => ReadyWord(true)))
-            .Join(WordImage.DOScale(Vector3.zero, 1f).From(Vector3.one));
-            ;
+            .Join(WordImage.DOScale(Vector3.zero, 1f).From(Vector3.one).OnComplete(() => score.OffScreenSaver()));
     }
 
     public void SucessSeqMaker()
@@ -66,7 +65,7 @@ public class PUzzleMoveController : MonoBehaviour
             .AppendInterval(1f)
             .Append(WordTarget.DOScale(Vector3.one * 1.2f, 0.5f).From(Vector3.one).SetLoops(2, LoopType.Yoyo).OnStart(() => CallNa(1)))
             .Append(WordTarget.DOMove(PuzzlePos[0].position, 2).From(WordTarget.position))
-            .Join(WordTarget.DOScale(Vector3.one * 0.75f, 2).From(Vector3.one))
+            .Join(WordTarget.DOScale(Vector3.one * 0.5f, 2).From(Vector3.one))
             .Join(WordImage.DOScale(mOne, 1f))
             .Join(PuzzlePices[0].DOMove(PuzzlePos[1].position, 2f).From(LetterPos[2].position))
             .Join(PuzzlePices[1].DOMove(PuzzlePos[2].position, 2f).From(LetterPos[4].position))
@@ -80,7 +79,7 @@ public class PUzzleMoveController : MonoBehaviour
             .AppendInterval(1f)
             .Append(WordTarget.DOScale(Vector3.one * 1.2f, 0.5f).From(Vector3.one).SetLoops(2, LoopType.Yoyo).OnStart(() => CallNa(1)))
             .Append(WordTarget.DOMove(PuzzlePos[0].position, 2).From(WordTarget.position))
-            .Join(WordTarget.DOScale(Vector3.one * 0.75f, 2).From(Vector3.one))
+            .Join(WordTarget.DOScale(Vector3.one * 0.5f, 2).From(Vector3.one))
             .Join(WordImage.DOScale(mOne, 1f))
             .Join(PuzzlePices[0].DOMove(PuzzlePos[2].position, 2f).From(LetterPos[2].position))
             .Join(PuzzlePices[1].DOMove(PuzzlePos[3].position, 2f).From(LetterPos[4].position))
