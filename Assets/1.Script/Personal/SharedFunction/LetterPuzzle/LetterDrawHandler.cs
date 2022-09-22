@@ -33,6 +33,9 @@ public class LetterDrawHandler : MonoBehaviour, IPointerExitHandler, IDragHandle
     Canvas canvas;
     PointerEventData ED;
     PointerEventData PD;
+
+    [SerializeField]
+    AudioClip[] ClickSound;
     #endregion
 
     #region ¿Ã∫•∆Æ
@@ -80,6 +83,8 @@ public class LetterDrawHandler : MonoBehaviour, IPointerExitHandler, IDragHandle
             {
                 PD = eventData;
 
+                speaker.SoundByClip(ClickSound[0]);
+
                 Ready?.Invoke(eventData);
                 onDraw = true;
                 arrow.SetDraw(true);
@@ -98,6 +103,11 @@ public class LetterDrawHandler : MonoBehaviour, IPointerExitHandler, IDragHandle
                 if (!arrow.GetDraw()) { return; }
                 outTime = 0;
                 Draw?.Invoke(eventData);
+
+                if (!speaker.GetComponent<AudioSource>().isPlaying)
+                {   
+                    speaker.SoundByClip(ClickSound[1]);
+                }
 
                 foreach (var item in result)
                 {
@@ -154,10 +164,6 @@ public class LetterDrawHandler : MonoBehaviour, IPointerExitHandler, IDragHandle
                     outTime = 0;
                 }
             }
-        }
-        else
-        {
-            print("asdf");
         }
     }
 
