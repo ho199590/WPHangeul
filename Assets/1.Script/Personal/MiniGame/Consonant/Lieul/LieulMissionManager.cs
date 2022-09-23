@@ -19,7 +19,6 @@ public class LieulMissionManager : MonoBehaviour
     {
         print("클릭감지");
         RandomPlay();
-        //애로우가 라디오를 터치하는 애니메이션과 함께 라디오 소리를 랜덤으로 재생되게 하는 이벤트 연결하기
     }
     void RandomPlay()
     {
