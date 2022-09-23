@@ -8,7 +8,7 @@ public class ArrowAniHandle : MonoBehaviour
     Animator arrowAni;
     [SerializeField]
     GameObject[] arrowPosi;
-    int index = 0 ;
+    
     int[] vecZ = new int[] { 60, -85, -100, 90, 120 };
     
     private void Start()
@@ -23,24 +23,25 @@ public class ArrowAniHandle : MonoBehaviour
     {
         yield return new WaitForSeconds(5.5f);
         arrowAni.SetInteger("ArrowAction", 1);
-        while (index < arrowPosi.Length)
+
+        for(int i = 0; i< arrowPosi.Length; i++)
         {
-            print("반복체크");
-            //transform.Rotate(new Vector3(0, vecZ[index], 0) * Time.deltaTime);
-            transform.Rotate(0, vecZ[index], 0);
-            while (Vector3.Distance(transform.position, arrowPosi[index].transform.position) > 0.2f) //둘사이의 거리가 있는 동안 //첨에 0으로 했다가 너무 느려서 10으로 바꿈
+            transform.LookAt(arrowPosi[i].transform);
+            while (Vector3.Distance(transform.position, arrowPosi[i].transform.position) > 0.1f) //둘사이의 거리가 있는 동안 //첨에 0으로 했다가 너무 느려서 10으로 바꿈
             {
-                transform.position = Vector3.Lerp(transform.position, arrowPosi[index].transform.position, Time.deltaTime * 0.7f);
+                transform.position = Vector3.Lerp(transform.position, arrowPosi[i].transform.position, Time.deltaTime * 0.8f);
+                
+                //transform.rotation = Quaternion.Slerp(transform.rotation, arrowPosi[i].transform.rotation, Time.time);
                 yield return new WaitForSeconds(Time.deltaTime);
-                if (Vector3.Distance(transform.position, arrowPosi[index].transform.position) == 0)
+                if (Vector3.Distance(transform.position, arrowPosi[i].transform.position) <= 0.1f)
                 {
                     break;
                 }
             }
-            transform.position = arrowPosi[index].transform.position;
-            index++;
+            transform.position = arrowPosi[i].transform.position;
         }
         arrowAni.SetInteger("ArrowAction", 2);
         yield break;
     }
+    
 }
