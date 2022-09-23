@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+//오브젝트를 버튼처럼 마우스의 움직임에 따라 반응하게 만드는 스크립트
 public class LikeButtonHandle : MonoBehaviour
 {
     [Tooltip("단어별 오디오의 인덱스를 입력해주세요")]

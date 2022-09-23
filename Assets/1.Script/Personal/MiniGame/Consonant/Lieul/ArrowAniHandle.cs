@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+//애로우전용 동선에 따라 이동하는 스크립트
 public class ArrowAniHandle : MonoBehaviour
 {
     Animator arrowAni;
