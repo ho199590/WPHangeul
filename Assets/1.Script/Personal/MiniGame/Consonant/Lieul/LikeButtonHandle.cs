@@ -7,6 +7,8 @@ public class LikeButtonHandle : MonoBehaviour
     [Tooltip("단어별 오디오의 인덱스를 입력해주세요")]
     [SerializeField]
     int connectAudio;
+    [SerializeField]
+    ScoreHandler scoreCase;
     private void Start()
     {
         FindObjectOfType<LieulMissionManager>().CallObject += ColliderActive;
@@ -25,6 +27,7 @@ public class LikeButtonHandle : MonoBehaviour
     {
         print("OnMouseUp");
         GetComponent<MeshRenderer>().material.color = new Color(1, 0.8f, 0, 1);
+        scoreCase.SetScore(); //ScoreCase프리팹 연결
     }
     private void OnMouseExit()
     {
