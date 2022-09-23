@@ -2,22 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-
 public class ArrowAniHandle : MonoBehaviour
 {
     Animator arrowAni;
     [SerializeField]
     GameObject[] arrowPosi;
-    
-    int[] vecZ = new int[] { 60, -85, -100, 90, 120 };
+    public event Action ButtonActive;
     
     private void Start()
     {
         arrowAni = GetComponent<Animator>();
         StartCoroutine(Speed_forArrow());
-        //요기서 라디오소리 재생하는 이벤트 연결
     }
-    
     //애로우가 움직이는 모습을 지연시키면서 애니메이션 바꿔주는 함수
     IEnumerator Speed_forArrow()
     {
@@ -41,7 +37,7 @@ public class ArrowAniHandle : MonoBehaviour
             transform.position = arrowPosi[i].transform.position;
         }
         arrowAni.SetInteger("ArrowAction", 2);
+        ButtonActive?.Invoke(); //애로우가 라디오에 도착하면 라디오 랜덤 재생 시작하는 이벤트 실행
         yield break;
     }
-    
 }
