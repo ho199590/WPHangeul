@@ -21,6 +21,7 @@ public class LetterImageController : MonoBehaviour
     [SerializeField]
     int UnitNum;
     int curIndex = 0;
+    [SerializeField]
     int[] indexs;
 
     List<string> word;
@@ -86,7 +87,7 @@ public class LetterImageController : MonoBehaviour
 
     public void Recruit()
     {
-        if (curIndex == word.Count - 1)
+        if (curIndex == word.Count)
         {
             curIndex = 0;
             Init();

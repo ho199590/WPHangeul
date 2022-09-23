@@ -15,17 +15,17 @@ MonoBehaviour:
   giyeog: []
   nieun: []
   digeud:
-  - Name: "\uB3CC\uB9C8\uBC40"
+  - Name: "\uB3C4\uB9C8\uBC40"
     Clips:
     - {fileID: 8300000, guid: 835876bb1a3bf344d8bdde3c975cfc81, type: 3}
     - {fileID: 8300000, guid: 07b6b7bd37d71fa42ac4ff8b901db7c6, type: 3}
     - {fileID: 8300000, guid: 8878b8ccafd488444a0cbd9ac369e48c, type: 3}
-  - Name: "\uB458\uB354"
+  - Name: "\uB450\uB354"
     Clips:
     - {fileID: 8300000, guid: 60e6106ebd3e6d0459d35cd82919d85d, type: 3}
     - {fileID: 8300000, guid: e06c57c8c9c6def4ba5ff664eda245be, type: 3}
     - {fileID: 8300000, guid: 5ea060916528fd448a4c8c4b348d5c78, type: 3}
-  - Name: "\uB2EC\uB78C\uC2DC"
+  - Name: "\uB2E4\uB78C\uC950"
     Clips:
     - {fileID: 8300000, guid: eccdd723c03459e41bebf701273569dd, type: 3}
     - {fileID: 8300000, guid: e41da7116c194d64a846574bfabf8109, type: 3}
