@@ -42,8 +42,19 @@ public class DecorationController : MonoBehaviour
         }
     }
 
+    public void CleanDeco()
+    {
+        for(int i = curIndex; i >= 0; i--)
+        {
+            transform.GetChild(i).GetComponent<Image>().color = new Color(0, 0, 0, 0);
+        }
+    }
+
     public void SetIndex(int i)
     {
         curIndex = i;
+        CleanDeco();
     }
+
+    
 }
