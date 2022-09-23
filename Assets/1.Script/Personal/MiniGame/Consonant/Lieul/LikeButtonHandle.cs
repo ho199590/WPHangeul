@@ -18,12 +18,12 @@ public class LikeButtonHandle : MonoBehaviour
     private void OnMouseUp()
     {
         print("OnMouseUp");
-        GetComponent<MeshRenderer>().material.color = new Color(1,0.8f,0, 1);
+        GetComponent<MeshRenderer>().material.color = new Color(1, 0.8f, 0, 1);
     }
-    private void OnMouseUpAsButton()
-    {
-        print("OnMouseUpAsButton?");
-    }
+    //private void OnMouseUpAsButton()
+    //{
+    //    print("OnMouseUpAsButton?");
+    //}
     private void OnMouseExit()
     {
         print("OnMouseExit");
