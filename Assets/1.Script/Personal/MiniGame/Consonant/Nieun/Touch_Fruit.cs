@@ -7,7 +7,7 @@ public class Touch_Fruit: MonoBehaviour
     [SerializeField]
     GameObject Fruit;
     private int ClickNum;
-    private float force = 500.0f;
+    private float force = 600.0f;
     private void Start()
     {
  
@@ -24,6 +24,7 @@ public class Touch_Fruit: MonoBehaviour
         {
             print("¶³¾îÁü");
             Fruit.GetComponent<Rigidbody>().isKinematic = false;
+            Fruit.GetComponent<HingeJoint>().enablePreprocessing = false;
             ClickNum = 0;
         }
     }
