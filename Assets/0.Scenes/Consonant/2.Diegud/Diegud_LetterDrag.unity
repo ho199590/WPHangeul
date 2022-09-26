@@ -2729,7 +2729,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.35686275, g: 0.45098042, b: 0.59607846, a: 1}
+  m_Color: {r: 0.5254902, g: 0.79215693, b: 0.9568628, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -3151,7 +3151,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.35686275, g: 0.45098042, b: 0.59607846, a: 1}
+  m_Color: {r: 0.5254902, g: 0.79215693, b: 0.9568628, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -3731,7 +3731,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.35686275, g: 0.45098042, b: 0.59607846, a: 1}
+  m_Color: {r: 0.5254902, g: 0.79215693, b: 0.9568628, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -6419,7 +6419,7 @@ PrefabInstance:
     - target: {fileID: 2819444990648598746, guid: 9ac3bc7cbd38da64d866c1898a4dd6a8,
         type: 3}
       propertyPath: SceneName
-      value: LetterPuzzle
+      value: Diegud_LetterPuzzle
       objectReference: {fileID: 0}
     - target: {fileID: 2819444990648598750, guid: 9ac3bc7cbd38da64d866c1898a4dd6a8,
         type: 3}
