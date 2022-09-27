@@ -9,6 +9,7 @@ public class DecorationController : MonoBehaviour
     [SerializeField]
     Sprite active;
 
+    bool optional = true;
     int curIndex;
     private void Start()
     {
@@ -21,17 +22,30 @@ public class DecorationController : MonoBehaviour
         StartCoroutine(Progress());
     }
 
+    private void OnEnable()
+    {
+        optional = true;
+    }
+
+    private void OnDisable()
+    {
+        optional = false;
+    }
+
     IEnumerator Progress()
     {
-        while (true)
+        while (optional)
         {
             for (int i = curIndex; i < transform.childCount; i++)
             {
+                
+                if (i < curIndex) i = curIndex;
                 transform.GetChild(i).GetComponent<Image>().color = Color.white;
                 yield return new WaitForSeconds(0.5f);
             }
             CleanDecoration();
         }
+        yield break;
     }
 
     public void CleanDecoration()
