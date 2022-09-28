@@ -37,8 +37,7 @@ public class DecorationController : MonoBehaviour
         while (optional)
         {
             for (int i = curIndex; i < transform.childCount; i++)
-            {
-                
+            {   
                 if (i < curIndex) i = curIndex;
                 transform.GetChild(i).GetComponent<Image>().color = Color.white;
                 yield return new WaitForSeconds(0.5f);

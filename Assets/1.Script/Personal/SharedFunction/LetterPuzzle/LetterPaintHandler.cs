@@ -35,8 +35,6 @@ public class LetterPaintHandler : MonoBehaviour
 
         PuzzleMove.Next += RestorePaint;
         PuzzleMove.Next += ResetTexture;
-
-
     }
 
     public void LetterPainting(PointerEventData eventData)
