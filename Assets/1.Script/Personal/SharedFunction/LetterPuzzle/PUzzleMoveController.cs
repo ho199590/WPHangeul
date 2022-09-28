@@ -101,8 +101,7 @@ public class PUzzleMoveController : MonoBehaviour
                 .Join(PuzzlePices[0].DOMove(PuzzlePos[1].position, 2f).From(LetterPos[2].position))
                 .Join(PuzzlePices[1].DOMove(PuzzlePos[2].position, 2f).From(LetterPos[4].position))
                 .Append(WordImage.DOMove(LetterPos[0].position, 3f).From(LetterPos[2].position).SetEase(Ease.OutQuad).OnComplete(() => CallNa(2)))
-                .Append(WordImage.DOScale(mOne * 1.2f, 1f).SetLoops(4, LoopType.Yoyo).From(mOne).OnComplete(() => NextSeqMaker()))
-                ;
+                .Append(WordImage.DOScale(mOne * 1.2f, 1f).SetLoops(4, LoopType.Yoyo).From(mOne).OnComplete(() => NextSeqMaker()));
         }
     }
 
@@ -144,9 +143,8 @@ public class PUzzleMoveController : MonoBehaviour
                 .Join(PuzzlePices[1].DOMove(LetterPos[4].position, 2f).From(PuzzlePos[2].position));
         }
 
-        
-
         StartCoroutine(NextSeqWait());
+
     }
 
     IEnumerator NextSeqWait()
