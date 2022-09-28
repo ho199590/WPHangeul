@@ -37,7 +37,7 @@ public class TriggerCollisionHandle : MonoBehaviour
         }
         if (ViewCamera != null)
         {
-            Vector3 direction = (Vector3.up*2+Vector3.back)*2;
+            Vector3 direction = (Vector3.up*2+ Vector3.back*4);
             RaycastHit hit;
             Debug.DrawLine(transform.position, transform.position+direction, Color.red);
             if (Physics.Linecast(transform.position, transform.position+direction, out hit))
