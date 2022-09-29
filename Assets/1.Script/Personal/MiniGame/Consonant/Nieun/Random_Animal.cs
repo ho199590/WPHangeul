@@ -5,21 +5,22 @@ using System.Linq;
 public class Random_Animal : MonoBehaviour
 {
     [SerializeField]
-    GameObject randomOb_in_Balloon;
+    GameObject RandomOb_Animal;
 
     int[] shuffledArray; //·£´ý ¹è¿­
     int shufflearrayindex; //intÇü ·£´ý º¯¼ö
     public void Start()
     {
         ShuffleArray();
-        for (int i = 0; i<randomOb_in_Balloon.transform.childCount; i++)
+        print(shuffledArray[shufflearrayindex]);
+        for (int i = 0; i< RandomOb_Animal.transform.childCount; i++)
         {
-            randomOb_in_Balloon.transform.GetChild(i).gameObject.SetActive(i == shuffledArray[shufflearrayindex]);
+            RandomOb_Animal.transform.GetChild(i).gameObject.SetActive(i == shuffledArray[shufflearrayindex]);
         }
     }
     protected void ShuffleArray()
     {
-        var indexArray = Enumerable.Range(0, randomOb_in_Balloon.transform.childCount).ToArray();
+        var indexArray = Enumerable.Range(0, RandomOb_Animal.transform.childCount).ToArray();
         System.Random random = new System.Random();
         shuffledArray = indexArray.OrderBy(x => random.Next()).ToArray();
         shufflearrayindex = 0;
