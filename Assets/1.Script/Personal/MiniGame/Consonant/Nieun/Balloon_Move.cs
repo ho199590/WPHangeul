@@ -22,6 +22,8 @@ public class Balloon_Move : MonoBehaviour
     public float turnSpeed = 10;
     [SerializeField]
     GameObject Balloon;//Ç³Â÷
+    [SerializeField]
+    GameObject Animal;//µ¿¹°
     void Start()
     {
 
@@ -42,8 +44,8 @@ public class Balloon_Move : MonoBehaviour
                 sign2 *= -1;
             }
         }
-        Balloon.transform.Rotate(new Vector3(0,turnSpeed * Time.deltaTime, 0));  
+        //Ç³¼± È¸Àü 
+        Balloon.transform.Rotate(new Vector3(0,turnSpeed * Time.deltaTime, 0));
+        Animal.transform.Rotate(new Vector3(0, turnSpeed * Time.deltaTime, 0));
     }
-
-
 }
