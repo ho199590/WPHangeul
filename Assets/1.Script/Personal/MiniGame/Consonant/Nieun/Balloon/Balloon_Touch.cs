@@ -6,14 +6,12 @@ public class Balloon_Touch : MonoBehaviour
 {
     [SerializeField]
     GameObject Animal;//동물 오브젝트
-    [SerializeField]
-    GameObject Balloon;//풍선 오브젝트 
-
-    int BalloonTouch=0;
+    int BalloonTouch=0;//풍선 터치 카운트
+    bool TriggerOnOff;
     private void OnMouseDown()
     {
         BalloonTouch++;
-        if(BalloonTouch == 5)//다섯번 클릭했을때 
+        if(BalloonTouch == 3)//다섯번 클릭했을때 
         {
             TouchClear();
             isTrigger_F();
@@ -22,10 +20,11 @@ public class Balloon_Touch : MonoBehaviour
     protected void TouchClear()//풍선 낙하 
     {
         Animal.GetComponent<Rigidbody>().useGravity = true;
-        Balloon.SetActive(false);
+        gameObject.SetActive(false);
     }
-    protected void isTrigger_F()//바닦이랑 충돌
+    protected void isTrigger_F()//바닥 충돌
     {
-        Animal.GetComponent<Collider>().isTrigger = false;
+        Animal.GetComponentInChildren<Collider>().isTrigger = false;
     }
+    
 }
