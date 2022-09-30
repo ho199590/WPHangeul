@@ -9,8 +9,8 @@ public class Animal_Move : MonoBehaviour
     bool ismove;
     private void Start()
     {
-        b_Move = transform.GetComponentInParent<Balloon_Move>();
-        Animal_Ob = transform.GetComponent<Rigidbody>();
+        b_Move = GetComponentInParent<Balloon_Move>();
+        Animal_Ob = GetComponent<Rigidbody>();
     }
     private void MoveOnOff()
     {
@@ -20,16 +20,22 @@ public class Animal_Move : MonoBehaviour
     {
         if(other.gameObject.layer == LayerMask.NameToLayer("GiyeokAnswer"))
         {
-            print("충돌");
+            print("기억 충돌");
+            ismove = true;
+            MoveOnOff();
+            FreezeVelocity();
+        }
+        if (other.gameObject.layer == LayerMask.NameToLayer("NieunAnswer"))
+        {
+            print("니은 충돌");
             ismove = true;
             MoveOnOff();
             FreezeVelocity();
         }
     }
-    private void FreezeVelocity()
+    private void FreezeVelocity()//풍선에서 떨어지는 물리적 연산 0으로 초기화
     {
         Animal_Ob.velocity = Vector3.zero;
         Animal_Ob.angularVelocity = Vector3.zero;
-        print("성공");
     }
 }
