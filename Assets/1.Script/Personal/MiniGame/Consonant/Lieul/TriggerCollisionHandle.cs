@@ -8,7 +8,7 @@ public class TriggerCollisionHandle : MonoBehaviour
     private AudioSource mAudioSource;
     public AudioClip JumpSound;
     public AudioClip HitSound;
-    public GameObject ViewCamera;
+    public Camera ViewCamera;
     void Start()
     {
         mRigidBody = GetComponent<Rigidbody>();
@@ -38,24 +38,22 @@ public class TriggerCollisionHandle : MonoBehaviour
         if (ViewCamera != null)
         {
             
-            Vector3 direction = (Vector3.up*2+ Vector3.back*4);
+            //Vector3 direction = (Vector3.up*2+ Vector3.back*4);
             RaycastHit hit;
-            Debug.DrawLine(transform.position, transform.position+direction, Color.red);
-            if (Physics.Linecast(transform.position, transform.position+direction, out hit))
+            Debug.DrawLine(transform.position, transform.position, Color.red);
+            if (Physics.Linecast(transform.position, transform.position, out hit))
             {
                 ViewCamera.transform.position = hit.point;
 
             }
             else
             {
-                ViewCamera.transform.position = transform.position+direction;
+                ViewCamera.transform.position = transform.position;
                 
             }
-            //ViewCamera.transform.rotation = transform.rotation;
-            //ViewCamera.transform.LookAt(transform.position);
-            ViewCamera.transform.rotation = Quaternion.Lerp(ViewCamera.transform.rotation, Quaternion.LookRotation(transform.position), Time.deltaTime);
-            //ViewCamera.transform.rotation = Quaternion.LookRotation(transform.position);
-
+            //ViewCamera.transform.forward = transform.forward;
+            //ViewCamera.transform.rotation = Quaternion.Lerp(ViewCamera.transform.rotation, Quaternion.LookRotation(transform.position), Time.deltaTime);
+            ViewCamera.transform.LookAt(transform.position + transform.forward);
         }
     }
     

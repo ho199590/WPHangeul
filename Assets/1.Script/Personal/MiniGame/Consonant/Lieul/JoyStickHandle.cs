@@ -30,6 +30,11 @@ public class JoyStickHandle : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         {
             currentDirection = value switch
             {
+                //ArrowDirection.Up => ball.transform.forward,
+                //ArrowDirection.Down => -ball.transform.forward,
+                //ArrowDirection.Left => -ball.transform.right,
+                //ArrowDirection.Right => ball.transform.right,
+                //_ => Vector3.zero
                 ArrowDirection.Up => Vector3.forward,
                 ArrowDirection.Down => Vector3.back,
                 ArrowDirection.Left => Vector3.left,
@@ -52,7 +57,8 @@ public class JoyStickHandle : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     public void OnPointerEnter(PointerEventData eventData)
     {
         print("ฟฃลอ");
-        ballRigi.AddForce(currentDirection * 100);
+        //ballRigi.AddForce(currentDirection * 100);
+        ballRigi.AddRelativeForce(currentDirection * 100);
     }
 
     public void OnPointerExit(PointerEventData eventData)
