@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class SnakeMovement : MonoBehaviour
 {
@@ -18,11 +19,12 @@ public class SnakeMovement : MonoBehaviour
     int beginSize;
 
     [SerializeField]
-    Transform StartPoint;
+    Transform StartPoint, Target;
 
     private float dis;
     private Transform curBodyParts;
     private Transform prevBodyParts;
+
     #endregion
 
     #region ÇÔ¼ö
@@ -36,7 +38,7 @@ public class SnakeMovement : MonoBehaviour
     {
         for (int i = 0; i < beginSize; i++)
         {
-            AddBodyPart();
+            //AddBodyPart();
         }
 
         BodyParts[0].position = StartPoint.position;
@@ -48,7 +50,8 @@ public class SnakeMovement : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            AddBodyPart();
+            RemoveBodyPart();
+
         }
     }
 
@@ -56,14 +59,20 @@ public class SnakeMovement : MonoBehaviour
     {
         float curSpeed = speed;
 
+        /*
         BodyParts[0].Translate(BodyParts[0].forward * curSpeed * Time.smoothDeltaTime, Space.World);
 
         if(Input.GetAxis("Horizontal") != 0)
         {
             BodyParts[0].Rotate(Vector3.up * rotationSpeed * Time.deltaTime, Input.GetAxis("Horizontal"));
         }
-        
-        for(int i = 1; i < BodyParts.Count; i++)
+        */
+
+        //snakeMove.ChangeEndValue(new Vector3(Target.position.x, BodyParts[0].position.y, Target.transform.position.z), .3f, true).Restart();
+        //BodyParts[0].DOLookAt(Target.position, 1);
+
+
+        for (int i = 1; i < BodyParts.Count; i++)
         {
             curBodyParts = BodyParts[i];
             prevBodyParts = BodyParts[i-1];
@@ -97,6 +106,17 @@ public class SnakeMovement : MonoBehaviour
         BodyParts.Add(newpart);
     }
 
+    public void RemoveBodyPart()
+    {
+        if (BodyParts.Count > 2)
+        {
+            Transform tt = BodyParts[BodyParts.Count - 1];
+            BodyParts.RemoveAt(BodyParts.Count - 1);
+
+            tt.SetParent(null);
+            tt.position = Vector3.one;
+        }
+    }
 
     #endregion
 }
