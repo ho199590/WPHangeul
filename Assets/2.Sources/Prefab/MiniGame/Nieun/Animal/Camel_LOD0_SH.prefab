@@ -1,19 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!136 &136245458971552942
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5151675499111086144}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 1.013655
-  m_Height: 2.8873818
-  m_Direction: 2
-  m_Center: {x: 0, y: 1.7201455, z: 0.1194545}
 --- !u!1001 &5151675499111055074
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -23,11 +9,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 100002, guid: dd68bcfc274106f4cae3f031a5a03690, type: 3}
       propertyPath: m_Name
-      value: Camel_LOD0
+      value: Camel_LOD0_SH
       objectReference: {fileID: 0}
     - target: {fileID: 100002, guid: dd68bcfc274106f4cae3f031a5a03690, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: dd68bcfc274106f4cae3f031a5a03690, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: dd68bcfc274106f4cae3f031a5a03690, type: 3}
       propertyPath: m_LocalPosition.x
@@ -42,6 +32,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: dd68bcfc274106f4cae3f031a5a03690, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: dd68bcfc274106f4cae3f031a5a03690, type: 3}
       propertyPath: m_LocalRotation.x
       value: -0
       objectReference: {fileID: 0}
@@ -52,14 +46,6 @@ PrefabInstance:
     - target: {fileID: 400002, guid: dd68bcfc274106f4cae3f031a5a03690, type: 3}
       propertyPath: m_LocalRotation.z
       value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400002, guid: dd68bcfc274106f4cae3f031a5a03690, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 400002, guid: dd68bcfc274106f4cae3f031a5a03690, type: 3}
-      propertyPath: m_RootOrder
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: dd68bcfc274106f4cae3f031a5a03690, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -79,9 +65,3 @@ PrefabInstance:
       objectReference: {fileID: 9100000, guid: 2eade79053c3d934bbc3594cb399542e, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dd68bcfc274106f4cae3f031a5a03690, type: 3}
---- !u!1 &5151675499111086144 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 100002, guid: dd68bcfc274106f4cae3f031a5a03690,
-    type: 3}
-  m_PrefabInstance: {fileID: 5151675499111055074}
-  m_PrefabAsset: {fileID: 0}
