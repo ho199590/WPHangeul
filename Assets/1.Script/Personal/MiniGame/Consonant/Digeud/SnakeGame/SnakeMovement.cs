@@ -38,7 +38,7 @@ public class SnakeMovement : MonoBehaviour
     {
         for (int i = 0; i < beginSize; i++)
         {
-            AddBodyPart();
+            //AddBodyPart();
         }
 
         BodyParts[0].position = StartPoint.position;
