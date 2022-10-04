@@ -4,8 +4,13 @@ using UnityEngine;
 
 public class Random_AnimalChoice : MonoBehaviour
 {
+    [SerializeField]
+    Random_Animal Animal;
+    [SerializeField]
+    string Animal_Ob;
     private void Start()
     {
-        transform.GetChild(Random_Animal.instance.shuffledArray[transform.parent.GetSiblingIndex()]).gameObject.SetActive(true);
+        Animal = GameObject.Find(Animal_Ob).GetComponent<Random_Animal>();
+        transform.GetChild(Animal.shuffledArray[transform.parent.GetSiblingIndex()]).gameObject.SetActive(true);
     }
 }
