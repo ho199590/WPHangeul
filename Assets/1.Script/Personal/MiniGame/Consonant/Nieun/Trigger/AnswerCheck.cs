@@ -8,7 +8,7 @@ public class AnswerCheck : MonoBehaviour
     string Answer;//어디에 닿았는지 확인하기 위한 변수
     [SerializeField]
     ScoreHandler scoreCase; //미션완료시 공통 별 프리팹
-    /* public event System.Action */
+    public event System.Action <bool> Check;    
     public UnityEvent rePosition;
     private void Start()
     {
@@ -20,7 +20,6 @@ public class AnswerCheck : MonoBehaviour
         {
             print("정답");
             scoreCase.SetScore();
-            scoreCase.SceneComplete += MissionComplete;
         }
         else//틀렸을때 
         {
@@ -29,9 +28,5 @@ public class AnswerCheck : MonoBehaviour
             rePosition.Invoke();
             print("reposion.Invoke실행");
         }
-    }
-    void MissionComplete()//별 5개를 다 클리어 했을때 나타나는 이벤트
-    {
-
     }
 }
