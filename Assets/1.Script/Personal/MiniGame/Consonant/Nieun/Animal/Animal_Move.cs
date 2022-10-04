@@ -22,15 +22,12 @@ public class Animal_Move : MonoBehaviour
     {
         if(other.gameObject.layer == LayerMask.NameToLayer("GiyeokAnswer"))//기역 농장에 닿였을때
         {
-            print("기억 충돌");
             ismove = true;
             MoveOnOff();
             FreezeVelocity();
-            print("물리적 연산");
         }
         if (other.gameObject.layer == LayerMask.NameToLayer("NieunAnswer"))//니은 농장에 닿였을때 
         {
-            print("니은 충돌");
             ismove = true;
             MoveOnOff();
             FreezeVelocity();
