@@ -49,6 +49,7 @@ public class GiyeokMissionManager : MonoBehaviour
         //StartCoroutine(SoundCheck(1));
         animatorPico = pico.GetComponent<Animator>();
         check = true;
+        scoreCase.SceneComplete += MissionComplete;
     }
     #region 함수
     //돋보기가 씬 안으로 천천히 들어오게 만들어주는 지연 함수
@@ -180,7 +181,7 @@ public class GiyeokMissionManager : MonoBehaviour
                     animatorPico.SetInteger("PicoAction", 1);
                     animatorColl.SetInteger(collider.name + "Ani", 1);
                     scoreCase.SetScore();
-                    scoreCase.SceneComplete += MissionComplete;
+                    
                     collider.gameObject.GetComponent<CapsuleCollider>().enabled = false;
                 }
             }

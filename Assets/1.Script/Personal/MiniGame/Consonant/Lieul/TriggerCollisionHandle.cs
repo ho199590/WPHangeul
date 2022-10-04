@@ -37,18 +37,25 @@ public class TriggerCollisionHandle : MonoBehaviour
         }
         if (ViewCamera != null)
         {
+            
             Vector3 direction = (Vector3.up*2+ Vector3.back*4);
             RaycastHit hit;
             Debug.DrawLine(transform.position, transform.position+direction, Color.red);
             if (Physics.Linecast(transform.position, transform.position+direction, out hit))
             {
                 ViewCamera.transform.position = hit.point;
+
             }
             else
             {
                 ViewCamera.transform.position = transform.position+direction;
+                
             }
-            ViewCamera.transform.LookAt(transform.position);
+            //ViewCamera.transform.rotation = transform.rotation;
+            //ViewCamera.transform.LookAt(transform.position);
+            ViewCamera.transform.rotation = Quaternion.Lerp(ViewCamera.transform.rotation, Quaternion.LookRotation(transform.position), Time.deltaTime);
+            //ViewCamera.transform.rotation = Quaternion.LookRotation(transform.position);
+
         }
     }
     
@@ -56,7 +63,7 @@ public class TriggerCollisionHandle : MonoBehaviour
     {
         if(collision != null)
         {
-            print("온콜리전엔터");
+            print("온콜리전엔터" + collision);
             if (mAudioSource != null && HitSound != null && collision.relativeVelocity.y > .5f)
             {
                 mAudioSource.PlayOneShot(HitSound, collision.relativeVelocity.magnitude);
@@ -67,7 +74,7 @@ public class TriggerCollisionHandle : MonoBehaviour
     {
         if (other != null)
         {
-            print("온트리거엔터");
+            print("온트리거엔터"+other);
             other.gameObject.SetActive(false);
         }
     }
