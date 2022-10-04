@@ -1,43 +1,53 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class ShepherdController : MonoBehaviour
 {
-    #region 변수
-    Vector3 originRoation;
-
-    private Vector3 screenSpace;
-    private Vector3 offset;
+    #region 변수    
+    NavMeshAgent agent;
+    [SerializeField]
+    GameObject Parti;
     #endregion
-    
+
     private void Start()
-    {
-        originRoation = transform.rotation.eulerAngles;
+    {        
+        agent = GetComponent<NavMeshAgent>();
     }
 
-    private void OnMouseDown()
+    private void Update()
     {
-        
-    }
-    private void OnMouseDrag()
-    {
-        /*
-        var curScreenSpace = new Vector3(Input.mousePosition.x, screenSpace.y, Input.mousePosition.z);
-        var curPosition = Camera.main.ScreenToWorldPoint(curScreenSpace) + offset;
-        transform.position = curPosition;
-        */
-
-
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
-
-
-        if (Physics.Raycast(ray, out hit))
+        if (Input.GetMouseButtonDown(0))
         {
-            if (hit.collider.name == "Cube")
-            transform.position = hit.point;
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit))
+            {
+                if (hit.collider.name == "Cube")
+                {
+                    agent.SetDestination(hit.point);
+                    var eff = Instantiate(Parti);
+                    eff.transform.position = hit.point + new Vector3(0,1,0);
+                }   
+                //transform.position = hit.point;
+            }
         }
-        
+
+        if (Input.GetMouseButton(0))
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit))
+            {
+                if (hit.collider.name == "Cube")
+                {
+                    agent.SetDestination(hit.point);
+                }
+                //transform.position = hit.point;
+            }
+        }
     }
 }

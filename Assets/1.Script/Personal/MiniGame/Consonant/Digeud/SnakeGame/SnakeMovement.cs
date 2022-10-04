@@ -25,8 +25,6 @@ public class SnakeMovement : MonoBehaviour
     private Transform curBodyParts;
     private Transform prevBodyParts;
 
-    Tweener snakeMove;
-    Tweener snakeRotation;
     #endregion
 
     #region ÇÔ¼ö
@@ -34,8 +32,6 @@ public class SnakeMovement : MonoBehaviour
     private void Start()
     {
         StartLevel();
-        snakeMove = BodyParts[0].DOMove(Target.position, 3).SetAutoKill(false);
-        snakeRotation = BodyParts[0].DOLookAt(Target.position, 1).SetAutoKill(false);
     }
 
     public void StartLevel()
@@ -54,7 +50,8 @@ public class SnakeMovement : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            AddBodyPart();
+            RemoveBodyPart();
+
         }
     }
 
@@ -71,12 +68,8 @@ public class SnakeMovement : MonoBehaviour
         }
         */
 
-
-        //BodyParts[0].LookAt(new Vector3(BodyParts[0].position.x, Target.position.y, Target.position.z));
-        //snakeRotation.ChangeEndValue(Target.position, 1).Restart();
-        
-        snakeMove.ChangeEndValue(new Vector3(Target.position.x, BodyParts[0].position.y, Target.transform.position.z), .3f, true).Restart();
-        BodyParts[0].DOLookAt(Target.position, 1);
+        //snakeMove.ChangeEndValue(new Vector3(Target.position.x, BodyParts[0].position.y, Target.transform.position.z), .3f, true).Restart();
+        //BodyParts[0].DOLookAt(Target.position, 1);
 
 
         for (int i = 1; i < BodyParts.Count; i++)
@@ -113,6 +106,17 @@ public class SnakeMovement : MonoBehaviour
         BodyParts.Add(newpart);
     }
 
+    public void RemoveBodyPart()
+    {
+        if (BodyParts.Count > 2)
+        {
+            Transform tt = BodyParts[BodyParts.Count - 1];
+            BodyParts.RemoveAt(BodyParts.Count - 1);
+
+            tt.SetParent(null);
+            tt.position = Vector3.one;
+        }
+    }
 
     #endregion
 }

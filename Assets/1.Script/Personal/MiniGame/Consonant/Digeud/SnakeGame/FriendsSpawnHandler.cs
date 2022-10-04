@@ -32,7 +32,8 @@ public class FriendsSpawnHandler : MonoBehaviour
 
         int index = Random.Range(0, Friends.Length);
 
-        Instantiate(Friends[index], pos, Quaternion.identity);
+        GameObject friend = Instantiate(Friends[index], pos, Quaternion.identity);
+        friend.transform.LookAt(center);
     }
 
     private void OnDrawGizmosSelected()
