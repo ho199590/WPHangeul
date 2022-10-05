@@ -601,6 +601,7 @@ MonoBehaviour:
   - {fileID: 2801660801035448185, guid: ef14ea7af57730c46b835448dc242113, type: 3}
   - {fileID: 7963411455292784340, guid: bf68d76502708b24c881b8649c226941, type: 3}
   - {fileID: 728563613441963391, guid: 58e8435f3c637ae4cb6f8fb3e4b1a688, type: 3}
+  Particle: {fileID: 1212038522573524, guid: d773d301d86b3254180a6887af308eef, type: 3}
   center: {x: 0, y: 0.8, z: 0}
   size: {x: 25, y: 1, z: 25}
 --- !u!1 &220584909
@@ -1088,7 +1089,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 595769977}
-  - component: {fileID: 595769976}
   - component: {fileID: 595769975}
   m_Layer: 0
   m_Name: UICamera
@@ -1140,14 +1140,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!81 &595769976
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 595769974}
-  m_Enabled: 1
 --- !u!4 &595769977
 Transform:
   m_ObjectHideFlags: 0
