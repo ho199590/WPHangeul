@@ -11,9 +11,9 @@ public class Movement : MonoBehaviour
     private float moveTimeX = 0.1f;     //1회 이동에 소요되는 시간(x축)
     private bool isXMove = false;       //true : 이동 중 , false : 이동 가능 
     //y축 이동
-    private float originY = 0.55f;      //점프 및 착지하는 y축 값
+    private float originY = 0.5f;      //점프 및 착지하는 y축 값
     private float gravity = -9.81f;     //중력
-    private float moveTimeY = 0.3f;     //1회 이동에 소요 되는 시간(y축)
+    private float moveTimeY = 0.6f;     //1회 이동에 소요 되는 시간(y축)
     private bool isJump = false;        //true : 점프 중, false : 점프 가능
     //z축 이동 
     [SerializeField]
