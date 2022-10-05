@@ -426,7 +426,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameController: {fileID: 1195526582}
-  moveSpeed: 10
+  moveSpeed: 5
 --- !u!54 &523265279
 Rigidbody:
   m_ObjectHideFlags: 0
