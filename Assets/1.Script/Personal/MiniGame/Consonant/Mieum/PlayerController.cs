@@ -73,10 +73,10 @@ public class PlayerController : MonoBehaviour
         }
 
         //터치 상태로 y축 양의 방향으로 드래그 범위가 dragDistance 보다 클 때 
-        if( touchEnd.y - touchStart.y >= dragDistance)
+/*        if( touchEnd.y - touchStart.y >= dragDistance)
         {
             movement.MoveToY();
             return;
-        }
+        }*/
     }
 }

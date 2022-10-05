@@ -11,7 +11,7 @@ public class RePosition : MonoBehaviour
     [SerializeField]
     GameObject balloonOb;
     Rigidbody rb;//iskinematic
-    Collider col;//IsTrigger
+    Collider col_Animal;//IsTrigger
     Balloon_Move isMove;//BalloonMove true변수
 
     private void Start()
@@ -20,12 +20,11 @@ public class RePosition : MonoBehaviour
         balloonPosition = this.transform.position;//풍성 위치 저장
         isMove = GetComponentInParent<Balloon_Move>();
         rb = GetComponent<Rigidbody>();
-        rb = GetComponentInChildren<Rigidbody>();
-        col = GetComponent<Collider>();
+        col_Animal = GetComponent<Collider>();
     }
     public void ReMove()
     {
-        col.isTrigger = true;
+        col_Animal.isTrigger = true;
         this.transform.position = animalPosition;
         balloonOb.transform.position = balloonPosition;
         balloonOb.SetActive(true);

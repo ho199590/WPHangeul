@@ -58,13 +58,13 @@ public class Movement : MonoBehaviour
             StartCoroutine(OnMoveToX(x));
         }
     }
-    public void MoveToY()
+  /*  public void MoveToY()
     {
         //현재 점프 중으로 점프 불가능
         if (isJump == true) return;
 
         StartCoroutine(OnMoveToY());
-    }
+    }*/
     private IEnumerator OnMoveToX(int direction)
     {
         float current = 0;
@@ -86,7 +86,8 @@ public class Movement : MonoBehaviour
         }
         isXMove = false;
     }
-    private IEnumerator OnMoveToY()
+    //점프
+   /* private IEnumerator OnMoveToY()
     {
         float current = 0;
         float percent = 0;
@@ -109,5 +110,5 @@ public class Movement : MonoBehaviour
         }
         isJump = false;
         rigidbody.useGravity = true;
-    }
+    }*/
 }

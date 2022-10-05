@@ -26,7 +26,6 @@ public class AnswerCheck : MonoBehaviour
             print("틀림");
             /*이벤트 처리하자*/
             rePosition.Invoke();
-            print("reposion.Invoke실행");
         }
     }
 }
