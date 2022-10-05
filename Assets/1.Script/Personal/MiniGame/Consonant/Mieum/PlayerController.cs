@@ -53,9 +53,10 @@ public class PlayerController : MonoBehaviour
         if(Input.GetMouseButtonDown(0))
         {
             touchStart = Input.mousePosition;
+          
         }
         //터치 & 드래그
-        else if (Input.GetMouseButtonDown(0))
+        else if (Input.GetMouseButton(0))
         {
             touchEnd = Input.mousePosition;
 

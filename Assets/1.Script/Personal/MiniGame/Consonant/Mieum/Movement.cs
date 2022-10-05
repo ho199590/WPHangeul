@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Movement : MonoBehaviour
 {
+    [SerializeField]
+    private GameController gameController; //IsGmaeStart가 true일 때 움직이기 위해 
     //x축 이동 
     private float moveXWidth = 1.5f;    //1회 이동 시 이동거리 (x축)
     private float moveTimeX = 0.1f;     //1회 이동에 소요되는 시간(x축)
@@ -28,6 +30,8 @@ public class Movement : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
+        //현재 상태가 게임 시작이 아니면 Update(0를 실행하지 않는다.
+        if (gameController.IsGameStart == false) return;
         //z 축 이동 
         transform.position += Vector3.forward * moveSpeed * Time.deltaTime;
 
