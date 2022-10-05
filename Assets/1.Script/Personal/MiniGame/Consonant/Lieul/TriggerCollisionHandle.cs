@@ -53,10 +53,13 @@ public class TriggerCollisionHandle : MonoBehaviour
             ViewCamera.transform.LookAt(transform.position  + transform.forward);
         }
     }
-    
+    //public Collider Rotation
+    //{
+    //    get => other;
+    //}
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision != null)
+        if (collision != null)
         {
             print("온콜리전엔터" + collision);
             //공 확대해주는 거
@@ -66,12 +69,13 @@ public class TriggerCollisionHandle : MonoBehaviour
             //}
         }
     }
-    private void OnTriggerEnter(Collider other)
+    public void OnTriggerEnter(Collider other)
     {
         if (other != null)
         {
             print("온트리거엔터"+other);
-            transform.rotation = Quaternion.Slerp(transform.rotation, other.transform.rotation, Time.deltaTime*50);
+            //Rotation = other;
+            transform.rotation = Quaternion.Lerp(transform.rotation, other.transform.rotation, Time.deltaTime*50);
             other.gameObject.SetActive(false);
             if (other.gameObject.name.Contains("Fin"))
             {
@@ -80,3 +84,4 @@ public class TriggerCollisionHandle : MonoBehaviour
         }
     }
 }
+   
