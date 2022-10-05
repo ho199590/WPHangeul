@@ -15,7 +15,6 @@ public class Balloon_Move : MonoBehaviour
     [Range(0, 100)]
     public int speedY;
 
-    private int sign1 = -1;
 
     private int sign2 = -1;
     //Ç³¼± È¸Àü
@@ -24,9 +23,12 @@ public class Balloon_Move : MonoBehaviour
     GameObject Balloon;//Ç³Â÷
     [SerializeField]
     GameObject Animal;//µ¿¹°
+    [SerializeField]
+    int sign1;
+
     void Start()
     {
-
+  
     }
 
     private void FixedUpdate()
