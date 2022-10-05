@@ -26,6 +26,10 @@ public class SpeakerHandler : MonoBehaviour
             audioSource.PlayOneShot(clips[num]);
         }
     }
+    public void SoundByNum2(int num)
+    {
+      audioSource.PlayOneShot(clips[num]);   
+    }
 
     public void SoundByClip(AudioClip clip)
     {
