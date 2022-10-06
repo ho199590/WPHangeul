@@ -16,7 +16,7 @@ public class RePosition : MonoBehaviour
     ScoreHandler scoreCase; //미션완료시 공통 별 프리팹 
     Vector3 bollonPosi;
     Vector3 animal;//animal positon
-    Vector3 perentsPosition;
+    Vector3 perentsPosition; //ReMove()할때 지속적으로 변경된 tranceform
     private void Start()
     {
         isMove = GetComponentInParent<Balloon_Move>();
