@@ -8,6 +8,7 @@ public class BuoyancyHandler : MonoBehaviour
 {
     #region 변수
     public Transform[] floaters;
+    public Transform StarPaint;
 
     public float underWaterDrag = 3;
     public float underWaterAngularDrag = 1;
@@ -18,16 +19,19 @@ public class BuoyancyHandler : MonoBehaviour
     public float waterHeight = 0f;
 
     Rigidbody m_rigidbody;
+    ScoreHandler score;
 
     bool underwater;
 
-    int floatersUnderwater; 
+    int floatersUnderwater;
+    int count = 0;
     #endregion
 
     #region 함수
     private void Start()
     {
         m_rigidbody = GetComponent<Rigidbody>();
+        score = FindObjectOfType<ScoreHandler>();
     }
 
     private void FixedUpdate()
@@ -66,6 +70,21 @@ public class BuoyancyHandler : MonoBehaviour
         {
             m_rigidbody.drag = airDrag;
             m_rigidbody.angularDrag = airAngularDrag;
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.transform.GetComponent<FishController>())
+        {
+            if(collision.transform.GetComponent<FishController>().Knock == false)
+            {
+                if(count >= StarPaint.childCount) { return; }
+                StarPaint.GetChild(count).gameObject.SetActive(false);
+                score.SetScore();
+                count++;
+            }
+            collision.transform.GetComponent<FishController>().Knock = true;
         }
     }
 

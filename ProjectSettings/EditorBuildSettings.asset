@@ -26,4 +26,13 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/0.Scenes/MiniGame/Digeud_MiniGame.unity
     guid: 671a0ef4faa93b6448037932800e1cf0
+  - enabled: 1
+    path: "Assets/0.Scenes/Consonant/2.Diegud/\u3137/BalancesGame.unity"
+    guid: ea5189c07085ddd4e9d53c3083ad2cf6
+  - enabled: 1
+    path: "Assets/0.Scenes/Consonant/2.Diegud/\u3137/Iceberg.unity"
+    guid: 519f227c69f7ba946aed56983760b437
+  - enabled: 1
+    path: "Assets/0.Scenes/Consonant/2.Diegud/\u3137/WormGame.unity"
+    guid: a40d87d594f80a744b38b384ac81e942
   m_configObjects: {}
