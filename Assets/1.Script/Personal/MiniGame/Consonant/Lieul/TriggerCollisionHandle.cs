@@ -57,11 +57,11 @@ public class TriggerCollisionHandle : MonoBehaviour
     //{
     //    get => other;
     //}
-    private void OnCollisionEnter(Collision collision)
+    private void OnCollisionEnter(Collision collision) //Collider에 Is Trigger 체크안되어 있어야 충돌 //통과안됨(물리연산O)
     {
         if (collision != null)
         {
-            print("온콜리전엔터" + collision);
+            print("온콜리전엔터" + collision.gameObject.name);
             //공 확대해주는 거
             //if (mAudioSource != null && HitSound != null && collision.relativeVelocity.y > .5f)
             //{
@@ -69,7 +69,7 @@ public class TriggerCollisionHandle : MonoBehaviour
             //}
         }
     }
-    public void OnTriggerEnter(Collider other)
+    public void OnTriggerEnter(Collider other) //Collider에 Is Trigger 체크되어있어야 충돌 //통과가능(물리연산X)
     {
         if (other != null)
         {
