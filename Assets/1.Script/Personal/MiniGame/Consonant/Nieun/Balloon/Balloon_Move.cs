@@ -26,11 +26,6 @@ public class Balloon_Move : MonoBehaviour
     [SerializeField]
     int sign1;
 
-    void Start()
-    {
-  
-    }
-
     private void FixedUpdate()
     {
         if (Time.time >= startTime)
