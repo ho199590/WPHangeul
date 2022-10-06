@@ -7,7 +7,8 @@ public class FriendsSpawnHandler : MonoBehaviour
     #region º¯¼ö
     [SerializeField]
     GameObject[] Friends;
-
+    [SerializeField]
+    GameObject Particle;
     public Vector3 center;
     public Vector3 size;
 
@@ -34,6 +35,7 @@ public class FriendsSpawnHandler : MonoBehaviour
 
         GameObject friend = Instantiate(Friends[index], pos, Quaternion.identity);
         friend.transform.LookAt(center);
+        var par = Instantiate(Particle, pos, Quaternion.identity);
     }
 
     private void OnDrawGizmosSelected()
