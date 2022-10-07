@@ -9,9 +9,11 @@ public class Balloon_Touch : MonoBehaviour
     int BalloonTouch=0;//Ç³¼± ÅÍÄ¡ Ä«¿îÆ®
     public Vector3 BalloonPosition;
     Balloon_Move ballMove;
+    SpeakerHandler speakerHandler;
     private void Start()
     {
         ballMove = GetComponentInParent<Balloon_Move>();
+        speakerHandler = FindObjectOfType<SpeakerHandler>();
     }
     private void OnMouseDown()
     {
@@ -26,6 +28,7 @@ public class Balloon_Touch : MonoBehaviour
     }
     protected void TouchClear()//Ç³¼± ³«ÇÏ 
     {
+        speakerHandler.SoundByNum2(0);
         Animal.GetComponent<Rigidbody>().isKinematic = false;
         gameObject.SetActive(false);
     }

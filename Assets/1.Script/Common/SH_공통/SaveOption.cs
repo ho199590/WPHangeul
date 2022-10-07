@@ -17,6 +17,7 @@ public class SaveOption : MonoBehaviour
 {
     string folderPath = "";
     string fileName = "";
+
     AudioSource audioSource;
     [SerializeField]
     Image image;
@@ -42,7 +43,6 @@ public class SaveOption : MonoBehaviour
 
         File.WriteAllText(folderPath + fileName, saveData);
         print("저장 완료 ");
-
     }
 
     private void OnEnable()

@@ -16,12 +16,14 @@ public class RePosition : MonoBehaviour
     Vector3 bollonPosi;
     Vector3 animal;//animal positon
     Vector3 perentsPosition; //ReMove()할때 지속적으로 변경된 tranceform
+    SpeakerHandler speakerHandler;
     private void Start()
     {
         isMove = GetComponentInParent<Balloon_Move>();
         bollonPosi = bollon.transform.position;//현재풍선 위치를 저장
         animal = this.transform.position;
         perentsPosition = gameObject.transform.parent.gameObject.transform.position;//부모tranceform 저장
+        speakerHandler = FindObjectOfType<SpeakerHandler>();
     }
     public void ReMove()//틀린애만 ReMove 시켜야함 
     {
@@ -43,6 +45,7 @@ public class RePosition : MonoBehaviour
         else
         {
             print("틀림");
+            speakerHandler.SoundByNum2(1);
             ReMove();
         }
     }
