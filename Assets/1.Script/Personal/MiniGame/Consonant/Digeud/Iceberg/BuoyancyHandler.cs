@@ -79,7 +79,9 @@ public class BuoyancyHandler : MonoBehaviour
         {
             if(collision.transform.GetComponent<FishController>().Knock == false)
             {
-                if(count >= StarPaint.childCount) { return; }
+                collision.transform.GetComponent<FishController>().Knock = true;
+
+                if (count >= StarPaint.childCount) { return; }
                 StarPaint.GetChild(count).gameObject.SetActive(false);
                 score.SetScore();
                 count++;

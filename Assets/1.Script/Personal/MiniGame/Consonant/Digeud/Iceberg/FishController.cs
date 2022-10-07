@@ -31,13 +31,12 @@ public class FishController : MonoBehaviour
             nextIndex = index + 1;
         }
         rb = GetComponent<Rigidbody>();
+        GetComponent<Collider>().isTrigger = true;
         MoveNext();
     }
 
     public void SettingIndex()
     {
-        print("SET");
-
         index++;
         if(index == Point.Length)
         {
@@ -62,11 +61,11 @@ public class FishController : MonoBehaviour
     private void OnMouseDown()
     {
         Vector3 Point = controller.TargetPoint.position;
-        Point += new Vector3(Random.Range(-1, 1) / 10.0f, Random.Range(-1, 1) / 10.0f, Random.Range(-1, 1) / 10.0f);
+        Point += new Vector3(Random.Range(-10, 10) / 10.0f, Random.Range(-10, 01) / 10.0f, Random.Range(-10, 10) / 10.0f);
 
         transform.DOKill();
         transform.GetComponent<Collider>().enabled = false;
-        transform.DOJump(Point, 4f, 1, 2f).OnComplete(() => { rb.useGravity = true; transform.GetComponent<Collider>().enabled = true; });
+        transform.DOJump(Point, 4f, 1, 2f).OnComplete(() => { rb.useGravity = true; transform.GetComponent<Collider>().enabled = true; GetComponent<Collider>().isTrigger = false; });
     }
     #endregion
 }

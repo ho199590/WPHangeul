@@ -14,7 +14,8 @@ public class WaveManager : MonoBehaviour
     #endregion
 
     private void Update()
-    {
+    {   
+
         offset += Time.deltaTime * speed;
         Debug = amplitude * Mathf.Sin(1 / length + offset);
     }
