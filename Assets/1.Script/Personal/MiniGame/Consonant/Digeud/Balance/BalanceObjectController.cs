@@ -29,7 +29,13 @@ public class BalanceObjectController : MonoBehaviour
 
     private void OnMouseDown()
     {   
-        rig.useGravity = false;        
+        rig.useGravity = false;
+        var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        if(Physics.Raycast(ray, out RaycastHit hit))
+        {
+
+            // hit.point;
+        }
         screenSpace = Camera.main.WorldToScreenPoint(transform.position);
         offset = transform.position - Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenSpace.z));
 
