@@ -26,10 +26,10 @@ public class Balloon_Touch : MonoBehaviour
     }
     protected void TouchClear()//Ç³¼± ³«ÇÏ 
     {
-        Animal.GetComponent<Rigidbody>().useGravity = true;
+        Animal.GetComponent<Rigidbody>().isKinematic = false;
         gameObject.SetActive(false);
     }
-    private void ColOnOff()
+    private void ColOnOff()//¹Ù´Û°ú Ãæµ¹ ÇÏ±âÀ§ÇÑ ÇÔ¼ö
     {
         Animal.GetComponent<Collider>().enabled = true;
     }
