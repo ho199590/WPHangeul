@@ -4,15 +4,20 @@ using UnityEngine;
 
 public class CloudMove : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    private float startTime = 0;//Scene이 시작되고 몇초후에 움직일지 변수
+    public float minX, maxX; //x축으로 이동을 어디서부터 어디까지 할지 변수 
+    public float minY, maxY; //y측으로 이동을 어디서부터 어디까지 할지 변수
+    public float speedX; //x축 이동 속도
+    public float speedY; //y축 이동 속도
 
-    // Update is called once per frame
-    void Update()
+    [SerializeField]
+    int sign1; //어느 방향에서 시작할지 방향 체크
+    private int sign2 = -1;
+    private void FixedUpdate()
     {
-        
+        if(Time.time > startTime)
+        {
+            transform.position += new Vector3(speedX * Time.deltaTime * sign1, speedY * Time.deltaTime * sign2, 0);
+        }
     }
 }
