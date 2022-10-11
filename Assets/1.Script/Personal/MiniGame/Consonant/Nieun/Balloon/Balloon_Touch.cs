@@ -64,7 +64,6 @@ public class Balloon_Touch : MonoBehaviour
     public void SizeReset()
     {
         Animal.transform.localScale = new Vector3(1f, 1f, 1f);
-        
         print($"{Animal}½ÇÇà");
     }
     #endregion
