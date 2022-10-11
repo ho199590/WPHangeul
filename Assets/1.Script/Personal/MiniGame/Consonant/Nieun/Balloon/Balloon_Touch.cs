@@ -44,7 +44,7 @@ public class Balloon_Touch : MonoBehaviour
         Animal.GetComponent<Collider>().enabled = true;
     }
 
-    private IEnumerator Down()
+    private IEnumerator Down()//동물 점점 작아짐 
     {
         while (Animal.transform.localScale.x > size)
         {
@@ -61,7 +61,7 @@ public class Balloon_Touch : MonoBehaviour
         }
 
     }
-    public void SizeReset()
+    public void SizeReset()//실패시 동물 크기 리셋
     {
         Animal.transform.localScale = new Vector3(1f, 1f, 1f);
         print($"{Animal}실행");
