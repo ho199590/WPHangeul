@@ -36,8 +36,9 @@ public class GiyeokMissionManager : MonoBehaviour
     int count = 0; //충돌완료 체크용 파라미터
     bool playstart; //소리 재생 파일 바꿀 때 전에꺼가 재생중인지 아닌지 체크하는용 파라미터
     bool check; //마우스다운시에 처음에 한번만 성우 안내 목소리 나오게끔 하는 파라미터
+    SpeakerHandler speakerHandler;
     #endregion
-    
+
     private void Awake()
     {
         StartCoroutine(Speed_StartZoom());
@@ -45,8 +46,9 @@ public class GiyeokMissionManager : MonoBehaviour
     private void Start()
     {
         invisible.SetActive(true);
-        //SoundInterface.instance.SoundPlay(0);
-        //StartCoroutine(SoundCheck(1));
+        speakerHandler = FindObjectOfType<SpeakerHandler>();
+        speakerHandler.SoundByNum2(0);
+        speakerHandler.SoundByNum(1);
         animatorPico = pico.GetComponent<Animator>();
         check = true;
         scoreCase.SceneComplete += MissionComplete;
@@ -59,7 +61,7 @@ public class GiyeokMissionManager : MonoBehaviour
         while (Vector3.Distance(transform.position, zoomPosition.transform.position) > 0.2f)//둘사이의 거리가 있는 동안 //첨에 0으로 했다가 너무 느려서 10으로 바꿈
         {
             transform.position = Vector3.Lerp(transform.position, zoomPosition.transform.position, Time.deltaTime * 0.7f);
-            yield return new WaitForSeconds(Time.deltaTime*0.1f); //제자리로 돌아갈때 속도 조절하는 곳
+            yield return new WaitForSeconds(Time.deltaTime*0.2f); //제자리로 돌아갈때 속도 조절하는 곳
             if (Vector3.Distance(transform.position, zoomPosition.transform.position) <= 0.2f)
             {
                 break;
@@ -72,27 +74,12 @@ public class GiyeokMissionManager : MonoBehaviour
         hand.SetActive(true);
         yield break;
     }
-   
-    //앞의 소리 재생이 끝날때까지 잠시 지연했다가 다음 소리로 재생
-    //IEnumerator SoundCheck(int index)
-    //{
-    //    yield return new WaitForSeconds(7);
-    //    while(SoundInterface.instance.Source.isPlaying)
-    //    {
-    //        if (!SoundInterface.instance.Source.isPlaying)
-    //        {
-    //            SoundInterface.instance.SoundPlay(index);
-    //            break;
-    //        }
-    //    }
-    //    yield break;
-    //}
     private void OnMouseDown()
     {
-        //if (check)
-        //{
-        //    if (!SoundInterface.instance.Source.isPlaying) SoundInterface.instance.SoundPlay(2);
-        //}
+        if (check)
+        {
+            speakerHandler.SoundByNum(2);
+        }
         check = false;
         hand.SetActive(false);
         transform.GetChild(0).GetComponent<Image>().gameObject.SetActive(true); //돋보기를 드래그시작할 때 돋보기 주변 어둡게해주는 역마스크 
@@ -104,18 +91,14 @@ public class GiyeokMissionManager : MonoBehaviour
     private void OnMouseDrag()
     {
         transform.position = GetMouseWorldPosition() + posi;
-        //if (!SoundInterface.instance.Source.isPlaying)
-        //{
-        //    SoundInterface.instance.SoundPlay(8);
-        //}
+        speakerHandler.SoundByNum(8);
         animatorPico.SetInteger("PicoAction", 4);
         collider = CheckOb(); //충돌처리 함수 호출
         if(collider != null)
         {
             if (!playstart)
             {
-                //SoundInterface.instance.Source.Stop();
-                //SoundInterface.instance.SoundPlay(9);
+                speakerHandler.SoundByNum(9);
                 if (collider.GetComponentInChildren<AudioSource>())
                 {
                     collider.GetComponentInChildren<AudioSource>().Play();
@@ -171,7 +154,7 @@ public class GiyeokMissionManager : MonoBehaviour
         {
             if (collider.transform.parent.name.Contains(obName))
             {
-                //SoundInterface.instance.SoundPlay(3);
+                speakerHandler.SoundByNum(3);
                 invisible.transform.SetAsLastSibling();
                 invisible.SetActive(true);
                 count++;
@@ -209,7 +192,7 @@ public class GiyeokMissionManager : MonoBehaviour
     //틀린 단어를 골랐을 경우, 미션 전체완료시에 돋보기가 제자리로 천천히 돌아가게 해주는 지연함수
     public IEnumerator Speed_forZoom()
     {
-        //SoundInterface.instance.SoundPlay(10);
+        speakerHandler.SoundByNum(10);
         while (Vector3.Distance(transform.position, zoomPosition.transform.position) > 0.2f) //둘사이의 거리가 있는 동안 //첨에 0으로 했다가 너무 느려서 10으로 바꿈
         {
             transform.position = Vector3.Lerp(transform.position, zoomPosition.transform.position, Time.deltaTime*10); //출발하는 곳과 도착할 곳의 Lerp
