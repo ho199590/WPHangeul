@@ -6,7 +6,7 @@ public class Balloon_Touch : MonoBehaviour
 {
     #region 변수
     [SerializeField]
-    GameObject animal;//동물 오브젝트
+    GameObject Animal;//동물 오브젝트
     int BalloonTouch=0;//풍선 터치 카운트
     public Vector3 BalloonPosition;
     SpeakerHandler speakerHandler;
@@ -20,6 +20,7 @@ public class Balloon_Touch : MonoBehaviour
     private void Start()
     {
         speakerHandler = FindObjectOfType<SpeakerHandler>();
+        
     }
     private void OnMouseDown()
     {
@@ -35,21 +36,23 @@ public class Balloon_Touch : MonoBehaviour
     protected void TouchClear()//풍선 낙하 
     {
         speakerHandler.SoundByNum2(0);
-        animal.GetComponent<Rigidbody>().isKinematic = false;
+        Animal.GetComponent<Rigidbody>().isKinematic = false;
         gameObject.GetComponent<MeshRenderer>().enabled = false;
     }
     private void ColOnOff()//바닦과 충돌 하기위한 함수
     {
-        animal.GetComponent<Collider>().enabled = true;
+        Animal.GetComponent<Collider>().enabled = true;
     }
 
     private IEnumerator Down()
     {
-        while (animal.GetComponent<Transform>().localScale.x > size)
+        while (Animal.transform.localScale.x > size)
         {
-            animal.GetComponent<Transform>().localScale = new Vector3(animal.GetComponent<Transform>().localScale.x - 1f * speed * Time.deltaTime, animal.GetComponent<Transform>().localScale.y - 1f * speed * Time.deltaTime, animal.GetComponent<Transform>().localScale.z - 1f * speed * Time.deltaTime);
+            Animal.transform.localScale = new Vector3(Animal.transform.localScale.x - 1f * speed * Time.deltaTime,
+                Animal.transform.localScale.y - 1f * speed * Time.deltaTime,
+                Animal.transform.localScale.z - 1f * speed * Time.deltaTime);
             time += Time.deltaTime;
-            if (animal.GetComponent<Transform>().localScale.x <= size)
+            if (Animal.transform.localScale.x <= size)
             {
                 time = 0;
                 break;
@@ -60,8 +63,9 @@ public class Balloon_Touch : MonoBehaviour
     }
     public void SizeReset()
     {
-        animal.GetComponent<Transform>().localScale = new Vector3(5f, 5f, 5f);
-        print("실행");
+        Animal.transform.localScale = new Vector3(1f, 1f, 1f);
+        
+        print($"{Animal}실행");
     }
     #endregion
 }
