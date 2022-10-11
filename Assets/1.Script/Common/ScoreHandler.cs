@@ -32,6 +32,8 @@ public class ScoreHandler : MonoBehaviour
     GameObject[] particles;
 
     bool CompleteCheck = false;
+
+    public float scale = 4f;
     #endregion
 
     #region ¿Ã∫•∆Æ
@@ -104,8 +106,8 @@ public class ScoreHandler : MonoBehaviour
                 {
                     ex.transform.SetParent(transform.root);
                 }
-                ex.transform.localPosition = new Vector3(Random.Range(-8, 8), Random.Range(-5, 5), 0);
-                ex.transform.localScale = Vector3.one * 1.5f;
+                ex.transform.localPosition = new Vector3(Random.Range(-16, 16), Random.Range(-5, 5), 0);
+                ex.transform.localScale = Vector3.one * scale;
             }
             yield return new WaitForSeconds(1f);
         }

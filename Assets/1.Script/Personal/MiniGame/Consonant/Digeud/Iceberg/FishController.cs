@@ -7,22 +7,26 @@ public class FishController : MonoBehaviour
 {
     #region 변수
     FlotsamController controller;
-    Transform[] Point;
+    List<Transform> Point = new List<Transform>();
 
     Rigidbody rb;
 
-    public bool Knock = false;
-    
-    int index;    
+    bool canMove = false;
+    public bool Knock = false;    
+    public int index;    
+
     int nextIndex;
+
+    float timer = 0;
     #endregion
     #region 함수
     private void OnEnable()
     {
         controller = FindObjectOfType<FlotsamController>();
-        Point = controller.wayPoint;
-        index = transform.GetSiblingIndex();
-        if (index == Point.Length - 1)
+
+        Point = controller.wayPoint;        
+
+        if (index == Point.Count - 1)
         {
             nextIndex = 0;
         }
@@ -30,6 +34,7 @@ public class FishController : MonoBehaviour
         {
             nextIndex = index + 1;
         }
+
         rb = GetComponent<Rigidbody>();
         GetComponent<Collider>().isTrigger = true;
         MoveNext();
@@ -38,11 +43,11 @@ public class FishController : MonoBehaviour
     public void SettingIndex()
     {
         index++;
-        if(index == Point.Length)
+        if(index == Point.Count)
         {
             index = 0;
         }
-        if (index == Point.Length - 1)
+        if (index == Point.Count - 1)
         {
             nextIndex = 0;
         }
@@ -54,18 +59,48 @@ public class FishController : MonoBehaviour
 
     public void MoveNext()
     {
-        transform.DOMove(Point[nextIndex].position, 2f).From(Point[index].position).SetEase(Ease.Linear).OnComplete(() => SettingIndex());
+        canMove = false;
+        transform.DOMove(Point[nextIndex].position, 2f).From(transform.position).SetEase(Ease.Linear).OnComplete(() => SettingIndex());
         transform.DOLookAt(Point[nextIndex].position, 2f).OnComplete(() => MoveNext()) ;
+        transform.GetComponentInChildren<SpriteRenderer>().enabled = true;
     }
 
     private void OnMouseDown()
     {
-        Vector3 Point = controller.TargetPoint.position;
-        Point += new Vector3(Random.Range(-10, 10) / 10.0f, Random.Range(-10, 01) / 10.0f, Random.Range(-10, 10) / 10.0f);
-
         transform.DOKill();
-        transform.GetComponent<Collider>().enabled = false;
-        transform.DOJump(Point, 4f, 1, 2f).OnComplete(() => { rb.useGravity = true; transform.GetComponent<Collider>().enabled = true; GetComponent<Collider>().isTrigger = false; });
+        transform.GetComponentInChildren<SpriteRenderer>().enabled = false;        
+    }
+
+    private void OnMouseOver()
+    {
+        timer = 0;
+    }
+
+    private void OnMouseUp()
+    {
+        
+        GetComponent<Collider>().isTrigger = false;
+        GetComponent<Rigidbody>().drag = 0;
+        GetComponent<Rigidbody>().angularDrag = 0;
+
+        timer = 0;
+        canMove = true;
+    }
+
+    private void Update()
+    {
+        if (!Knock)
+        {
+            timer += Time.deltaTime;
+        }
+        if(timer > 50)
+        {
+            if (canMove)
+            {
+                MoveNext();
+                timer = 0;
+            }
+        }
     }
     #endregion
 }
