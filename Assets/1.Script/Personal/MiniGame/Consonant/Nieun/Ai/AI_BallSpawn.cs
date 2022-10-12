@@ -32,7 +32,6 @@ public class AI_BallSpawn : MonoBehaviour
         if (redarray.Count <= 10)
         {
             redarray.Add((GameObject)Instantiate(red, new Vector3(Xpos, 0.5f, Zpos), Quaternion.identity));
-
         }
     }
 }
