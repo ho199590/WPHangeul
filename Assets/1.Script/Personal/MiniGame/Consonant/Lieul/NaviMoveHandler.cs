@@ -9,6 +9,8 @@ public class NaviMoveHandler : MonoBehaviour
     Vector3 destination;
     NavMeshAgent agent;
     int index;
+    [SerializeField]
+    Rigidbody[] drop;
     public int DestinationIndex
     {
         get => index;
@@ -59,7 +61,15 @@ public class NaviMoveHandler : MonoBehaviour
         if (collision != null)
         {
             print("온콜리전엔터" + collision.gameObject.name);
-            agent.isStopped = true;
+            if (collision.gameObject.name.Contains("Invisible")) 
+            { 
+                agent.isStopped = true;
+                for (int i = 0; i < drop.Length; i++)
+                {
+                    drop[i].useGravity= true;
+                }
+            }
+            
         }
     }
 }
