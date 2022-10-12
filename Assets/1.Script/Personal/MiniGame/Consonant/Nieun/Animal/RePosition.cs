@@ -24,7 +24,7 @@ public class RePosition : MonoBehaviour
         animal = this.transform.position;
         perentsPosition = gameObject.transform.parent.gameObject.transform.position;//부모tranceform 저장
         speakerHandler = FindObjectOfType<SpeakerHandler>();
-        balloon_Touch = transform.parent.GetComponentInChildren<Balloon_Touch>();
+        balloon_Touch = this.transform.parent.GetChild(1).GetComponent<Balloon_Touch>();
     }
     public void ReMove()//틀린애만 ReMove 시켜야함 
     {

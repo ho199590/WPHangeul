@@ -5,13 +5,10 @@ using UnityEngine;
 public class Balloon_Move : MonoBehaviour
 {
     public float startTime;
-
     public float minX, maxX;
-
     public float minY, maxY;
     [Range(1,100)]
     public float speedX;
-
     [Range(0, 100)]
     public int speedY;
 
