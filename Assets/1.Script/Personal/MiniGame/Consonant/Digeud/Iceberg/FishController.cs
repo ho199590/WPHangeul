@@ -37,6 +37,7 @@ public class FishController : MonoBehaviour
 
         rb = GetComponent<Rigidbody>();
         GetComponent<Collider>().isTrigger = true;
+
         MoveNext();
     }
 
