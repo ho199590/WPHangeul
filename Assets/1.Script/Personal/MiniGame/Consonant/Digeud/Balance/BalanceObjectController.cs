@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+// 안쓰는 함수
 public class BalanceObjectController : MonoBehaviour
 {
-    #region
+    #region 함수
     [SerializeField]
     private int weight;
-    private int index;
-
     public bool Clone = true;
 
     [SerializeField]
@@ -24,8 +24,7 @@ public class BalanceObjectController : MonoBehaviour
     #region 함수
 
     private void Start()
-    {
-        index = transform.GetSiblingIndex();
+    {    
         rig = GetComponent<Rigidbody>();
     }
 

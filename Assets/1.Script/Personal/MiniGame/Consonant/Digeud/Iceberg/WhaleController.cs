@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
-
+//고래 움직임
 public class WhaleController : MonoBehaviour
 {
     [SerializeField]

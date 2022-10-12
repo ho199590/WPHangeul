@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// 보조부력 컨트롤
 public class FloaterHandler : MonoBehaviour
 {
     #region 변수

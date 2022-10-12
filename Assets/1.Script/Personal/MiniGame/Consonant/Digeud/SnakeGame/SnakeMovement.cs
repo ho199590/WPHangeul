@@ -1,26 +1,26 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using DG.Tweening;
 
+//뱀 이동
 public class SnakeMovement : MonoBehaviour
 {
     #region 변수    
+    //몸체 리스트
     [SerializeField]
     List<Transform> BodyParts = new List<Transform>();
-
+    //거리, 속도, 회전속도
     [SerializeField]
     float mindistance, speed, rotationSpeed;
-
+    // 무엇을 추가할 것인가
     [SerializeField]
     GameObject bodyPrefab;
-
+    // 길이
     [SerializeField]
     int beginSize;
-
+    // 시작점과 목표점
     [SerializeField]
     Transform StartPoint, Target;
-
+    // 현재 파츠 이전파츠
     private float dis;
     private Transform curBodyParts;
     private Transform prevBodyParts;
@@ -33,7 +33,7 @@ public class SnakeMovement : MonoBehaviour
     {
         StartLevel();
     }
-
+    // 몇개로 시작할 것인가
     public void StartLevel()
     {
         for (int i = 0; i < beginSize; i++)
@@ -42,8 +42,7 @@ public class SnakeMovement : MonoBehaviour
         }
 
         BodyParts[0].position = StartPoint.position;
-    }
-
+    }    
     private void Update()
     {
         SnakeMove();
@@ -54,7 +53,7 @@ public class SnakeMovement : MonoBehaviour
 
         }
     }
-
+    // 뱀의 움직임 구현
     public void SnakeMove()
     {
         float curSpeed = speed;
@@ -90,6 +89,8 @@ public class SnakeMovement : MonoBehaviour
             curBodyParts.rotation = Quaternion.Slerp(curBodyParts.rotation, prevBodyParts.rotation, T);
         }
     }
+
+    // 지정 프리팹으로 몸통 추가
     public void AddBodyPart()
     {
         Transform newpart = ((Instantiate(bodyPrefab, BodyParts[BodyParts.Count-1].position, BodyParts[BodyParts.Count - 1].rotation)) as GameObject).transform;
@@ -97,7 +98,7 @@ public class SnakeMovement : MonoBehaviour
 
         BodyParts.Add(newpart);
     }
-
+    // 특정 오브젝트로 몸통 추가
     public void AddBodyPart(GameObject obj)
     {
         Transform newpart = ((Instantiate(obj, BodyParts[BodyParts.Count - 1].position, BodyParts[BodyParts.Count - 1].rotation)) as GameObject).transform;
@@ -105,7 +106,7 @@ public class SnakeMovement : MonoBehaviour
 
         BodyParts.Add(newpart);
     }
-
+    // 몸통 제거
     public void RemoveBodyPart()
     {
         if (BodyParts.Count > 2)
