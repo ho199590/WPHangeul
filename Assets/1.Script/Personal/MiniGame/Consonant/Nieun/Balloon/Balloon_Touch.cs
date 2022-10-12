@@ -37,7 +37,7 @@ public class Balloon_Touch : MonoBehaviour
     {
         speakerHandler.SoundByNum2(0);
         Animal.GetComponent<Rigidbody>().isKinematic = false;
-        gameObject.GetComponent<MeshRenderer>().enabled = false;
+        this.gameObject.SetActive(false);
     }
     private void ColOnOff()//바닦과 충돌 하기위한 함수
     {
