@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-//collision, trigger 충돌
+//공의 움직임
 public class TriggerCollisionHandle : MonoBehaviour
 {
     private Rigidbody mRigidBody;
@@ -9,8 +9,6 @@ public class TriggerCollisionHandle : MonoBehaviour
     public AudioClip JumpSound;
     public AudioClip HitSound;
     public Camera ViewCamera;
-    [SerializeField]
-    GameObject[] purple;
     int i = 0;
     void Start()
     {
@@ -21,6 +19,7 @@ public class TriggerCollisionHandle : MonoBehaviour
     {
         if (mRigidBody != null)
         {
+            //키보드의 WASD방향키 조작
             if (Input.GetButton("Horizontal"))
             {
                 //mRigidBody.AddTorque(Vector3.back * Input.GetAxis("Horizontal")*10);
@@ -40,6 +39,7 @@ public class TriggerCollisionHandle : MonoBehaviour
                 mRigidBody.AddForce(Vector3.up*200);
             }
         }
+        //공을 따라다니는 카메라 시점
         if (ViewCamera != null)
         {
             Vector3 direction = (Vector3.up*2+Vector3.back)*2;
