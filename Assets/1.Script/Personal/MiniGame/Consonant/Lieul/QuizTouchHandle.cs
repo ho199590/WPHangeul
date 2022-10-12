@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-
+//퀘스트별로 정답처리용 OnMouse관련 기능
 public class QuizTouchHandle : MonoBehaviour
 {
     public GameObject x;
@@ -11,17 +11,13 @@ public class QuizTouchHandle : MonoBehaviour
 
     [SerializeField]
     GameObject plane;
-    private void OnMouseDown()
-    {
-        print("클릭");
-        
-    }
+    
     private void OnMouseUp()
     {
-        print("클릭땜");
+        print("클릭 후 마우스 땠음");
         if (gameObject.transform.GetChild(2).gameObject.activeSelf)
         {
-            print("O");
+            print("정답클릭O");
             gameObject.SetActive(false);
             x.SetActive(false);
             invisible.SetActive(false);
@@ -30,7 +26,7 @@ public class QuizTouchHandle : MonoBehaviour
         }
         else
         {
-            print("X");
+            print("오답클릭X");
         }
     }
 }
