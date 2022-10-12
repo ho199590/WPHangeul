@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.AI;
 public class RePosition : MonoBehaviour
 {
     [SerializeField]
@@ -25,6 +26,7 @@ public class RePosition : MonoBehaviour
         perentsPosition = gameObject.transform.parent.gameObject.transform.position;//부모tranceform 저장
         speakerHandler = FindObjectOfType<SpeakerHandler>();
         balloon_Touch = this.transform.parent.GetChild(1).GetComponent<Balloon_Touch>();
+        
     }
     public void ReMove()//틀린애만 ReMove 시켜야함 
     {
@@ -41,6 +43,10 @@ public class RePosition : MonoBehaviour
         if(other.gameObject.layer == LayerMask.NameToLayer(Answer))
         {
             print("정답");
+/*            this.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;//물리적 충돌 처리 0
+            this.GetComponent<Rigidbody>().useGravity = false; //중력 끔
+            this.GetComponent<NavMeshAgent>().enabled = true; //네브메쉬도 켜준다*/
+/*            this.gameObject.GetComponent<AI_AnimalMove2>().enabled = true;//자기 자신에 달린 AI_AnimalMove2 를 켜준다*/
             scoreCase.SetScore();
         }
         else
