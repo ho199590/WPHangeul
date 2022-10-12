@@ -56,17 +56,5 @@ public class TriggerCollisionHandle : MonoBehaviour
             ViewCamera.transform.LookAt(transform.position + transform.forward);
         }
     }
-    //public Collider Rotation
-    //{
-    //    get => other;
-    //}
-    private void OnCollisionEnter(Collision collision) //Collider에 Is Trigger 체크안되어 있어야 충돌 //통과안됨(물리연산O)
-    {
-        if (collision != null)
-        {
-            print("온콜리전엔터" + collision.gameObject.name);
-        }
-    }
-    
 }
    
