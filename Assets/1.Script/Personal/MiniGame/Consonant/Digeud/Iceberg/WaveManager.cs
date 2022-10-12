@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+//파도 구현
 public class WaveManager : MonoBehaviour
 {
     #region 변수

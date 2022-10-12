@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+// 양치기 컨트롤러
 public class ShepherdController : MonoBehaviour
 {
     #region 변수    

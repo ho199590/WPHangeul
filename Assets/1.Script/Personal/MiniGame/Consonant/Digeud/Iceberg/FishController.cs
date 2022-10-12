@@ -3,66 +3,64 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
+//물고기 움직임
 public class FishController : MonoBehaviour
 {
     #region 변수
     FlotsamController controller;
     List<Transform> Point = new List<Transform>();
 
-    Rigidbody rb;
 
     bool canMove = false;
-    public bool Knock = false;    
-    public int index;    
-
+    [SerializeField]
+    bool knock;
+    public bool Knock
+    {
+        get => knock;
+        set
+        {
+            knock = value;
+            StopAllCoroutines();
+            if (!knock)
+            {
+                StartCoroutine(WaitMove());
+            }
+        }
+    }
+    
+    int ind;
+    public int Index
+    {
+        get => ind;
+        set
+        {
+            ind = value % Point.Count;
+            nextIndex = (Index + 1) % Point.Count;
+            MoveNext();
+        }
+    }
+    [SerializeField]
     int nextIndex;
 
-    float timer = 0;
     #endregion
     #region 함수
-    private void OnEnable()
+    private void Awake()
     {
         controller = FindObjectOfType<FlotsamController>();
-
-        Point = controller.wayPoint;        
-
-        if (index == Point.Count - 1)
-        {
-            nextIndex = 0;
-        }
-        else
-        {
-            nextIndex = index + 1;
-        }
-
-        rb = GetComponent<Rigidbody>();
-        GetComponent<Collider>().isTrigger = true;
-
-        MoveNext();
+        Point = controller.wayPoint;
     }
-
-    public void SettingIndex()
+    private void OnEnable()
     {
-        index++;
-        if(index == Point.Count)
-        {
-            index = 0;
-        }
-        if (index == Point.Count - 1)
-        {
-            nextIndex = 0;
-        }
-        else
-        {   
-            nextIndex = index + 1;
-        }
+        GetComponent<Collider>().isTrigger = true;
     }
+
 
     public void MoveNext()
-    {
+    {   
         canMove = false;
-        transform.DOMove(Point[nextIndex].position, 2f).From(transform.position).SetEase(Ease.Linear).OnComplete(() => SettingIndex());
-        transform.DOLookAt(Point[nextIndex].position, 2f).OnComplete(() => MoveNext()) ;
+        transform.DOMove(Point[nextIndex].position, 2f).From(transform.position).SetEase(Ease.Linear).OnComplete(() => Index++);
+        transform.DOLookAt(Point[nextIndex].position, 2f);
+        GetComponent<Collider>().isTrigger = true;
         transform.GetComponentInChildren<SpriteRenderer>().enabled = true;
     }
 
@@ -72,36 +70,27 @@ public class FishController : MonoBehaviour
         transform.GetComponentInChildren<SpriteRenderer>().enabled = false;        
     }
 
-    private void OnMouseOver()
-    {
-        timer = 0;
-    }
-
     private void OnMouseUp()
     {
-        
         GetComponent<Collider>().isTrigger = false;
         GetComponent<Rigidbody>().drag = 0;
         GetComponent<Rigidbody>().angularDrag = 0;
-
-        timer = 0;
         canMove = true;
+        Knock = false;
     }
 
-    private void Update()
+    
+
+    IEnumerator WaitMove()
     {
-        if (!Knock)
+        print("손에 잡힘");
+        yield return new WaitForSeconds(3);
+        if (canMove)
         {
-            timer += Time.deltaTime;
+            MoveNext();
+            yield break;
         }
-        if(timer > 50)
-        {
-            if (canMove)
-            {
-                MoveNext();
-                timer = 0;
-            }
-        }
+        yield break;
     }
     #endregion
 }

@@ -1,23 +1,22 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-
+// 낚시꾼 컨트롤러
 public class FishermanController : MonoBehaviour
 {
     #region 변수
+    // 무언가를 잡았다
     public bool grabbed = false;
-
+    // 기본 레이
     Ray moRay;
-
+    //무엇을 잡았고, 땅은 어느 것인가?
     public Transform catchTransform;
     public Transform ground;
-    
+    // 잡을 것의 레이어와 땅의 레이어
     public LayerMask catchLayer;
     public LayerMask groundLayer;
-
+    // 잡기위한 레이와 땅의 레이
     RaycastHit hit;
     RaycastHit groundHit;
-
+    // 마우스 마커 관련 설정들
     public Transform mousePosMarker;
     RaycastHit mousePosHit;
     public float offsetY = 0;
@@ -59,7 +58,7 @@ public class FishermanController : MonoBehaviour
 
         }
     }
-
+    // 오브젝트 잡기
     void CatchObject()
     {
         if(Physics.Raycast(moRay, out hit, Mathf.Infinity, catchLayer))
@@ -72,7 +71,7 @@ public class FishermanController : MonoBehaviour
 
         }
     }
-
+    // 땅을 찾기
     void FindGround()
     {
          if(Physics.Raycast(catchTransform.position, Vector3.down, out groundHit, Mathf.Infinity, groundLayer))
@@ -90,7 +89,7 @@ public class FishermanController : MonoBehaviour
             mousePosMarker.position = new Vector3(mousePos.x, mousePos.y + mouseposOffsetFromGround, mousePos.z);
         }
     }
-
+    // 오브젝트 떨어트리기
     void DropObject()
     {
         if (catchTransform != null)

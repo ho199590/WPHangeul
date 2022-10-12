@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+//난이도 디버깅용
 public class WaveDebugControl : MonoBehaviour
 {
     WaveManager waveManager;
