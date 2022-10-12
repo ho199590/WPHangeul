@@ -114,7 +114,7 @@ public class SnakeMovement : MonoBehaviour
             BodyParts.RemoveAt(BodyParts.Count - 1);
 
             tt.SetParent(null);
-            tt.position = Vector3.one;
+            tt.position = new Vector3(Random.Range(-5,5), 1, Random.Range(-5, 5));
         }
     }
 
