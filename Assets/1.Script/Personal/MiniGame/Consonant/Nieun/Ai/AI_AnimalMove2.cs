@@ -4,16 +4,15 @@ using UnityEngine;
 using UnityEngine.AI;
 public class AI_AnimalMove2 : MonoBehaviour
 {
-    GameObject red;
+    public Transform targetPos;
     NavMeshAgent nav;
-
     private void Start()
     {
-        red = GameObject.Find("Red");
+
         nav = GetComponent<NavMeshAgent>();
     }
     private void Update()
     {
-        nav.SetDestination(red.transform.position);
+        nav.SetDestination(targetPos.position);
     }
 }
