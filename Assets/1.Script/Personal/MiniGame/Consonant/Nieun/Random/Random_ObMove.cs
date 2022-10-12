@@ -4,24 +4,23 @@ using UnityEngine;
 
 public class Random_ObMove : MonoBehaviour
 {
-    public float Speed = 50.0f;
-    private Transform myTransform = null;
+    public Rigidbody rb;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        myTransform = GetComponent<Transform>();
+        StartCoroutine(MoveObject());
     }
-
-    // Update is called once per frame
-    void Update()
+    IEnumerator MoveObject()
     {
-        Vector3 moveAmount = Speed * Vector3.back * Time.deltaTime;
-        myTransform.Translate(moveAmount);
+        rb = GetComponent<Rigidbody>(); 
 
-        if (myTransform.position.y <= -10f)
+        while (true)
         {
-            myTransform.position = new Vector3(Random.Range(10f, 10f), 0f, 10f);
+            float dir1 = Random.Range(-0.5f, 0.5f);
+            float dir2 = Random.Range(-0.5f, 0.5f);
+
+            yield return new WaitForSeconds(2);
+            rb.velocity = new Vector3 (dir1, 0,dir2);
         }
     }
 }

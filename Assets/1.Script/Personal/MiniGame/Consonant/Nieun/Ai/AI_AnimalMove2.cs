@@ -9,7 +9,7 @@ public class AI_AnimalMove2 : MonoBehaviour
 
     private void Start()
     {
-        red = GameObject.Find("Alligator_LOD0");
+        red = GameObject.Find("Red");
         nav = GetComponent<NavMeshAgent>();
     }
     private void Update()
