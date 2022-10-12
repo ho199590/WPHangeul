@@ -9,6 +9,9 @@ public class TriggerCollisionHandle : MonoBehaviour
     public AudioClip JumpSound;
     public AudioClip HitSound;
     public Camera ViewCamera;
+    [SerializeField]
+    GameObject[] purple;
+    int i = 0;
     void Start()
     {
         mRigidBody = GetComponent<Rigidbody>();
@@ -39,7 +42,7 @@ public class TriggerCollisionHandle : MonoBehaviour
         }
         if (ViewCamera != null)
         {
-            //Vector3 direction = (Vector3.up*2+ Vector3.back*4);
+            Vector3 direction = (Vector3.up*2+Vector3.back)*2;
             RaycastHit hit;
             Debug.DrawLine(transform.position, transform.position, Color.red);
             if (Physics.Linecast(transform.position, transform.position, out hit))
@@ -50,7 +53,7 @@ public class TriggerCollisionHandle : MonoBehaviour
             {
                 ViewCamera.transform.position = transform.position;
             }
-            ViewCamera.transform.LookAt(transform.position  + transform.forward);
+            ViewCamera.transform.LookAt(transform.position + transform.forward);
         }
     }
     //public Collider Rotation
@@ -62,26 +65,8 @@ public class TriggerCollisionHandle : MonoBehaviour
         if (collision != null)
         {
             print("온콜리전엔터" + collision.gameObject.name);
-            //공 확대해주는 거
-            //if (mAudioSource != null && HitSound != null && collision.relativeVelocity.y > .5f)
-            //{
-            //    mAudioSource.PlayOneShot(HitSound, collision.relativeVelocity.magnitude);
-            //}
         }
     }
-    public void OnTriggerEnter(Collider other) //Collider에 Is Trigger 체크되어있어야 충돌 //통과가능(물리연산X)
-    {
-        if (other != null)
-        {
-            print("온트리거엔터"+other);
-            //Rotation = other;
-            transform.rotation = Quaternion.Lerp(transform.rotation, other.transform.rotation, Time.deltaTime*50);
-            other.gameObject.SetActive(false);
-            if (other.gameObject.name.Contains("Fin"))
-            {
-                print("도착!");
-            }
-        }
-    }
+    
 }
    

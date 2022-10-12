@@ -17,15 +17,16 @@ public class SaveOption : MonoBehaviour
 {
     string folderPath = "";
     string fileName = "";
-    AudioSource audioSource;
+
+    [SerializeField]
+    GameObject audioSource;
     [SerializeField]
     Image image;
     private void Awake()
     {
         folderPath = Application.dataPath +"/";
         fileName = "han_setting.json";
-        audioSource = FindObjectOfType<AudioSource>();
-        
+        audioSource = GameObject.Find("Audio Source");/*FindObjectOfType<AudioSource>();*/
     }
 
     //저장할 함수
@@ -35,14 +36,13 @@ public class SaveOption : MonoBehaviour
     {
         //저장할 정보를 임의로 생성 : 값 불러오기 등을 통해 저장할 파일 정보를 갱신
         SaveFileFormat savefileFormat = new SaveFileFormat();
-        savefileFormat.volume = audioSource.volume;
+        savefileFormat.volume = audioSource.GetComponent<AudioSource>().volume;
         savefileFormat.color = image.color;
 
         var saveData = JsonUtility.ToJson(savefileFormat);
 
         File.WriteAllText(folderPath + fileName, saveData);
         print("저장 완료 ");
-
     }
 
     private void OnEnable()

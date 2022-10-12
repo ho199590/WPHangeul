@@ -26,17 +26,12 @@ public class Balloon_Move : MonoBehaviour
     [SerializeField]
     int sign1;
 
-    void Start()
-    {
-  
-    }
-
     private void FixedUpdate()
     {
         if (Time.time >= startTime)
         {
             //이동 로직 처리.
-            transform.position += new Vector3(speedX * Time.deltaTime * sign1, speedY * Time.deltaTime * sign2, speedY * Time.deltaTime * sign2);
+            transform.position += new Vector3(speedX * Time.deltaTime * sign1, speedY * Time.deltaTime * sign2, 0);
             if (transform.position.x <= minX || transform.position.x >= maxX)
             {
                 sign1 *= -1;//부호변경

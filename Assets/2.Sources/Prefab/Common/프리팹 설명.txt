@@ -13,3 +13,7 @@ SoundByNum2(int)로 사용해야함.
 
 [ScoreCase]
 캔버스에 올려서 사용. 게임 클리어시 일어날 이벤트 들을 SceneComplete에 담기
+
+[Scene_Load] 배경 밝기 , 배경 BGM , 배경Color , 배경BGM Volum 저장 및 불러오기 
+Canvas안에 넣어주세요 배경 밝기 조절 때문에 그렇습니다
+Audio Source 에 원하는 BGM Clip을 넣어주세요 

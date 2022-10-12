@@ -9,6 +9,8 @@ public class BalanceObjectController : MonoBehaviour
     private int weight;
     private int index;
 
+    public bool Clone = true;
+
     [SerializeField]
     Transform SpawnPoint;
 
@@ -29,12 +31,22 @@ public class BalanceObjectController : MonoBehaviour
 
     private void OnMouseDown()
     {   
-        rig.useGravity = false;        
+        rig.useGravity = false;
+        var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        if(Physics.Raycast(ray, out RaycastHit hit))
+        {
+
+            // hit.point;
+        }
         screenSpace = Camera.main.WorldToScreenPoint(transform.position);
         offset = transform.position - Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenSpace.z));
-
-        var sig = Instantiate(transform);
-        sig.position = SpawnPoint.position;
+        
+        if (Clone)
+        {
+            var sig = Instantiate(transform);
+            sig.position = SpawnPoint.position;
+            sig.GetComponent<BalanceObjectController>().Clone = false;
+        }
     }
 
     private void OnMouseDrag()
