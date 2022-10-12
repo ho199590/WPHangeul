@@ -23,6 +23,10 @@ public class FloaterHandler : MonoBehaviour
     private void Awake()
     {   
         waveManager = FindObjectOfType<WaveManager>();
+        if(rb == null)
+        {
+            rb = GetComponent<Rigidbody>();
+        }
     }
 
     private void FixedUpdate()
