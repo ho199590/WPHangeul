@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
+
+// 환경 움직임 
 public class EnviromentMove : MonoBehaviour
 {
     [SerializeField]

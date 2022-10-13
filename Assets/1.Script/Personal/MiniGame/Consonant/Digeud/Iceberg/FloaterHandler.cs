@@ -9,9 +9,12 @@ public class FloaterHandler : MonoBehaviour
     WaveManager waveManager;
 
     public Rigidbody rb;
+    
     public float depthBeforeSubmerged = 1f;
-    public float displacementAmount = 3f;
+    public float displacementAmount = 3f;    
+    // 보조부력 숫자
     public int floaterCount;
+    // 수중 저항
     public float waterDrag = 0.99f;
     public float waterAngularDrag = 0.5f;
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
+// 부력 생성자
 [RequireComponent(typeof(Rigidbody))]
 public class BuoyancyHandler : MonoBehaviour
 {
@@ -80,6 +81,7 @@ public class BuoyancyHandler : MonoBehaviour
             if(collision.transform.GetComponent<FishController>().Knock == false)
             {
                 collision.transform.GetComponent<FishController>().Knock = true;
+                collision.transform.localScale *= 0.5f;
 
                 score.SetScore();
                 count++;
