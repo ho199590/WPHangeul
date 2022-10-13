@@ -8,6 +8,6 @@ public class ParticleAutoDestroyer : MonoBehaviour
 
     private void Awake()
     {
-        particle = GetComponent<ParticleSystem>();
+       // particle = GetComponent<ParticleSystem>();
     }
 }
