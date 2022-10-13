@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ParticleAutoDestroyer : MonoBehaviour
+/*public class ParticleAutoDestroyer : MonoBehaviour
 {
     private ParticleSystem particle;
 
@@ -18,7 +18,7 @@ public class ParticleAutoDestroyer : MonoBehaviour
             Destroy(gameObject);
         }
     }
-}
+}*/
 /*
   현재 게임에서는 오브젝트에 하나의 파티클만 재생중이지만
   여러개의 파티클을 하나의 그룹으로 묶어서 사용할때는 시간이 가장 긴 파티클의 재생
