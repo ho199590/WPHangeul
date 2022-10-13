@@ -41,16 +41,7 @@ public class NaviMoveHandler : MonoBehaviour
                 DestinationIndex = ++index; //다음 타겟으로 인덱스값 +1해서 넘겨주기
                 print(index);
             }
-            //Rotation = other;
             //transform.rotation = Quaternion.Lerp(transform.rotation, other.transform.rotation, Time.deltaTime * 50);
-            //if (other.gameObject.name.Contains("Right"))
-            //{
-            //    while (i < purple.Length)
-            //    {
-            //        purple[i].transform.GetComponent<Rigidbody>().useGravity = true;
-            //        i++;
-            //    }
-            //}
             other.gameObject.SetActive(false);
             if (other.gameObject.name.Contains("Fin"))
             {
