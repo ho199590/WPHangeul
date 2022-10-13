@@ -18,6 +18,7 @@ public class RePosition : MonoBehaviour
     Vector3 perentsPosition; //ReMove()할때 지속적으로 변경된 tranceform
     SpeakerHandler speakerHandler;
     Balloon_Touch balloon_Touch; //Balloon_Touch SizeReset() 함수 불러오기
+    Random_Enable random_Enable;//정답일시 다음 오브젝트 활성화 Choice()함수 불러오기
     private void Start()
     {
         isMove = GetComponentInParent<Balloon_Move>();
@@ -26,7 +27,7 @@ public class RePosition : MonoBehaviour
         perentsPosition = gameObject.transform.parent.gameObject.transform.position;//부모tranceform 저장
         speakerHandler = FindObjectOfType<SpeakerHandler>();
         balloon_Touch = this.transform.parent.GetChild(1).GetComponent<Balloon_Touch>();
-        
+        random_Enable = FindObjectOfType<Random_Enable>();
     }
     public void ReMove()//틀린애만 ReMove 시켜야함 
     {
@@ -36,17 +37,19 @@ public class RePosition : MonoBehaviour
         isMove.enabled = true;
         GetComponent<Collider>().enabled = false;
         bollon.transform.position = bollonPosi;//풍선 원위치 전환
-        bollon.GetComponent<MeshRenderer>().enabled = true;
+        bollon.SetActive(true);//풍선 다시 활성화
+
     }
     private void OnTriggerEnter(Collider other)
     { 
         if(other.gameObject.layer == LayerMask.NameToLayer(Answer))
         {
             print("정답");
-/*            this.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;//물리적 충돌 처리 0
-            this.GetComponent<Rigidbody>().useGravity = false; //중력 끔
-            this.GetComponent<NavMeshAgent>().enabled = true; //네브메쉬도 켜준다*/
-/*            this.gameObject.GetComponent<AI_AnimalMove2>().enabled = true;//자기 자신에 달린 AI_AnimalMove2 를 켜준다*/
+            this.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;//물리적 충돌 처리 0
+            /* this.GetComponent<Rigidbody>().useGravity = false; //중력 끔
+            this.GetComponent<NavMeshAgent>().enabled = true; //네브메쉬도 켜준다
+            this.gameObject.GetComponent<AI_AnimalMove2>().enabled = true;//자기 자신에 달린 AI_AnimalMove2 를 켜준다*/
+            random_Enable.Choice();
             scoreCase.SetScore();
         }
         else
