@@ -10,8 +10,9 @@ public class FishController : MonoBehaviour
     FlotsamController controller;
     List<Transform> Point = new List<Transform>();
 
-
+    // 물고기가 움직일 수 있는가?
     bool canMove = false;
+    // 포획 여부
     [SerializeField]
     bool knock;
     public bool Knock

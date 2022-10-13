@@ -32,7 +32,6 @@ public class ShepherdController : MonoBehaviour
                     var eff = Instantiate(Parti);
                     eff.transform.position = hit.point + new Vector3(0,1,0);
                 }   
-                //transform.position = hit.point;
             }
         }
 

@@ -4,22 +4,22 @@ using UnityEngine;
 using DG.Tweening;
 using UnityEngine.AI;
 
+// 뱀 머리 지휘
 public class SnakeHeadHandler : MonoBehaviour
 {
     #region 변수
     SnakeMovement movement;
     FriendsSpawnHandler FS;
     NavMeshAgent agent;
-
+    // 추격 대상
     ShepherdController shepher;
 
-    Tweener snakeMove;    
-    
 
     float originSpeed;
     #endregion
 
     #region 함수
+
     private void Start()
     {
         movement = FindObjectOfType<SnakeMovement>();
@@ -28,17 +28,14 @@ public class SnakeHeadHandler : MonoBehaviour
 
         agent = GetComponent<NavMeshAgent>();
         originSpeed = agent.speed;
-       // MoveStart();
+
+        
     }
 
 
     private void OnTriggerEnter(Collider col)
     {   
-        
-        if (col.GetComponentInParent<SnakeMovement>())
-        {
-            return;
-        }
+        if (col.GetComponentInParent<SnakeMovement>()){return;}
 
         if (col.GetComponentInChildren<LODGroup>())
         {
@@ -50,31 +47,19 @@ public class SnakeHeadHandler : MonoBehaviour
         if (col.GetComponent<ShepherdController>())
         {
             transform.DOKill();
-
             agent.speed = originSpeed;  
         }
     }
 
     private void OnTriggerExit(Collider col)
     {
-        if (col.GetComponent<ShepherdController>())
-        {
-            agent.speed = originSpeed;
-        }
+        if (col.GetComponent<ShepherdController>()){agent.speed = originSpeed;}
     }
 
     private void Update() 
     {
-        /*
-        transform.LookAt(shepher.transform);
-        if (Check)
-        {
-            snakeMove.ChangeEndValue(new Vector3(shepher.transform.position.x, transform.position.y, shepher.transform.position.z), 3f, true).Restart();
-        }
-        */
         agent.SetDestination(shepher.transform.position);
         agent.speed += Time.deltaTime;
-        
     }
     #endregion
 }
