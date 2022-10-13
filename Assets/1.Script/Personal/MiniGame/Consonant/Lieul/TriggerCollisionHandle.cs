@@ -42,7 +42,7 @@ public class TriggerCollisionHandle : MonoBehaviour
         //공을 따라다니는 카메라 시점
         if (ViewCamera != null)
         {
-            Vector3 direction = (Vector3.up*2+Vector3.back)*2;
+            Vector3 direction = (Vector3.up+Vector3.back);
             RaycastHit hit;
             Debug.DrawLine(transform.position, transform.position, Color.red);
             if (Physics.Linecast(transform.position, transform.position, out hit))
