@@ -64,7 +64,6 @@ public class MoleFSM : MonoBehaviour
 
         //두더지의 상태를 MoveDown으로 변경
         ChangeState(MoleState.MoveDown);
-        print("OnGround");
     }
     ///<summary>
     ///두더지가 홀 밖으로 나오는 상태 (maxYPoseOnGround 위치까지 위로 이동)
