@@ -48,7 +48,7 @@ public class NaviMoveHandler : MonoBehaviour
             if (other.gameObject.name.Contains("(1)")) 
             {
                 print("카메라시점 전환 체크");
-                ViewCamera.transform.position = Vector3.up;
+                ViewCamera.transform.LookAt(transform.position + transform.up);
             }
             //transform.rotation = Quaternion.Lerp(transform.rotation, other.transform.rotation, Time.deltaTime * 50);
             other.gameObject.SetActive(false);
