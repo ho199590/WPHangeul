@@ -24,14 +24,17 @@ public class Balloon_Touch : MonoBehaviour
     }
     private void OnMouseDown()
     {
-        BalloonTouch++;
-        if(BalloonTouch == 3)//다섯번 클릭했을때 
+/*        BalloonTouch++;
+        if(BalloonTouch == 3)//세번클릭했을때
         {
             StartCoroutine(Down());
             TouchClear();
             ColOnOff();
             BalloonTouch = 0;
-        }
+        }*/
+        StartCoroutine(Down());
+        TouchClear();
+        ColOnOff();
     }
     protected void TouchClear()//풍선 낙하 
     {
