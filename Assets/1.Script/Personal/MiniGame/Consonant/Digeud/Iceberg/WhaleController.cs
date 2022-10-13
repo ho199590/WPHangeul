@@ -5,6 +5,7 @@ using DG.Tweening;
 //고래 움직임
 public class WhaleController : MonoBehaviour
 {
+
     [SerializeField]
     Transform[] Point;
     public int index;

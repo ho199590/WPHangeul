@@ -11,7 +11,10 @@ public class NaviMoveHandler : MonoBehaviour
     NavMeshAgent agent;
     int index;
     [SerializeField]
-    Rigidbody[] drop;
+    Rigidbody drop;
+    [SerializeField]
+    GameObject[] speechBubble;
+    public Camera ViewCamera;
     //콜라이더를 OnTrigger로 만났을때 방향 NavMesh의 타겟(도착지점)을 다음 타겟으로 바꿔주는 프로퍼티 
     public int DestinationIndex
     {
@@ -36,10 +39,16 @@ public class NaviMoveHandler : MonoBehaviour
         if (other != null)
         {
             print("온트리거엔터" + other);
-            if (index < 4)
+            if (other.gameObject.name.Contains("Invisible"))
             {
-                DestinationIndex = ++index; //다음 타겟으로 인덱스값 +1해서 넘겨주기
-                print(index);
+                agent.isStopped = true;
+                drop.useGravity = true;
+                for (int i = 0; i < speechBubble.Length; i++) speechBubble[i].SetActive(true);
+            }
+            if (other.gameObject.name.Contains("(1)")) 
+            {
+                print("카메라시점 전환 체크");
+                ViewCamera.transform.LookAt(transform.position + transform.up);
             }
             //transform.rotation = Quaternion.Lerp(transform.rotation, other.transform.rotation, Time.deltaTime * 50);
             other.gameObject.SetActive(false);
@@ -54,15 +63,11 @@ public class NaviMoveHandler : MonoBehaviour
         if (collision != null)
         {
             print("온콜리전엔터" + collision.gameObject.name);
-            if (collision.gameObject.name.Contains("Invisible")) 
-            { 
-                agent.isStopped = true;
-                for (int i = 0; i < drop.Length; i++)
-                {
-                    drop[i].useGravity= true;
-                }
+            if (index < 4)
+            {
+                DestinationIndex = ++index; //다음 타겟으로 인덱스값 +1해서 넘겨주기
+                print(index);
             }
-            
         }
     }
 }

@@ -30,8 +30,12 @@ public class ScoreHandler : MonoBehaviour
     [Header("클리어 파티클")]
     [SerializeField]
     GameObject[] particles;
+    [Header("파티클이 터질 위치와 크기")]
+    public int ParticleDistance = 10;
+    public int ParticleScale = 5;
 
     bool CompleteCheck = false;
+    private Transform EndPoint;
     #endregion
 
     #region 이벤트
@@ -61,6 +65,7 @@ public class ScoreHandler : MonoBehaviour
                 transform.GetChild(i).GetComponent<UnityEngine.UI.Image>().sprite = scoreCase;
             }
         }
+        EndPoint = MakeFireFlowerPoint();
 
         SceneComplete += Comp;
         SceneStart += OnScreenSaver;
@@ -100,16 +105,26 @@ public class ScoreHandler : MonoBehaviour
             for (int i = 0; i < num; i++)
             {
                 var ex = Instantiate(particles[Random.Range(0, particles.Length)]);
-                if (!transform.root.GetComponent<Canvas>())
-                {
-                    ex.transform.SetParent(transform.root);
-                }
-                ex.transform.localPosition = new Vector3(Random.Range(-8, 8), Random.Range(-5, 5), 0);
-                ex.transform.localScale = Vector3.one * 1.5f;
+                Vector3 subPos = EndPoint.transform.position +
+                    Camera.main.transform.right * Random.Range(-8, 8) +
+                    Camera.main.transform.up * Random.Range(-4, 4);
+
+                ex.transform.position = subPos;
+                ex.transform.localScale = Vector3.one * ParticleScale;
+                ex.transform.SetParent(EndPoint);
             }
             yield return new WaitForSeconds(1f);
-        }
+        }        
+    }
+
+    // 카메라 앞쪽 지점에서 위치시키기
+    public Transform MakeFireFlowerPoint()
+    {
+        GameObject TestCube = new GameObject();        
+        TestCube.transform.position = Camera.main.transform.position + Camera.main.transform.forward * ParticleDistance;
+        TestCube.transform.rotation = new Quaternion(0.0f, Camera.main.transform.rotation.y, 0.0f, Camera.main.transform.rotation.w);        
         
+        return TestCube.transform;
     }
     #endregion
 

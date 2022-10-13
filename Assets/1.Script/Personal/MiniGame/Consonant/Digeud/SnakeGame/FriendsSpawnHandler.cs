@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+// 뱀게임 목표물 스포너
 public class FriendsSpawnHandler : MonoBehaviour
 {
     #region 변수
@@ -26,7 +28,7 @@ public class FriendsSpawnHandler : MonoBehaviour
             FriendSpawn();
         }
     }
-
+    // 오브젝트 스폰
     public void FriendSpawn()
     {
         Vector3 pos = center + new Vector3(Random.Range(-size.x / 2, size.x / 2) , Random.Range(-size.y / 2, size.y / 2) , Random.Range(-size.z / 2, size.z / 2));

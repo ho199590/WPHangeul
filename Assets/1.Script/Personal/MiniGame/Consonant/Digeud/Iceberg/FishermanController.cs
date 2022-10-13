@@ -16,13 +16,16 @@ public class FishermanController : MonoBehaviour
     // 잡기위한 레이와 땅의 레이
     RaycastHit hit;
     RaycastHit groundHit;
+
     // 마우스 마커 관련 설정들
     public Transform mousePosMarker;
     RaycastHit mousePosHit;
+    // 잡힌 물체의 높이
     public float offsetY = 0;
+    // 마커의 높이
     public float mouseposOffsetFromGround = 0;
     public Vector3 mousePos;
-
+    // 물 확인
     public Collider water;
 
     #endregion
