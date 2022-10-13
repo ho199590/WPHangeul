@@ -44,7 +44,7 @@ public class MoleFSM : MonoBehaviour
         //이동방향을 : (0,0,0) [정지]
         movement3D.MoveTo(Vector3.zero);
         //두더지의 y위치를 홀 밖으로 나와있는 limitMaxY 위치로 설정
-        transform.position = new Vector3(transform.position.x ,limitMaxY, transform.position.z);
+        transform.position = new Vector3(transform.position.x ,limitMinY, transform.position.z);
 
         yield return null;
     }
