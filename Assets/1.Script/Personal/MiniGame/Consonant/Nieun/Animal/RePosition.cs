@@ -19,6 +19,8 @@ public class RePosition : MonoBehaviour
     SpeakerHandler speakerHandler;
     Balloon_Touch balloon_Touch; //Balloon_Touch SizeReset() 함수 불러오기
     Random_Enable random_Enable;//정답일시 다음 오브젝트 활성화 Choice()함수 불러오기
+    Animal_Move animal_Move;//
+
     private void Start()
     {
         isMove = GetComponentInParent<Balloon_Move>();
@@ -28,6 +30,7 @@ public class RePosition : MonoBehaviour
         speakerHandler = FindObjectOfType<SpeakerHandler>();
         balloon_Touch = this.transform.parent.GetChild(1).GetComponent<Balloon_Touch>();
         random_Enable = FindObjectOfType<Random_Enable>();
+        animal_Move = FindObjectOfType<Animal_Move>();
     }
     public void ReMove()//틀린애만 ReMove 시켜야함 
     {
@@ -48,6 +51,7 @@ public class RePosition : MonoBehaviour
             /*gameObject.SetActive(false);//충돌시 게임 오브젝트 false*/
             random_Enable.Choice();
             scoreCase.SetScore();//별 스코어가 올라간다
+            animal_Move.AnimalMove();
         }
         else
         {

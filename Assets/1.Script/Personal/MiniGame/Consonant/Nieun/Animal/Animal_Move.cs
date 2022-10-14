@@ -5,12 +5,15 @@ using UnityEngine;
 public class Animal_Move : MonoBehaviour
 {
     Balloon_Move b_Move;
-    Random_AnimalChoice animal_PointNum;
-    AnimalMovePosition animalPoint_G,animalPoint_N;
+    RePosition Number;
+    AnimalMovePosition animalMovePosition;
+    Random_AnimalChoice choice;
     bool ismove;
     private void Start()
     {
         b_Move = GetComponentInParent<Balloon_Move>();
+        animalMovePosition = FindObjectOfType<AnimalMovePosition>();
+        choice = FindObjectOfType<Random_AnimalChoice>();
     }
     private void MoveOnOff()//Balloon_Move 스크립트 Off
     {
@@ -24,7 +27,7 @@ public class Animal_Move : MonoBehaviour
             MoveOnOff();
             FreezeVelocity();
         }
-        if (other.gameObject.layer == LayerMask.NameToLayer("NieunAnswer"))//니은 농장에 닿였을때 
+        if(other.gameObject.layer == LayerMask.NameToLayer("NieunAnswer"))//니은 농장에 닿였을때 
         {
             ismove = true;
             MoveOnOff();
@@ -36,5 +39,10 @@ public class Animal_Move : MonoBehaviour
         this.gameObject.GetComponent<Collider>().isTrigger = false ;
         this.gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
         this.gameObject.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+    }
+    public void AnimalMove()
+    {
+        /*random_AnimalChoice.number*/
+        /*transform.position = Vector3.Lerp(transform.position,, 0.01f);*/
     }
 }

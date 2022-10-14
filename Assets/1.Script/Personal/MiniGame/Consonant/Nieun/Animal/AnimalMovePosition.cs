@@ -6,4 +6,9 @@ public class AnimalMovePosition : MonoBehaviour
 {
     [SerializeField]
     public GameObject[] AnimalPoint;
+
+    private void Start()
+    {
+        
+    }
 }
