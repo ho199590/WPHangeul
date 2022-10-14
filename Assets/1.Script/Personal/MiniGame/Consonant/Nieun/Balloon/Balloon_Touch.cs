@@ -24,14 +24,15 @@ public class Balloon_Touch : MonoBehaviour
     }
     private void OnMouseDown()
     {
-/*        BalloonTouch++;
-        if(BalloonTouch == 3)//세번클릭했을때
-        {
-            StartCoroutine(Down());
-            TouchClear();
-            ColOnOff();
-            BalloonTouch = 0;
-        }*/
+        /*        BalloonTouch++;
+                if(BalloonTouch == 3)//세번클릭했을때
+                {
+                    StartCoroutine(Down());
+                    TouchClear();
+                    ColOnOff();
+                    BalloonTouch = 0;
+                }*/
+        Animal.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
         StartCoroutine(Down());
         TouchClear();
         ColOnOff();

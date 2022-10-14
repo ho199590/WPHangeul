@@ -6,9 +6,12 @@ public class Random_AnimalChoice : MonoBehaviour
 {
     [SerializeField]
     Random_Animal Animal;
+    [SerializeField]
+    int number;
     private void Start()
     {
         Animal = transform.parent.GetComponentInParent<Random_Animal>();
         transform.GetChild(Animal.shuffledArray[transform.parent.GetSiblingIndex()]).gameObject.SetActive(true);
+        number = Animal.shuffledArray[transform.parent.GetSiblingIndex()];
     }
 }

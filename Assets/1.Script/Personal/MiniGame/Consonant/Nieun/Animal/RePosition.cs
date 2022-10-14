@@ -45,16 +45,13 @@ public class RePosition : MonoBehaviour
         if(other.gameObject.layer == LayerMask.NameToLayer(Answer))
         {
             print("정답");
-            this.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;//물리적 충돌 처리 0
-            /* this.GetComponent<Rigidbody>().useGravity = false; //중력 끔
-            this.GetComponent<NavMeshAgent>().enabled = true; //네브메쉬도 켜준다
-            this.gameObject.GetComponent<AI_AnimalMove2>().enabled = true;//자기 자신에 달린 AI_AnimalMove2 를 켜준다*/
+            gameObject.SetActive(false);//충돌시 게임 오브젝트 false
             random_Enable.Choice();
-            scoreCase.SetScore();
+            scoreCase.SetScore();//별 스코어가 올라간다
         }
         else
         {
-            print($"{balloon_Touch}틀림");
+            print("틀림");
             speakerHandler.SoundByNum2(1);
             ReMove();
             balloon_Touch.SizeReset();
