@@ -45,7 +45,7 @@ public class RePosition : MonoBehaviour
         if(other.gameObject.layer == LayerMask.NameToLayer(Answer))
         {
             print("정답");
-            gameObject.SetActive(false);//충돌시 게임 오브젝트 false
+            /*gameObject.SetActive(false);//충돌시 게임 오브젝트 false*/
             random_Enable.Choice();
             scoreCase.SetScore();//별 스코어가 올라간다
         }
