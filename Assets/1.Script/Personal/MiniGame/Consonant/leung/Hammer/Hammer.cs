@@ -5,13 +5,15 @@ using UnityEngine;
 
 public class Hammer : MonoBehaviour
 {
-
+    [SerializeField]
     public float maxY;       //망치의 최대 y위치
+    [SerializeField]
     public float minY;       //망치의 최소 y위치
-
+    [SerializeField]
+    private GameObject moleHitEffectPrefab;     //두더지 타격 효과 프리팹
 
     public ObjectDetector objectDetector;       //마우스 클릭으로 오브젝트 선택을 위한 ObjectDetector 
-    private Movement3D movement3D;             //망치 이동을위한 movement
+    private Movement3D movement3D;              //망치 이동을위한 movement
 
 
 
@@ -44,6 +46,11 @@ public class Hammer : MonoBehaviour
 
             //카메라 흔들기
             ShakeCamera.Instance.OnShakeCamera(0.1f, 0.1f);
+
+            //두더지 타격 효과 생성 (particle의 색상을 두더지 색상과 동일하게 설정)
+            GameObject clone = Instantiate(moleHitEffectPrefab, transform.position, Quaternion.identity);
+            ParticleSystem.MainModule main = clone.GetComponent<ParticleSystem>().main;
+            main.startColor = mole.GetComponent<MeshRenderer>().material.color;
 
             //망치를 다시 위로 이동시키는 코루틴함수 재생
             StartCoroutine("MoveUp");
