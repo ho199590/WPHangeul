@@ -59,6 +59,7 @@ public class Balloon_Touch : MonoBehaviour
             if (Animal.transform.localScale.x <= size)
             {
                 time = 0;
+
                 break;
             }
             yield return null;

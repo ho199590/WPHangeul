@@ -51,7 +51,7 @@ public class RePosition : MonoBehaviour
             /*gameObject.SetActive(false);//충돌시 게임 오브젝트 false*/
             random_Enable.Choice();
             scoreCase.SetScore();//별 스코어가 올라간다
-            animal_Move.AnimalMove();
+            animal_Move.move = true;
         }
         else
         {

@@ -6,6 +6,7 @@ public class Animal_Move : MonoBehaviour
 {
     Balloon_Move b_Move;
     bool ismove;
+    public bool move = false;
     [SerializeField]
     AnimalMovePosition animalMovePosition;
     Random_AnimalChoice random_AnimalChoice;
@@ -13,6 +14,7 @@ public class Animal_Move : MonoBehaviour
     {
         b_Move = GetComponentInParent<Balloon_Move>();
         random_AnimalChoice = GetComponent<Random_AnimalChoice>();
+        
     }
 
     private void MoveOnOff()//Balloon_Move 스크립트 Off
@@ -40,19 +42,31 @@ public class Animal_Move : MonoBehaviour
         this.gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
         this.gameObject.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
     }
-
-    public void AnimalMove()//동물이 지정위치로 이동 
+    private void Update()
     {
-        while (true)
+        if(move)
         {
             //현재 위치에서 목적지 까지 Lerp로 이동
-            transform.position = Vector3.Lerp(transform.position, animalMovePosition.AnimalPoint[this.random_AnimalChoice.number].transform.position, Time.deltaTime);
+            transform.position = Vector3.Lerp(transform.position, animalMovePosition.AnimalPoint[this.random_AnimalChoice.number].transform.position, 1f * Time.deltaTime); 
             //현재 위치와 목적지 사이의 거리가 1f미만이면 멈춤
-            if (Vector3.Distance(transform.position, animalMovePosition.AnimalPoint[this.random_AnimalChoice.number].transform.position) <= 1f)
+            if (Vector3.Distance(transform.position, animalMovePosition.AnimalPoint[this.random_AnimalChoice.number].transform.position) <= 0.5f)
+            {
+               move = false;
+            }
+        }
+    }
+    public void AnimalMove()//동물이 지정위치로 이동 
+    {
+/*        while (true)
+        {
+            //현재 위치에서 목적지 까지 Lerp로 이동
+            transform.position = Vector3.Lerp(transform.position, animalMovePosition.AnimalPoint[this.random_AnimalChoice.number].transform.position, 0.005f + Time.deltaTime);
+            //현재 위치와 목적지 사이의 거리가 1f미만이면 멈춤
+            if (Vector3.Distance(transform.position, animalMovePosition.AnimalPoint[this.random_AnimalChoice.number].transform.position) <= 2f)
             {
                 break;
             }
-        }
+        }*/
     }
 
 }
