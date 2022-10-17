@@ -2,18 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using System;
 //방향키대신 공(Mover)의 자동 움직임을 담당해주는 NavMesh기능  
 public class NaviMoveHandler : MonoBehaviour
 {
     [Tooltip ("순서대로 도착할 곳의 위치(NavMesh의 타겟)를 넣어주세요")]
-    public Transform[] target; //순서대로 NavMesh의 도착지점 넣어주기
+    [SerializeField]
+    Transform[] target; //순서대로 NavMesh의 도착지점 넣어주기
+    [SerializeField]
+    GameObject[] speechBubble; //첫번째 퀴즈의 말풍선들
+    public GameObject invisible; //공 스탑용 보이지 않는 OnTrigger용 오브젝트
+    public GameObject drop; //콜라이더를 갖고있는 떨어진 과일 
+    public GameObject center; //떨어진 과일이 떨어질 가운데 위치용 투명바구니
+    public GameObject[] basket;
+
     Vector3 destination;
     NavMeshAgent agent;
     int index;
-    [SerializeField]
-    Rigidbody drop;
-    [SerializeField]
-    GameObject[] speechBubble;
+
     //콜라이더를 OnTrigger로 만났을때 방향 NavMesh의 타겟(도착지점)을 다음 타겟으로 바꿔주는 프로퍼티 
     public int DestinationIndex
     {
@@ -28,6 +34,8 @@ public class NaviMoveHandler : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
         destination = target[0].position; //처음에 한번만 1번 타겟(도착지점)으로 NavMesh가 출발하도록 설정
+        FindObjectOfType<QuizTouchHandle>().QuizCheck1 += Quiz1Right;
+        FindObjectOfType<DragNDropHandle>().QuizCheck2 += Quiz2Right;
     }
     void Update()
     {
@@ -37,20 +45,48 @@ public class NaviMoveHandler : MonoBehaviour
     {
         if (other != null)
         {
+
             print("온트리거엔터" + other);
             if (other.gameObject.name.Contains("Invisible"))
             {
-                agent.isStopped = true;
-                drop.useGravity = true;
-                for (int i = 0; i < speechBubble.Length; i++) speechBubble[i].SetActive(true);
+                print("첫번째 퀘스트");
+                agent.isStopped = true; //네브메쉬 스탑
+                for (int i = 0; i < speechBubble.Length; i++) speechBubble[i].SetActive(true); //말풍선 나타나기
+                drop.GetComponent<Rigidbody>().useGravity = true;
+                
             }
-            //transform.rotation = Quaternion.Lerp(transform.rotation, other.transform.rotation, Time.deltaTime * 50);
-            other.gameObject.SetActive(false);
-            if (other.gameObject.name.Contains("Fin"))
+            if(other.gameObject.name.Contains("Invisible(1)"))
+            {
+                print("두번째 퀘스트");
+            }
+            if (other.gameObject.name.Contains("Invisible(2)"))
+            {
+                print("세번째 퀘스트");
+            }
+            if (other.gameObject.name.Contains("Invisible(3)"))
+            {
+                print("네번째 퀘스트");
+            }
+            if (other.gameObject.name.Contains("Invisible(4)"))
             {
                 print("도착!");
             }
+            //transform.rotation = Quaternion.Lerp(transform.rotation, other.transform.rotation, Time.deltaTime * 50);
         }
+    }
+    public void Quiz1Right()
+    {
+        print("이벤트 실행 테스트1");
+        speechBubble[1].SetActive(false);
+        invisible.SetActive(false);
+        drop.GetComponent<Collider>().isTrigger = true;
+        center.SetActive(false);
+        agent.isStopped = false; //네브메쉬 스탑 끝
+    }
+    public void Quiz2Right()
+    {
+        print("이벤트 실행 테스트2");
+        for(int i = 0; i < basket.Length; i++) basket[i].SetActive(false);
     }
     private void OnCollisionEnter(Collision collision) //Collider에 Is Trigger 체크안되어 있어야 충돌 //통과안됨(물리연산O)
     {

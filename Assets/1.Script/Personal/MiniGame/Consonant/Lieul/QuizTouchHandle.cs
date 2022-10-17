@@ -1,28 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
 //퀘스트별로 정답처리용 OnMouse관련 기능
 public class QuizTouchHandle : MonoBehaviour
 {
-    public GameObject x;
-    public GameObject invisible;
-    public NavMeshAgent ball;
+    public event System.Action QuizCheck1; //퀴즈 맞췄을 때 발생할 이벤트
 
-    [SerializeField]
-    GameObject plane;
-    
     private void OnMouseUp()
     {
-        print("클릭 후 마우스 땠음");
         if (gameObject.transform.GetChild(2).gameObject.activeSelf)
         {
             print("정답클릭O");
-            gameObject.SetActive(false);
-            x.SetActive(false);
-            invisible.SetActive(false);
-            ball.isStopped = false;
-            plane.SetActive(false);
+            //QuizCheck();
+            QuizCheck1?.Invoke();
+            gameObject.SetActive(false);          
         }
         else
         {
