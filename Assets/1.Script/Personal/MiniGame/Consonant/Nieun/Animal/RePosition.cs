@@ -30,7 +30,7 @@ public class RePosition : MonoBehaviour
         speakerHandler = FindObjectOfType<SpeakerHandler>();
         balloon_Touch = this.transform.parent.GetChild(1).GetComponent<Balloon_Touch>();
         random_Enable = FindObjectOfType<Random_Enable>();
-        animal_Move = FindObjectOfType<Animal_Move>();
+        animal_Move = GetComponent<Animal_Move>();
     }
     public void ReMove()//틀린애만 ReMove 시켜야함 
     {

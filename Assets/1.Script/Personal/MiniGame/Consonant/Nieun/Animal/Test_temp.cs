@@ -4,12 +4,11 @@ using UnityEngine;
 
 public class Test_temp : MonoBehaviour
 {
-    private void OnCollisionEnter(Collision collision)
+   Random_AnimalChoice  random_AnimalChoice;
+    int num;
+    private void Start()
     {
-        print($"충돌{collision}");
-    }
-    private void OnTriggerEnter(Collider other)
-    {
-        print($"트리거 {other}");
+        random_AnimalChoice = GetComponent<Random_AnimalChoice>();
+        print(random_AnimalChoice.number);
     }
 }

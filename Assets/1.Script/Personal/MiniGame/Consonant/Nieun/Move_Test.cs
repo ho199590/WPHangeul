@@ -13,6 +13,6 @@ public class Move_Test : MonoBehaviour
     }
     private void Update()
     {
-      transform.position = Vector3.Lerp(transform.position, Cube.transform.position, 0.05f);
+      transform.position = Vector3.Lerp(transform.position, Cube.transform.position, 0.1f * Time.deltaTime);
     }
 }

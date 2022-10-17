@@ -13,5 +13,4 @@ public class Random_AnimalChoice : MonoBehaviour
         transform.GetChild(Animal.shuffledArray[transform.parent.GetSiblingIndex()]).gameObject.SetActive(true);
         number = Animal.shuffledArray[transform.parent.GetSiblingIndex()];
     }
-
 }
