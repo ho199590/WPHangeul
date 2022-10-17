@@ -14,7 +14,6 @@ public class NaviMoveHandler : MonoBehaviour
     Rigidbody drop;
     [SerializeField]
     GameObject[] speechBubble;
-    public Camera ViewCamera;
     //콜라이더를 OnTrigger로 만났을때 방향 NavMesh의 타겟(도착지점)을 다음 타겟으로 바꿔주는 프로퍼티 
     public int DestinationIndex
     {
@@ -44,11 +43,6 @@ public class NaviMoveHandler : MonoBehaviour
                 agent.isStopped = true;
                 drop.useGravity = true;
                 for (int i = 0; i < speechBubble.Length; i++) speechBubble[i].SetActive(true);
-            }
-            if (other.gameObject.name.Contains("(1)")) 
-            {
-                print("카메라시점 전환 체크");
-                ViewCamera.transform.LookAt(transform.position + transform.up);
             }
             //transform.rotation = Quaternion.Lerp(transform.rotation, other.transform.rotation, Time.deltaTime * 50);
             other.gameObject.SetActive(false);
