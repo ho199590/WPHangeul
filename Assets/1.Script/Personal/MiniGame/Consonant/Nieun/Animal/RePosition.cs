@@ -19,6 +19,8 @@ public class RePosition : MonoBehaviour
     SpeakerHandler speakerHandler;
     Balloon_Touch balloon_Touch; //Balloon_Touch SizeReset() 함수 불러오기
     Random_Enable random_Enable;//정답일시 다음 오브젝트 활성화 Choice()함수 불러오기
+    Animal_Move animal_Move;//
+
     private void Start()
     {
         isMove = GetComponentInParent<Balloon_Move>();
@@ -28,6 +30,7 @@ public class RePosition : MonoBehaviour
         speakerHandler = FindObjectOfType<SpeakerHandler>();
         balloon_Touch = this.transform.parent.GetChild(1).GetComponent<Balloon_Touch>();
         random_Enable = FindObjectOfType<Random_Enable>();
+        animal_Move = GetComponent<Animal_Move>();
     }
     public void ReMove()//틀린애만 ReMove 시켜야함 
     {
@@ -45,16 +48,14 @@ public class RePosition : MonoBehaviour
         if(other.gameObject.layer == LayerMask.NameToLayer(Answer))
         {
             print("정답");
-            this.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;//물리적 충돌 처리 0
-            /* this.GetComponent<Rigidbody>().useGravity = false; //중력 끔
-            this.GetComponent<NavMeshAgent>().enabled = true; //네브메쉬도 켜준다
-            this.gameObject.GetComponent<AI_AnimalMove2>().enabled = true;//자기 자신에 달린 AI_AnimalMove2 를 켜준다*/
+            /*gameObject.SetActive(false);//충돌시 게임 오브젝트 false*/
             random_Enable.Choice();
-            scoreCase.SetScore();
+            scoreCase.SetScore();//별 스코어가 올라간다
+            animal_Move.AnimalMove();
         }
         else
         {
-            print($"{balloon_Touch}틀림");
+            print("틀림");
             speakerHandler.SoundByNum2(1);
             ReMove();
             balloon_Touch.SizeReset();
