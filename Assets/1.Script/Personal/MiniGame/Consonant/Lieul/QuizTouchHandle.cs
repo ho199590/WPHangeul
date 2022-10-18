@@ -11,13 +11,8 @@ public class QuizTouchHandle : MonoBehaviour
         if (gameObject.transform.GetChild(2).gameObject.activeSelf)
         {
             print("정답클릭O");
-            //QuizCheck();
             QuizCheck1?.Invoke();
-            gameObject.SetActive(false);          
-        }
-        else
-        {
-            print("오답클릭X");
+            gameObject.SetActive(false);
         }
     }
 }
