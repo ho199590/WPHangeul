@@ -11,14 +11,18 @@ public class NaviMoveHandler : MonoBehaviour
     Transform[] target; //순서대로 NavMesh의 도착지점 넣어주기
     [SerializeField]
     GameObject[] speechBubble; //첫번째 퀴즈의 말풍선들
-    public GameObject invisible; //공 스탑용 보이지 않는 OnTrigger용 오브젝트
-    public GameObject drop; //콜라이더를 갖고있는 떨어진 과일 
+    [SerializeField]
+    Collider[] planes; //바닥에 숨어있는 모든 충돌처리용 plane
+    public Collider drop; //콜라이더를 갖고있는 떨어진 과일 
     public GameObject center; //떨어진 과일이 떨어질 가운데 위치용 투명바구니
     public GameObject[] basket;
 
     Vector3 destination;
     NavMeshAgent agent;
     int index;
+    int count = 0;
+
+    public event System.Action<int> Quiz2CountCheck;
 
     //콜라이더를 OnTrigger로 만났을때 방향 NavMesh의 타겟(도착지점)을 다음 타겟으로 바꿔주는 프로퍼티 
     public int DestinationIndex
@@ -34,8 +38,6 @@ public class NaviMoveHandler : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
         destination = target[0].position; //처음에 한번만 1번 타겟(도착지점)으로 NavMesh가 출발하도록 설정
-        FindObjectOfType<QuizTouchHandle>().QuizCheck1 += Quiz1Right;
-        FindObjectOfType<DragNDropHandle>().QuizCheck2 += Quiz2Right;
     }
     void Update()
     {
@@ -45,48 +47,55 @@ public class NaviMoveHandler : MonoBehaviour
     {
         if (other != null)
         {
-
             print("온트리거엔터" + other);
-            if (other.gameObject.name.Contains("Invisible"))
+            if (other.gameObject.name.Contains("InvisibleWall1"))
             {
                 print("첫번째 퀘스트");
                 agent.isStopped = true; //네브메쉬 스탑
-                for (int i = 0; i < speechBubble.Length; i++) speechBubble[i].SetActive(true); //말풍선 나타나기
+                center.SetActive(true);
                 drop.GetComponent<Rigidbody>().useGravity = true;
-                
+                for (int i = 0; i < speechBubble.Length; i++) speechBubble[i].SetActive(true); //말풍선 나타나기
+                FindObjectOfType<QuizTouchHandle>().QuizCheck1 += Quiz1Right; //QuizTouchHandle스크립트가 여러군데 들어가 있으면 랜덤으로 어느 QuizCheck이벤트에 들어가 있을지 모름!
             }
-            if(other.gameObject.name.Contains("Invisible(1)"))
+            else if (other.gameObject.name.Contains("InvisibleWall2"))
             {
                 print("두번째 퀘스트");
-            }
-            if (other.gameObject.name.Contains("Invisible(2)"))
-            {
-                print("세번째 퀘스트");
-            }
-            if (other.gameObject.name.Contains("Invisible(3)"))
-            {
-                print("네번째 퀘스트");
-            }
-            if (other.gameObject.name.Contains("Invisible(4)"))
-            {
-                print("도착!");
+                agent.isStopped = true; //네브메쉬 스탑
+                for (int i = 0; i < basket.Length;i++) basket[i].SetActive(true);
+                var draghandles = FindObjectsOfType<DragNDropHandle>(); //스크립트가 여러군데 들어가 있으면 각각의 스크립트의 이벤트에 밑에처럼 일일히 넣어줘야 함 //FindObject"s"OfType
+                foreach (var item in draghandles)
+                {
+                    item.QuizCheck2 += Quiz2Right;
+                }
             }
             //transform.rotation = Quaternion.Lerp(transform.rotation, other.transform.rotation, Time.deltaTime * 50);
         }
     }
-    public void Quiz1Right()
+    void Quiz1Right()
     {
         print("이벤트 실행 테스트1");
         speechBubble[1].SetActive(false);
-        invisible.SetActive(false);
-        drop.GetComponent<Collider>().isTrigger = true;
+        drop.isTrigger = true;
+        planes[0].isTrigger = true;
         center.SetActive(false);
         agent.isStopped = false; //네브메쉬 스탑 끝
     }
-    public void Quiz2Right()
+    void Quiz2Right(bool check, GameObject goChild)
     {
         print("이벤트 실행 테스트2");
-        for(int i = 0; i < basket.Length; i++) basket[i].SetActive(false);
+        if (check)
+        {
+            count++;
+            print("count=" + count);
+            if(goChild.gameObject.name.Contains("Aubergine")) goChild.transform.SetParent(basket[0].transform);
+            else goChild.transform.SetParent(basket[1].transform);
+            if (count == 5)
+            {
+                for (int i = 0; i < basket.Length; i++) basket[i].SetActive(false);
+                for(int i=1; i<8;i++) planes[i].isTrigger = true;
+                agent.isStopped = false; //네브메쉬 스탑 끝
+            }
+        }
     }
     private void OnCollisionEnter(Collision collision) //Collider에 Is Trigger 체크안되어 있어야 충돌 //통과안됨(물리연산O)
     {
