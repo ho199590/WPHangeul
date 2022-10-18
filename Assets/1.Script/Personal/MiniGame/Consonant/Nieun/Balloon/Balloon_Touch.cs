@@ -19,8 +19,7 @@ public class Balloon_Touch : MonoBehaviour
 
     private void Start()
     {
-        speakerHandler = FindObjectOfType<SpeakerHandler>();
-        
+        speakerHandler = FindObjectOfType<SpeakerHandler>(); 
     }
     private void OnMouseDown()
     {
@@ -50,20 +49,15 @@ public class Balloon_Touch : MonoBehaviour
 
     private IEnumerator Down()//동물 점점 작아짐 
     {
-        while (Animal.transform.localScale.x > size)
+        while (Animal.transform.localScale.x >= size)
         {
-            Animal.transform.localScale = new Vector3(Animal.transform.localScale.x - 1f * speed * Time.deltaTime,
-                Animal.transform.localScale.y - 1f * speed * Time.deltaTime,
-                Animal.transform.localScale.z - 1f * speed * Time.deltaTime);
-            time += Time.deltaTime;
-            if (Animal.transform.localScale.x <= size)
-            {
-                time = 0;
-
-                break;
-            }
-            yield return null;
+            print("작아지는중");
+            yield return new WaitForSeconds(Time.deltaTime);
+            Animal.transform.localScale = new Vector3(Animal.transform.localScale.x - 0.01f * speed*Time.deltaTime,
+            Animal.transform.localScale.y - 0.01f * speed * Time.deltaTime, Animal.transform.localScale.z - 0.01f * speed * Time.deltaTime);
+ 
         }
+        yield break;
 
     }
     public void SizeReset()//실패시 동물 크기 리셋
@@ -73,3 +67,14 @@ public class Balloon_Touch : MonoBehaviour
     }
     #endregion
 }
+/*          Animal.transform.localScale = new Vector3(Animal.transform.localScale.x - 1f * speed * Time.deltaTime,
+                Animal.transform.localScale.y - 1f * speed * Time.deltaTime,
+                Animal.transform.localScale.z - 1f * speed * Time.deltaTime);
+            time += Time.deltaTime;
+            if (Animal.transform.localScale.x <= size)
+            {
+                time = 0;
+
+                break;
+            }
+            */

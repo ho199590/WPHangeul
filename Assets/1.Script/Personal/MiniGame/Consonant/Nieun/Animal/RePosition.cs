@@ -32,7 +32,8 @@ public class RePosition : MonoBehaviour
         random_Enable = FindObjectOfType<Random_Enable>();
         animal_Move = GetComponent<Animal_Move>();
     }
-    public void ReMove()//틀린애만 ReMove 시켜야함 
+    //틀린애만 ReMove 시켜야함 
+    public void ReMove()
     {
         gameObject.GetComponent<Rigidbody>().isKinematic = true;
         gameObject.GetComponent<Collider>().isTrigger = true;
@@ -51,7 +52,8 @@ public class RePosition : MonoBehaviour
             /*gameObject.SetActive(false);//충돌시 게임 오브젝트 false*/
             random_Enable.Choice();
             scoreCase.SetScore();//별 스코어가 올라간다
-            animal_Move.move = true;
+            /*animal_Move.move = true;*/
+            animal_Move.AnimalMove();
         }
         else
         {
