@@ -4,6 +4,7 @@ using UnityEngine;
 using System.Linq;
 public class Random_Enable : MonoBehaviour
 {
+    //랜덤하게 오브젝트 활성화 
     [SerializeField]
     List<GameObject> gameObjects = new List<GameObject>();
     public int[] shuffledArray; //랜덤 배열

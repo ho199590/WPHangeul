@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+//안쓰는 스크립트
 public class AI_BallSpawn : MonoBehaviour
 {
     public GameObject red;

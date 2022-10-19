@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+//안쓰는 스크립트
 public class AI_AnimalMove2 : MonoBehaviour
 {
     [SerializeField]

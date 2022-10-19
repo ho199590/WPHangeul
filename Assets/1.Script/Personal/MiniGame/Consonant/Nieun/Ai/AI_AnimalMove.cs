@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+//안쓰는 테스트 스크립트
 public class AI_AnimalMove : MonoBehaviour
 {
     NavMeshAgent nav;
     public Transform targetPos;
-
     float range = 10;
     Vector3 point;
 

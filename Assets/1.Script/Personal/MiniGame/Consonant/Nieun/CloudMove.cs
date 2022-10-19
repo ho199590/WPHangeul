@@ -13,6 +13,7 @@ public class CloudMove : MonoBehaviour
     [SerializeField]
     int sign1; //어느 방향에서 시작할지 방향 체크
     private int sign2 = -1;
+    //일정한 시간만큼 구름이 움직임
     private void FixedUpdate()
     {
         if (Time.time >= startTime)

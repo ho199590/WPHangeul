@@ -7,9 +7,12 @@ public class Animal_Move : MonoBehaviour
 {
     //풍선 움직임 스크립트 변수
     Balloon_Move b_Move;
-    bool ismove;
+    //풍선 행동 제어 
+    bool ismove; 
+    //풍선이 떨어지고 목표 위치 변수 
     [SerializeField]
     AnimalMovePosition animalMovePosition;
+    //랜덤으로 활성화되는 동물의 번호
     Random_AnimalChoice random_AnimalChoice;
     //이벤트
     public static Action animal_move;
@@ -59,9 +62,8 @@ public class Animal_Move : MonoBehaviour
     public void AnimalMove()
     {
         StartCoroutine(MoveFunction());
-        
-        print("LookAt");
     }
+    //동물이 목적지로 가는 함수
     IEnumerator MoveFunction()
     {
         this.transform.LookAt(animalMovePosition.AnimalPoint[this.random_AnimalChoice.number].transform.position);
