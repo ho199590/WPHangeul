@@ -20,7 +20,11 @@ public class NaviMoveManager : MonoBehaviour
     Vector3 destination;
     NavMeshAgent agent;
     int index;
-    int count = 0;
+    int num2;
+    int count;
+
+    public event System.Action QuizCheck; //퀴즈 맞췄을 때 발생할 이벤트
+
     //콜라이더를 OnTrigger로 만났을때 방향 NavMesh의 타겟(도착지점)을 다음 타겟으로 바꿔주는 프로퍼티 
     public int DestinationIndex
     {
@@ -29,6 +33,30 @@ public class NaviMoveManager : MonoBehaviour
         {
             index = value;
             destination = target[index].position; //NavMesh의 도착지점을 타겟의 위치로 지정
+        }
+    }
+    public int QuizNum
+    {
+        get => num2; 
+        set 
+        {
+            num2 = value;
+            QuizCheck?.Invoke();
+            agent.isStopped = false;
+            print("value" + value);
+            //if (value == 1)
+            //{
+            //    print(value + "번째 퀴즈");
+            //    num2 = value + 1;
+            //    QuizCheck?.Invoke();
+
+            //}   
+            //if(value == 2)
+            //{
+            //    print(value + "번째 퀴즈");
+            //    num2 = num2 + value; //num2 += value;
+            //    if(count ==4) QuizCheck?.Invoke();
+            //}
         }
     }
     void Start()
@@ -46,27 +74,7 @@ public class NaviMoveManager : MonoBehaviour
         if (other != null)
         {
             print("온트리거엔터" + other);
-            if (other.gameObject.name.Contains("InvisibleWall1"))
-            {
-                print("첫번째 퀘스트");
-                agent.isStopped = true; //네브메쉬 스탑
-                center.SetActive(true);
-                drop.GetComponent<Rigidbody>().useGravity = true;
-                for (int i = 0; i < speechBubble.Length; i++) speechBubble[i].SetActive(true); //말풍선 나타나기
-                FindObjectOfType<QuizTouchHandle>().QuizCheck1 += Quiz1Right; //QuizTouchHandle스크립트가 여러군데 들어가 있으면 랜덤으로 어느 QuizCheck이벤트에 들어가 있을지 모름!
-            }
-            else if (other.gameObject.name.Contains("InvisibleWall2"))
-            {
-                print("두번째 퀘스트");
-                agent.isStopped = true; //네브메쉬 스탑
-                for (int i = 0; i < basket.Length;i++) basket[i].SetActive(true);
-                var draghandles = FindObjectsOfType<DragNDropHandle>(); //스크립트가 여러군데 들어가 있으면 각각의 스크립트의 이벤트에 밑에처럼 일일히 넣어줘야 함 //FindObject"s"OfType
-                foreach (var item in draghandles)
-                {
-                    item.QuizCheck2 += Quiz2Right;
-                }
-            }
-            //transform.rotation = Quaternion.Lerp(transform.rotation, other.transform.rotation, Time.deltaTime * 50);
+            agent.isStopped = true; //네브메쉬 스탑         
         }
     }
     //코너에서 만난 collider의 설정되어 있는 회전 방향으로 공도 똑같이 회전
@@ -78,35 +86,36 @@ public class NaviMoveManager : MonoBehaviour
             if (index < 4)
             {
                 DestinationIndex = ++index; //다음 타겟으로 인덱스값 +1해서 넘겨주기
-                print(index);
             }
         }
     }
-    void Quiz1Right()
-    {
-        print("이벤트 실행 테스트1");
-        speechBubble[1].SetActive(false);
-        drop.isTrigger = true;
-        planes[0].isTrigger = true;
-        center.SetActive(false);
-        agent.isStopped = false; //네브메쉬 스탑 끝
-    }
-    void Quiz2Right(bool check, GameObject goChild)
-    {
-        print("이벤트 실행 테스트2");
-        if (check)
-        {
-            count++;
-            print("count=" + count);
-            if(goChild.gameObject.name.Contains("Aubergine")) goChild.transform.SetParent(basket[0].transform);
-            else goChild.transform.SetParent(basket[1].transform);
-            if (count == 5)
-            {
-                for (int i = 0; i < basket.Length; i++) basket[i].SetActive(false);
-                for(int i=1; i<8;i++) planes[i].isTrigger = true;
-                agent.isStopped = false; //네브메쉬 스탑 끝
-            }
-        }
-    }
+    //첫번째 퀴즈용 이벤트에 담을 정답 함수
+    //void Quiz1Right()
+    //{
+    //    print("이벤트 실행 테스트1");
+    //    speechBubble[1].SetActive(false);
+    //    drop.isTrigger = true;
+    //    planes[0].isTrigger = true;
+    //    center.SetActive(false);
+    //    agent.isStopped = false; //네브메쉬 스탑 끝
+    //}
+    //두번째 퀴즈용 이벤트에 담을 정답 함수
+    //void Quiz2Right(bool check, GameObject goChild)
+    //{
+    //    print("이벤트 실행 테스트2");
+    //    if (check)
+    //    {
+    //        count++;
+    //        print("count=" + count);
+    //        if(goChild.gameObject.name.Contains("Aubergine")) goChild.transform.SetParent(basket[0].transform);
+    //        else goChild.transform.SetParent(basket[1].transform);
+    //        if (count == 5)
+    //        {
+    //            for (int i = 0; i < basket.Length; i++) basket[i].SetActive(false);
+    //            for(int i=1; i<8;i++) planes[i].isTrigger = true;
+    //            agent.isStopped = false; //네브메쉬 스탑 끝
+    //        }
+    //    }
+    //}
     
 }
