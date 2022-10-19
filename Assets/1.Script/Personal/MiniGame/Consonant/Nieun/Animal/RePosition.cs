@@ -19,7 +19,7 @@ public class RePosition : MonoBehaviour
     SpeakerHandler speakerHandler;
     Balloon_Touch balloon_Touch; //Balloon_Touch SizeReset() 함수 불러오기
     Random_Enable random_Enable;//정답일시 다음 오브젝트 활성화 Choice()함수 불러오기
-    Animal_Move animal_Move;//
+    Animal_Move animal_Move;//동물 움직임 변수 
 
     private void Start()
     {
@@ -30,9 +30,10 @@ public class RePosition : MonoBehaviour
         speakerHandler = FindObjectOfType<SpeakerHandler>();
         balloon_Touch = this.transform.parent.GetChild(1).GetComponent<Balloon_Touch>();
         random_Enable = FindObjectOfType<Random_Enable>();
-        animal_Move = GetComponent<Animal_Move>();
+        animal_Move = GetComponent<Animal_Move>();//자기자신의 animalMove를 들고 온다
     }
-    public void ReMove()//틀린애만 ReMove 시켜야함 
+    //원위치로 돌아가는 함수 
+    public void ReMove()
     {
         gameObject.GetComponent<Rigidbody>().isKinematic = true;
         gameObject.GetComponent<Collider>().isTrigger = true;
@@ -43,6 +44,7 @@ public class RePosition : MonoBehaviour
         bollon.SetActive(true);//풍선 다시 활성화
 
     }
+    //농장에 닿였을때 일어나는 상황
     private void OnTriggerEnter(Collider other)
     { 
         if(other.gameObject.layer == LayerMask.NameToLayer(Answer))
@@ -51,17 +53,22 @@ public class RePosition : MonoBehaviour
             /*gameObject.SetActive(false);//충돌시 게임 오브젝트 false*/
             random_Enable.Choice();
             scoreCase.SetScore();//별 스코어가 올라간다
-            animal_Move.move = true;
+            /*animal_Move.move = true;*/
+            animal_Move.AnimalMove();
         }
         else
         {
             print("틀림");
+            //사운드
             speakerHandler.SoundByNum2(1);
+            //원위치
             ReMove();
+            //동물크기 리셋 
             balloon_Touch.SizeReset();
             
         }
     }
+    //동물 원위치로 전환
     private void PositionReset()
     {
         gameObject.transform.parent.gameObject.transform.position = perentsPosition;

@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+//안쓰는 스크립트
 public class Random_ObMove : MonoBehaviour
 {
     public Rigidbody rb;
