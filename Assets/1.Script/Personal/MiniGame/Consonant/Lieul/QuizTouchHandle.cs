@@ -17,7 +17,6 @@ public class QuizTouchHandle : MonoBehaviour
     int count;
     private void Start()
     {
-
         //퀴즈 맞출시에 필요한 오브젝트 떨어뜨려주기
         if (drop != null)
         {
