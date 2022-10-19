@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
+// 글자 따라쓰기 인식부
 public class WordBodyHandler : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler, IPointerClickHandler, IPointerExitHandler
 {
     #region 변수
@@ -21,6 +22,7 @@ public class WordBodyHandler : MonoBehaviour, IDragHandler, IBeginDragHandler, I
     float time;
     bool onSprite = false;
 
+    // 연결 시킬 스크립트
     ScoreHandler score;
     SpeakerHandler speaker;
     DecorationHandler decoration;

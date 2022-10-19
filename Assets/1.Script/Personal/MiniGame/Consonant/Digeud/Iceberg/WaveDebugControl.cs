@@ -4,11 +4,11 @@ using UnityEngine;
 //난이도 디버깅용
 public class WaveDebugControl : MonoBehaviour
 {
-    WaveManager waveManager;
+    SeaManager waveManager;
 
     private void Start()
     {
-        waveManager = GetComponent<WaveManager>();
+        waveManager = GetComponent<SeaManager>();
     }
 
     private void Update()

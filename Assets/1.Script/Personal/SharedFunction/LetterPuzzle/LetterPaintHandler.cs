@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using XDPaint.Controllers;
 
-
+// 퍼즐 칠하기 제어
 public class LetterPaintHandler : MonoBehaviour
 {
     [SerializeField]
@@ -13,6 +13,7 @@ public class LetterPaintHandler : MonoBehaviour
     [SerializeField]
     RawImage paintOb;
 
+    //연결 스크립트
     LetterDrawHandler letterDrawHandler;
     PUzzleMoveController PuzzleMove;
 

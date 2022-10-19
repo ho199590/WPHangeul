@@ -3,6 +3,7 @@ using UnityEngine;
 public class FishermanController : MonoBehaviour
 {
     #region 변수
+    bool EndGame = false;
     // 무언가를 잡았다
     public bool grabbed = false;
     // 기본 레이
@@ -28,6 +29,8 @@ public class FishermanController : MonoBehaviour
     // 물 확인
     public Collider water;
 
+
+    ScoreHandler score;
     #endregion
     #region
     private void Start()
@@ -35,6 +38,9 @@ public class FishermanController : MonoBehaviour
         hit = new RaycastHit();
         groundHit = new RaycastHit();
         mousePosHit = new RaycastHit();
+
+        score = FindObjectOfType<ScoreHandler>();
+        score.SceneComplete += EndSetting;
     }
 
     private void Update()
@@ -43,13 +49,15 @@ public class FishermanController : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
-            
             CatchObject();
         }
 
         if (Input.GetMouseButtonUp(0))
         {
-            DropObject();
+            if (!EndGame)
+            {
+                DropObject();
+            }
         }
 
         grabbed = catchTransform != null;
@@ -58,52 +66,64 @@ public class FishermanController : MonoBehaviour
         if (grabbed)
         {
             TraceMousePostion();
-
         }
     }
     // 오브젝트 잡기
     void CatchObject()
     {
-        if(Physics.Raycast(moRay, out hit, Mathf.Infinity, catchLayer))
+        if (EndGame) { return; }
+        if (Physics.Raycast(moRay, out hit, Mathf.Infinity, catchLayer))
         {
+            
             catchTransform = hit.transform;
-            catchTransform.GetComponent<Rigidbody>().isKinematic = true;
-            //catchTransform.GetComponent<BuoyancyHandler>().enabled = false;
+            if (catchTransform.GetComponent<FishHandler>())
+            {
+                if(catchTransform.GetComponent<FishHandler>().State == FishState.OnIce)
+                {
+                    score.RemoveScore();
+                }
+                catchTransform.GetComponent<FishHandler>().State = FishState.Catch;
+            }
             FindGround();
             water.enabled = true;
-
         }
     }
     // 땅을 찾기
     void FindGround()
     {
-         if(Physics.Raycast(catchTransform.position, Vector3.down, out groundHit, Mathf.Infinity, groundLayer))
+        if (Physics.Raycast(catchTransform.position, Vector3.down, out groundHit, Mathf.Infinity, groundLayer))
         {
-            ground = groundHit.transform; 
+            ground = groundHit.transform;
         }
     }
 
     void TraceMousePostion()
     {
-        if(Physics.Raycast(moRay, out mousePosHit, Mathf.Infinity, groundLayer))
+        if (Physics.Raycast(moRay, out mousePosHit, Mathf.Infinity, groundLayer))
         {
             mousePos = mousePosHit.point;
-            catchTransform.position = new Vector3(mousePos.x, mousePos.y + offsetY, mousePos.z);            
+            catchTransform.position = new Vector3(mousePos.x, mousePos.y + offsetY, mousePos.z);
             mousePosMarker.position = new Vector3(mousePos.x, mousePos.y + mouseposOffsetFromGround, mousePos.z);
         }
     }
     // 오브젝트 떨어트리기
     void DropObject()
-    {
+    {   
         if (catchTransform != null)
         {
-            catchTransform.GetComponent<Rigidbody>().isKinematic = false;
-            
-
+            catchTransform.GetComponent<FishHandler>().State = FishState.Hook;
         }
+
         catchTransform = null;
         ground = null;
+
         water.enabled = false;
+    }
+
+    void EndSetting()
+    {
+        DropObject();
+        EndGame = true;
     }
     #endregion
 

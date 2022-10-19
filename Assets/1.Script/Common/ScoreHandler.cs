@@ -91,12 +91,24 @@ public class ScoreHandler : MonoBehaviour
             OnComplete();
         }
     }
+    // 감점
+    public void RemoveScore()
+    {   
+        curScore--;
+        transform.GetChild(curScore).DOComplete();
+        transform.GetChild(curScore).GetComponent<UnityEngine.UI.Image>().DOFade(0.5f, 1f).From(1).OnComplete(() =>
+            { transform.GetChild(curScore).GetComponent<UnityEngine.UI.Image>().sprite = scoreCase;
+              transform.GetChild(curScore).GetComponent<UnityEngine.UI.Image>().DOFade(1, 2f).From(0.5f);
+            }
+        );
+    }
 
+    // 컴플리트 이벤트 실행하기
     public void OnComplete()
     {
         SceneComplete?.Invoke();
     }
-
+    //클리어 파티클 터트리기
     IEnumerator ClearParticle()
     {
         while (true)

@@ -6,7 +6,7 @@ using UnityEngine;
 public class FloaterHandler : MonoBehaviour
 {
     #region º¯¼ö
-    WaveManager waveManager;
+    SeaManager seaManager;
 
     public Rigidbody rb;
     
@@ -26,7 +26,7 @@ public class FloaterHandler : MonoBehaviour
 
     private void Awake()
     {   
-        waveManager = FindObjectOfType<WaveManager>();
+        seaManager = FindObjectOfType<SeaManager>();
         if(rb == null)
         {
             rb = GetComponent<Rigidbody>();
@@ -37,7 +37,7 @@ public class FloaterHandler : MonoBehaviour
     {
         rb.AddForceAtPosition(Physics.gravity / floaterCount, transform.position, ForceMode.Acceleration);
 
-        float waveHeight = waveManager.GetWaveHeight(transform.position.x);
+        float waveHeight = seaManager.GetWaveHeight(transform.position.x);
         if (transform.position.y < waveHeight * accel) {
             float displacementMultiplier = Mathf.Clamp01((waveHeight * accel - transform.position.y) / depthBeforeSubmerged ) * displacementAmount;
             rb.AddForceAtPosition(new Vector3(0f, Mathf.Abs(Physics.gravity.y) * displacementMultiplier, 0f) ,transform.position ,ForceMode.Acceleration);

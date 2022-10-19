@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+
+// 글자 체우기
 public class LetterFillHandler : MonoBehaviour
 {
     public void Fill(int curIndex, int num, int count)

@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
+// 마우스 드래그 커서
 public class LineDragController : MonoBehaviour
 {
     #region 변수

@@ -4,6 +4,8 @@ using UnityEngine;
 using DG.Tweening;
 using UnityEngine.EventSystems;
 
+
+// 퍼즐 움직임 제어
 public class PUzzleMoveController : MonoBehaviour
 {
     #region 변수
@@ -45,6 +47,7 @@ public class PUzzleMoveController : MonoBehaviour
         StartSeqMaker();
     }
 
+    // 단어 출제 준비
     public void StartSeqMaker()
     {   
         StartSeq = DOTween.Sequence()
@@ -56,6 +59,8 @@ public class PUzzleMoveController : MonoBehaviour
             .Join(WordImage.DOScale(Vector3.zero, 1f).From(Vector3.one).OnComplete(() => score.OffScreenSaver()));
     }
 
+
+    // 단어 완성시 움직임
     public void SucessSeqMaker()
     {
         Vector3 mOne = new Vector3(-1, 1, 1);
@@ -105,6 +110,8 @@ public class PUzzleMoveController : MonoBehaviour
         }
     }
 
+
+    // 다음 단어 출제 준비
     public void NextSeqMaker()
     {   
         if (score.CompCheck())
@@ -146,7 +153,8 @@ public class PUzzleMoveController : MonoBehaviour
         StartCoroutine(NextSeqWait());
 
     }
-
+    
+    // 다음 단어 음성 지연
     IEnumerator NextSeqWait()
     {
         yield return new WaitWhile(() => NextSeq.IsPlaying());

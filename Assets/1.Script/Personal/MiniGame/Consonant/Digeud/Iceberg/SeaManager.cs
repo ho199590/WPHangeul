@@ -8,13 +8,18 @@ using UnityEngine;
 public class SeaManager : MonoBehaviour
 {
     #region 변수
-    WaveManager wave;
     MeshFilter meshFilter;
+
+    [Header("파도 관리자")]
+    public float amplitude = 1f;
+    public float length = 2f;
+    public float speed = 1f;
+    public float offset = 0f;
+
     #endregion
 
     private void Awake()
     {
-        wave = GetComponent<WaveManager>();
         meshFilter = GetComponent<MeshFilter>();
     }
 
@@ -24,11 +29,19 @@ public class SeaManager : MonoBehaviour
 
         for(int i = 0; i < vertices.Length; i++)
         {
-            vertices[i].y = wave.GetWaveHeight(transform.position.x + vertices[i].x);
+            vertices[i].y = GetWaveHeight(transform.position.x + vertices[i].x);
         }
 
         meshFilter.mesh.vertices = vertices;
         meshFilter.mesh.RecalculateNormals();
+
+        offset += Time.deltaTime * speed;
+    }
+
+
+    public float GetWaveHeight(float _x)
+    {
+        return amplitude * Mathf.Sin(_x / length + offset);
     }
 
 }

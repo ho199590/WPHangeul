@@ -26,6 +26,7 @@ public class BuoyancyHandler : MonoBehaviour
 
     int floatersUnderwater;
     int count = 0;
+    float scale = 4;
     #endregion
 
     #region ÇÔ¼ö
@@ -37,7 +38,7 @@ public class BuoyancyHandler : MonoBehaviour
 
     private void FixedUpdate()
     {
-        floatersUnderwater = 0;
+        floatersUnderwater = 0; 
         for(int i = 0; i < floaters.Length; i++)
         {
             float difference = floaters[i].position.y - waterHeight;
@@ -62,6 +63,8 @@ public class BuoyancyHandler : MonoBehaviour
 
     void SwitchState(bool isUnderWater)
     {
+        m_rigidbody.drag = isUnderWater ? underWaterDrag : airDrag;
+        m_rigidbody.angularDrag = isUnderWater ? underWaterAngularDrag : airAngularDrag;
         if (isUnderWater)
         {
             m_rigidbody.drag = underWaterDrag;
@@ -76,17 +79,12 @@ public class BuoyancyHandler : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.transform.GetComponent<FishController>())
+        if (collision.transform.GetComponent<FishHandler>() && collision.transform.GetComponent<FishHandler>().State == FishState.Hook)
         {
-            if(collision.transform.GetComponent<FishController>().Knock == false)
-            {
-                collision.transform.GetComponent<FishController>().Knock = true;
-                collision.transform.localScale *= 0.5f;
-
-                score.SetScore();
-                count++;
-            }
-            collision.transform.GetComponent<FishController>().Knock = true;
+            collision.transform.GetComponent<FishHandler>().State = FishState.OnIce;
+            collision.transform.localScale = Vector3.one *scale;
+            score.SetScore();
+            count++;
         }
     }
 
