@@ -6,20 +6,21 @@ public class Balloon_Touch : MonoBehaviour
 {
     #region 변수
     [SerializeField]
+    GameObject explosion;//풍선 폭팔 파티클 
+    [SerializeField]
     GameObject Animal;//동물 오브젝트
-    int BalloonTouch=0;//풍선 터치 카운트
+    //int BalloonTouch=0;//풍선 터치 카운트
     public Vector3 BalloonPosition;
     SpeakerHandler speakerHandler;
     //[풍선이 터지면 동물작아지는 변수]
     private float size = 0.8f; //원하는 사이즈
-    private float speed = 1f; //작아 질때의 속도
-    private float time = 0;
     #endregion
     #region
     private void Start()
     {
         speakerHandler = FindObjectOfType<SpeakerHandler>(); 
     }
+    //마우스로 풍선을 클릭했을때 발생 
     private void OnMouseDown()
     {
         /*세번클릭했을때
@@ -31,10 +32,16 @@ public class Balloon_Touch : MonoBehaviour
                     ColOnOff();
                     BalloonTouch = 0;
                 }*/
-        Animal.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
-        StartCoroutine(Down());
-        TouchClear();
-        ColOnOff();
+        if(transform.root.GetComponent<Canvas>())
+        {
+            var te = Instantiate(explosion);
+            te.transform.localScale = Vector3.one * 5f;
+            Vector3 vec = new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.nearClipPlane);
+            te.transform.position = Camera.main.ScreenToWorldPoint(vec);
+            StartCoroutine(Down());
+            TouchClear();
+            ColOnOff();
+        }
     }
     protected void TouchClear()//풍선 낙하 
     {
