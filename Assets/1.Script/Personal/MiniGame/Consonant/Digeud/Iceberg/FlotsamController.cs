@@ -52,7 +52,8 @@ public class FlotsamController : MonoBehaviour
         }
 
         var fish = Instantiate(Fishes[h], wayPoint[p].position, Quaternion.identity, FishBasket);
-        fish.GetComponent<FishController>().Index = p;
+        //fish.GetComponent<FishController>().Index = p;
+        fish.GetComponent<FishHandler>().Index = p;
     }
     #endregion
 }

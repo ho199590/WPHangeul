@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
+
+// 화살표 제어자
 public class LetterArrowHandler : MonoBehaviour
 {
     [SerializeField]
@@ -40,6 +42,8 @@ public class LetterArrowHandler : MonoBehaviour
 
     }
 
+
+    // 화살표 감추기
     public void HiddenView()
     {
         ArrowView.gameObject.SetActive(false);

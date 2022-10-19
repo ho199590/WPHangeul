@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+// 단어 출제자
 public class LetterImageController : MonoBehaviour
 {
     #region 변수
@@ -56,6 +57,7 @@ public class LetterImageController : MonoBehaviour
 
         moveCon.Next += NextSetting;
     }
+    // 첫 시작까지 약간의 딜레이 => 오류 방지용
     IEnumerator StartDelay()
     {
         yield return new WaitForSeconds(0.001f);
@@ -66,7 +68,7 @@ public class LetterImageController : MonoBehaviour
         Recruit();
         yield break;
     }
-
+    // 초기 세팅
     public void Init()
     {
         var array = System.Linq.Enumerable.Range(0, Animals.childCount);
@@ -84,7 +86,7 @@ public class LetterImageController : MonoBehaviour
             }
         }
     }
-
+    // 단어 뽑기
     public void Recruit()
     {
         if (curIndex == word.Count)
@@ -107,6 +109,7 @@ public class LetterImageController : MonoBehaviour
         curIndex++;
     }
 
+    //자모 구분 후 단어 출제
     public void SetPuzzle()
     {
         letterCheck = HangeulUtil.DirAndPiece(letterSplit);

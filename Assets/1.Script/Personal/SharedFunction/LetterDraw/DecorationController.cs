@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
+
+// 진행로더 컨트롤러
 public class DecorationController : MonoBehaviour
 {
     [SerializeField]
@@ -32,6 +34,7 @@ public class DecorationController : MonoBehaviour
         optional = false;
     }
 
+
     IEnumerator Progress()
     {
         while (optional)
@@ -46,7 +49,8 @@ public class DecorationController : MonoBehaviour
         }
         yield break;
     }
-
+    
+    // 데코레이션 전체 지우기
     public void CleanDecoration()
     {
         for(int i = 0; i < transform.childCount; i++)
@@ -54,7 +58,7 @@ public class DecorationController : MonoBehaviour
             transform.GetChild(i).GetComponent<Image>().color = new Color(0, 0, 0, 0);
         }
     }
-
+    // 현제의 인덱스까지 지우기
     public void CleanDeco()
     {
         for(int i = curIndex; i >= 0; i--)
@@ -62,6 +66,7 @@ public class DecorationController : MonoBehaviour
             transform.GetChild(i).GetComponent<Image>().color = new Color(0, 0, 0, 0);
         }
     }
+
 
     public void SetIndex(int i)
     {

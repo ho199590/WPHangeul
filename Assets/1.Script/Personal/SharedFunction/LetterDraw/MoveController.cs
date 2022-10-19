@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
+// 전체 움직임 관리자
 public class MoveController : MonoBehaviour
 {
     #region 변수
+    // 글자, 외형, 튜토리얼 시작/끝점, 배경 오브젝트, 환경 오브젝트
     [SerializeField]
     Transform Word, WordCase ,TutoHand, TutoPoint, ObjPos , Cloud;
     [SerializeField]
@@ -27,7 +29,7 @@ public class MoveController : MonoBehaviour
 
         SceneReady();
     }
-
+    // 씬이 준비가 끝났을 때 플레이하도록 활성화까지
     public void SceneReady()
     {
         WordCase.DOScale(Vector3.one, 2f).From(Vector3.zero).SetEase(Ease.OutQuad)
@@ -50,6 +52,7 @@ public class MoveController : MonoBehaviour
         }
     }
 
+    // 나레이션 음성이 끝날 때 까지 순차적으로 기다리기
     IEnumerator SceneWaiting()
     {
         yield return new WaitWhile(() => speaker.GetComponent<AudioSource>().isPlaying);

@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+// 진행도 저장용 스크립트
 public class DecorationHit : MonoBehaviour
 {
     [SerializeField]

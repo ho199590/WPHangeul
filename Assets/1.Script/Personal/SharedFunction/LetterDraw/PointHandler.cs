@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// 변환점 포인트
 public class PointHandler : MonoBehaviour , IPointer
 {
     [SerializeField]
