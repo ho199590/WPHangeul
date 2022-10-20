@@ -20,9 +20,10 @@ public class NaviMoveManager : MonoBehaviour
     Vector3 destination;
     NavMeshAgent agent;
     int index;
-    int num2;
-    int count;
-
+    int quizNum;
+    int quizOrder = 0;
+    int answerCount = 0;
+    int saveCount;
     public event System.Action QuizCheck; //퀴즈 맞췄을 때 발생할 이벤트
 
     //콜라이더를 OnTrigger로 만났을때 방향 NavMesh의 타겟(도착지점)을 다음 타겟으로 바꿔주는 프로퍼티 
@@ -37,26 +38,26 @@ public class NaviMoveManager : MonoBehaviour
     }
     public int QuizNum
     {
-        get => num2; 
+        get => quizNum; 
         set 
         {
-            num2 = value;
-            QuizCheck?.Invoke();
-            agent.isStopped = false;
-            print("value" + value);
-            //if (value == 1)
-            //{
-            //    print(value + "번째 퀴즈");
-            //    num2 = value + 1;
-            //    QuizCheck?.Invoke();
-
-            //}   
-            //if(value == 2)
-            //{
-            //    print(value + "번째 퀴즈");
-            //    num2 = num2 + value; //num2 += value;
-            //    if(count ==4) QuizCheck?.Invoke();
-            //}
+            quizNum = value;
+            //quizNum[1] = value[1];
+            print("quizNume값 체크 :" + value);
+            quizOrder++;
+            print("quizOrder값 체크 :"+quizOrder);
+            
+            if (quizOrder > 1 && quizOrder < 5) 
+            {
+                answerCount++;
+                print("answerCount값 체크 :" + answerCount);
+                if(answerCount == 4) QuizCheck?.Invoke();
+            }
+            else 
+            { 
+                QuizCheck?.Invoke();
+                agent.isStopped = false;
+            }
         }
     }
     void Start()
@@ -74,7 +75,7 @@ public class NaviMoveManager : MonoBehaviour
         if (other != null)
         {
             print("온트리거엔터" + other);
-            agent.isStopped = true; //네브메쉬 스탑         
+            agent.isStopped = true; //네브메쉬 스탑
         }
     }
     //코너에서 만난 collider의 설정되어 있는 회전 방향으로 공도 똑같이 회전
