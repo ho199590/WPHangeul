@@ -13,8 +13,10 @@ public class QuizTouchHandle : MonoBehaviour
     [Tooltip("퀘스트별 퀴즈 종료후 진로에 방해될 장애물들 모두 넣어주세요")]
     [SerializeField]
     GameObject[] obstacles; //퀴즈맞추면 비활성화할 진로방해물
-    int num1;
-    int count;
+    
+    [Tooltip ("퀘스트별 퀴즈의 정답처리 갯수를 입력해주세요")]
+    [SerializeField]
+    int num;
     private void Start()
     {
         //퀴즈 맞출시에 필요한 오브젝트 떨어뜨려주기
@@ -40,8 +42,13 @@ public class QuizTouchHandle : MonoBehaviour
     private void OnMouseUp()
     {
         print("정답클릭O");
-        if(GetComponent<Rigidbody>() != null) GetComponent<Rigidbody>().useGravity = true; //두번째 퀴즈때 클릭떼면 떨어뜨려야하는 오브젝트용
-        gameObject.SetActive(false); //자기자신도 진로방해의 장애물임으로 비활성화
-        FindObjectOfType<NaviMoveManager>().QuizNum = num1; //파라미터값을 변경함으로써 이벤트 호출(파라미터내용 안에 이벤트 호출이 존재함)
+        if (GetComponent<Rigidbody>()) 
+        {
+            print("자기자신 체크");
+            GetComponent<Rigidbody>().useGravity = true; //두번째 퀴즈때 클릭떼면 떨어뜨려야하는 오브젝트용
+        }
+
+        //gameObject.SetActive(false); //자기자신도 진로방해의 장애물임으로 비활성화
+        FindObjectOfType<NaviMoveManager>().QuizNum = num; //파라미터값을 변경함으로써 이벤트 호출(파라미터내용 안에 이벤트 호출이 존재함)
     }
 }

@@ -6,6 +6,7 @@ public class DragNDropHandle : MonoBehaviour
 {
     private float z_saved; //z값 부여용
     private Vector3 posi;
+    [SerializeField]
     int num;
     [Tooltip("퀘스트별 퀴즈시 중력으로 떨어뜨려줘야할 오브젝트를 모두 넣어주세요")]
     [SerializeField]
