@@ -4,7 +4,7 @@ using UnityEngine;
 using System.Linq;
 public class Random_Enable : MonoBehaviour
 {
-    Index myIndex;
+    Index myIndex = new Index();  
     //랜덤하게 오브젝트 활성화 
     [SerializeField]
     List<GameObject> gameObjects = new List<GameObject>();
@@ -27,6 +27,12 @@ public class Random_Enable : MonoBehaviour
 }
 public class Index
 {
-    public int index { get; set; }  
+    public int index;
+    public int Number
+    {
+        get => index;
+
+        set => index = value;   
+    }
 }
 
