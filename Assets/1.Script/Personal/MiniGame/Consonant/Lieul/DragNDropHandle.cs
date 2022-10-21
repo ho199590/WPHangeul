@@ -31,7 +31,7 @@ public class DragNDropHandle : MonoBehaviour
             for (int k = 0; k < active.Length; k++)
                 active[k].SetActive(true);
         }
-        FindObjectOfType<NaviMoveManager>().QuizCheck += RemoveObstacles; //이 스크립트가 들어있는 오브젝트가 활성화 되자마자 이벤트에 함수 추가
+       // FindObjectOfType<NaviMoveManager>().QuizCheck += RemoveObstacles; //이 스크립트가 들어있는 오브젝트가 활성화 되자마자 이벤트에 함수 추가
 
     }
     Vector3 GetMouseWorldPosition() //마우스포인트의 월드좌표값 부여용
@@ -58,6 +58,6 @@ public class DragNDropHandle : MonoBehaviour
     private void OnMouseUp()
     {
         gameObject.SetActive(false);
-        FindObjectOfType<NaviMoveManager>().QuizNum = num; //파라미터값을 변경함으로써 이벤트 호출(파라미터내용 안에 이벤트 호출이 존재함)
+        //FindObjectOfType<NaviMoveManager>().QuizNum = num; //파라미터값을 변경함으로써 이벤트 호출(파라미터내용 안에 이벤트 호출이 존재함)
     }
 }
