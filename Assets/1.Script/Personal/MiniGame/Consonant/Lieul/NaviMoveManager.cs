@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-using System;
 //방향키대신 공(Mover)의 자동 움직임을 담당해주는 NavMesh기능  
 public class NaviMoveManager : MonoBehaviour
 {
@@ -13,17 +12,24 @@ public class NaviMoveManager : MonoBehaviour
     GameObject[] speechBubble; //첫번째 퀴즈의 말풍선들
     [SerializeField]
     Collider[] planes; //바닥에 숨어있는 모든 충돌처리용 plane
-    public Collider drop; //콜라이더를 갖고있는 떨어진 과일 
-    public GameObject center; //떨어진 과일이 떨어질 가운데 위치용 투명바구니
-    public GameObject[] basket;
+    [SerializeField]
+    Collider drop; //콜라이더를 갖고있는 떨어진 과일 
+    [SerializeField]
+    GameObject center; //떨어진 과일이 떨어질 가운데 위치용 투명바구니
+    [SerializeField]
+    GameObject[] basket;
 
     Vector3 destination;
     NavMeshAgent agent;
+
+    //골목 회전용
     int index;
-    int quizNum;
-    int quizOrder = 0;
+    //쌓이는 퀴즈 정답처리 카운트용
+    int invokeCount = 0;
+    //정답처리 카운트용
     int answerCount = 0;
-    int saveCount;
+    //이전 퀴즈정답처리 카운트 갯수 저장용
+    int preQuizNum = 1;
     public event System.Action QuizCheck; //퀴즈 맞췄을 때 발생할 이벤트
 
     //콜라이더를 OnTrigger로 만났을때 방향 NavMesh의 타겟(도착지점)을 다음 타겟으로 바꿔주는 프로퍼티 
@@ -36,22 +42,25 @@ public class NaviMoveManager : MonoBehaviour
             destination = target[index].position; //NavMesh의 도착지점을 타겟의 위치로 지정
         }
     }
+    //퀴즈 남은 갯수...?
     public int QuizNum
     {
-        get => quizNum; 
+        //get => preQuizNum; 
         set 
         {
-            quizNum = value;
-            //quizNum[1] = value[1];
-            print("quizNume값 체크 :" + value);
-            quizOrder++;
-            print("quizOrder값 체크 :"+quizOrder);
-            
-            if (quizOrder > 1 && quizOrder < 5) 
+            invokeCount++;
+            if(preQuizNum == value) preQuizNum = value; //"이전 퀴즈"의 정답처리 카운트 갯수 저장용
+            print("이전퀴즈의 num체크:" + preQuizNum);
+            if (invokeCount < value + preQuizNum) 
             {
                 answerCount++;
                 print("answerCount값 체크 :" + answerCount);
-                if(answerCount == 4) QuizCheck?.Invoke();
+                if (answerCount == value) 
+                {
+                    QuizCheck?.Invoke();
+                    agent.isStopped = false;
+                    preQuizNum = value; //이전 퀴즈꺼에서 그 다음 퀴즈껄로 변경
+                }
             }
             else 
             { 
