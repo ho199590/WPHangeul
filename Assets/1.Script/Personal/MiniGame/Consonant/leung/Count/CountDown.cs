@@ -24,10 +24,10 @@ public class CountDown : MonoBehaviour
         textCountDown = GetComponent<TextMeshProUGUI>();
         audioSource = GetComponent<AudioSource>();
     }
-    public void StartCountDown(UnityAction action, int start = 3 , int end = 1)
+/*    public void StartCountDown(UnityAction action, int start = 3 , int end = 1)
     {
         StartCoroutine(OnCountDown(action, start, end));
-    }
+    }*/
 /*    private IEnumerator OnCountDown(UnityAction action , int start , int end)
     {
         //action 메소드를 이벤트에 등록
