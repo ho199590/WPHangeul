@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+// 뽑기 상품 배치 및 관리 컨트롤러
 public class ClawProductController : MonoBehaviour
 {
     #region 변수
@@ -36,6 +38,7 @@ public class ClawProductController : MonoBehaviour
             ProductSetting();
         }
     }
+    // 상품 배치
     public void ProductSetting()
     {
         Vector3 pos = center + new Vector3(Random.Range(-size.x / 2, size.x / 2), Random.Range(-size.y / 2, size.y / 2), Random.Range(-size.z / 2, size.z / 2));
@@ -51,7 +54,7 @@ public class ClawProductController : MonoBehaviour
         ProductNum++;
     }
 
-
+    // 떨어진 상품을 리셋하여 새로운 상품으로 생성하기
     public void ResetDropProducts(Transform Target, int num)
     {
         Target.gameObject.GetComponent<Collider>().enabled = false;
@@ -59,10 +62,12 @@ public class ClawProductController : MonoBehaviour
 
         GameObject go = Instantiate(Products[num], Target.transform.position, Target.transform.rotation, basket) as GameObject;
         go.GetComponent<ClawProductHandler>().PrefabNumber = num;
+        go.name = Target.name;
 
         Destroy(Target.gameObject);
     }
 
+    // 바닥에 충돌하였을 경우 자석을 올리기
     private void OnCollisionEnter(Collision collision)
     {
         if(collision.transform.root == magenticRoot)
