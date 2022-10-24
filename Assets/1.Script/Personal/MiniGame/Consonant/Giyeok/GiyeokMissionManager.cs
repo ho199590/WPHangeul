@@ -45,6 +45,12 @@ public class GiyeokMissionManager : MonoBehaviour
     }
     private void Start()
     {
+        StartCoroutine(startDelay());
+        
+    }
+    IEnumerator startDelay()
+    {
+        yield return new WaitForFixedUpdate();
         invisible.SetActive(true);
         speakerHandler = FindObjectOfType<SpeakerHandler>();
         speakerHandler.SoundByNum2(0);
@@ -52,7 +58,9 @@ public class GiyeokMissionManager : MonoBehaviour
         animatorPico = pico.GetComponent<Animator>();
         check = true;
         scoreCase.SceneComplete += MissionComplete;
+        yield break;
     }
+
     #region 함수
     //돋보기가 씬 안으로 천천히 들어오게 만들어주는 지연 함수
     public IEnumerator Speed_StartZoom()

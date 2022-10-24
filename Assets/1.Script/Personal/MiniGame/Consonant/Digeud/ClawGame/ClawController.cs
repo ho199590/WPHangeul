@@ -36,6 +36,15 @@ public class ClawController : MonoBehaviour
             Operate?.Invoke();
         }
     }
+    //ºÎµúÈú °æ¿ì..?
+    public bool Collide
+    {
+        set
+        {
+            MagnetCollision?.Invoke();
+        }
+    }
+
     public System.Action Operate;
 
     List<Transform> magnetParts = new List<Transform>();
@@ -192,11 +201,6 @@ public class ClawController : MonoBehaviour
         }
 
         roofTransform = null;
-    }
-
-    public void MagnetCollisionInvoke()
-    {
-        MagnetCollision?.Invoke();
     }
 
     public void RelaxProduct()
