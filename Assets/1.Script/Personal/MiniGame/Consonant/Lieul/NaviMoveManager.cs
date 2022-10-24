@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-using System;
 //방향키대신 공(Mover)의 자동 움직임을 담당해주는 NavMesh기능  
 public class NaviMoveManager : MonoBehaviour
 {
@@ -13,18 +12,19 @@ public class NaviMoveManager : MonoBehaviour
     GameObject[] speechBubble; //첫번째 퀴즈의 말풍선들
     [SerializeField]
     Collider[] planes; //바닥에 숨어있는 모든 충돌처리용 plane
-    public Collider drop; //콜라이더를 갖고있는 떨어진 과일 
-    public GameObject center; //떨어진 과일이 떨어질 가운데 위치용 투명바구니
-    public GameObject[] basket;
+    [SerializeField]
+    Collider drop; //콜라이더를 갖고있는 떨어진 과일 
+    [SerializeField]
+    GameObject center; //떨어진 과일이 떨어질 가운데 위치용 투명바구니
+    [SerializeField]
+    GameObject[] basket;
 
     Vector3 destination;
     NavMeshAgent agent;
+
+    //골목 회전용
     int index;
-    int num2;
-    int count;
-
-    public event System.Action QuizCheck; //퀴즈 맞췄을 때 발생할 이벤트
-
+    
     //콜라이더를 OnTrigger로 만났을때 방향 NavMesh의 타겟(도착지점)을 다음 타겟으로 바꿔주는 프로퍼티 
     public int DestinationIndex
     {
@@ -35,28 +35,12 @@ public class NaviMoveManager : MonoBehaviour
             destination = target[index].position; //NavMesh의 도착지점을 타겟의 위치로 지정
         }
     }
-    public int QuizNum
+    //퀴즈 정답 카운트 다 끝나서 0되면 다시 네브메쉬 움직이게 해주는 프로퍼티
+    public bool Check
     {
-        get => num2; 
-        set 
+        set
         {
-            num2 = value;
-            QuizCheck?.Invoke();
-            agent.isStopped = false;
-            print("value" + value);
-            //if (value == 1)
-            //{
-            //    print(value + "번째 퀴즈");
-            //    num2 = value + 1;
-            //    QuizCheck?.Invoke();
-
-            //}   
-            //if(value == 2)
-            //{
-            //    print(value + "번째 퀴즈");
-            //    num2 = num2 + value; //num2 += value;
-            //    if(count ==4) QuizCheck?.Invoke();
-            //}
+            if(value) agent.isStopped = false;
         }
     }
     void Start()
@@ -74,7 +58,7 @@ public class NaviMoveManager : MonoBehaviour
         if (other != null)
         {
             print("온트리거엔터" + other);
-            agent.isStopped = true; //네브메쉬 스탑         
+            agent.isStopped = true; //네브메쉬 스탑
         }
     }
     //코너에서 만난 collider의 설정되어 있는 회전 방향으로 공도 똑같이 회전
@@ -89,33 +73,4 @@ public class NaviMoveManager : MonoBehaviour
             }
         }
     }
-    //첫번째 퀴즈용 이벤트에 담을 정답 함수
-    //void Quiz1Right()
-    //{
-    //    print("이벤트 실행 테스트1");
-    //    speechBubble[1].SetActive(false);
-    //    drop.isTrigger = true;
-    //    planes[0].isTrigger = true;
-    //    center.SetActive(false);
-    //    agent.isStopped = false; //네브메쉬 스탑 끝
-    //}
-    //두번째 퀴즈용 이벤트에 담을 정답 함수
-    //void Quiz2Right(bool check, GameObject goChild)
-    //{
-    //    print("이벤트 실행 테스트2");
-    //    if (check)
-    //    {
-    //        count++;
-    //        print("count=" + count);
-    //        if(goChild.gameObject.name.Contains("Aubergine")) goChild.transform.SetParent(basket[0].transform);
-    //        else goChild.transform.SetParent(basket[1].transform);
-    //        if (count == 5)
-    //        {
-    //            for (int i = 0; i < basket.Length; i++) basket[i].SetActive(false);
-    //            for(int i=1; i<8;i++) planes[i].isTrigger = true;
-    //            agent.isStopped = false; //네브메쉬 스탑 끝
-    //        }
-    //    }
-    //}
-    
 }
