@@ -46,7 +46,6 @@ public class GiyeokMissionManager : MonoBehaviour
     private void Start()
     {
         StartCoroutine(startDelay());
-        
     }
     IEnumerator startDelay()
     {
