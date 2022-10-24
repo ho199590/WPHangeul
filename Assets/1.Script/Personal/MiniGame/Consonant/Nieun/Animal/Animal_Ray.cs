@@ -30,6 +30,5 @@ public class Animal_Ray : MonoBehaviour
         {
             dropPosition.position = hitinfo.point;
         }
-
     }
 }
