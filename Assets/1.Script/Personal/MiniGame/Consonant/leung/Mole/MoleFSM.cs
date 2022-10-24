@@ -4,6 +4,8 @@ using UnityEngine;
 //Script 설명 : 두더지의 행동을 제어하는 스크립트
 // 지하에 대기 , 지상에 대기 , 지하 -> 지상 이동 , 지상 -> 지하 이동
 public enum MoleState {  UnderGround = 0, OnGround , MoveUp, MoveDown}
+//두더지 종류 (기본 ,점수 - , 시간 + )
+public enum MoleType {  Normal = 0, Red , Blue}
 public class MoleFSM : MonoBehaviour
 {
     [SerializeField]
@@ -14,13 +16,40 @@ public class MoleFSM : MonoBehaviour
     private float limitMaxY;                //올라올 수 있는 최대 Y 위치
 
     private Movement3D movement3D;          //위/아래 이동을 위한 Movement3D
+    private MeshRenderer meshRenderer;      //두더지의 색상 설정을 위한 MeshRenderer
+
+    private MoleType moleType;              //두더지의 종류
+    private Color defaultColor;             //기본 두더지의 색상(173,135,24)
 
     //두더지의 현재 상태 (Set은 MoleFSM 클래스 내부에서만)
     public MoleState MoleState { private set; get; }  //property  
-
+    //두더지의 종류(moleType에 따라 두더지 색상 변경)
+    public MoleType MoleType
+    {
+        set
+        {
+            moleType = value;
+            switch (moleType)
+            {
+                case MoleType.Normal:
+                    meshRenderer.material.color = defaultColor;
+                    break;
+                    case MoleType.Red:
+                    meshRenderer.material.color = Color.red;
+                    break;
+                case MoleType.Blue:
+                    meshRenderer.material.color = Color.blue;
+                    break;
+            }
+        }
+        get => moleType;
+    }
     private void Awake()
     {
         movement3D = GetComponent<Movement3D>();
+        meshRenderer = GetComponent<MeshRenderer>();
+
+        defaultColor = meshRenderer.material.color; //두더지의 최초 색상 저장
 
         ChangeState(MoleState.UnderGround);//처음 두더지의 상태를 설정 UnderGround(땅속에 대기)
     }
