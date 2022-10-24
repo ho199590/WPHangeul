@@ -8,16 +8,6 @@ public class NaviMoveManager : MonoBehaviour
     [Tooltip ("순서대로 도착할 곳의 위치(NavMesh의 타겟)를 넣어주세요")]
     [SerializeField]
     Transform[] target; //순서대로 NavMesh의 도착지점 넣어주기
-    [SerializeField]
-    GameObject[] speechBubble; //첫번째 퀴즈의 말풍선들
-    [SerializeField]
-    Collider[] planes; //바닥에 숨어있는 모든 충돌처리용 plane
-    [SerializeField]
-    Collider drop; //콜라이더를 갖고있는 떨어진 과일 
-    [SerializeField]
-    GameObject center; //떨어진 과일이 떨어질 가운데 위치용 투명바구니
-    [SerializeField]
-    GameObject[] basket;
 
     Vector3 destination;
     NavMeshAgent agent;
