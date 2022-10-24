@@ -27,7 +27,7 @@ public class SeaManager : MonoBehaviour
     {
         Vector3[] vertices = meshFilter.mesh.vertices;
 
-        for(int i = 0; i < vertices.Length; i++)
+        for (int i = 0; i < vertices.Length; i++)
         {
             vertices[i].y = GetWaveHeight(transform.position.x + vertices[i].x);
         }

@@ -61,10 +61,6 @@ public class ClawProductController : MonoBehaviour
 
 
 
-
-
-
-
     //화면에 그림 그리기
     private void OnDrawGizmosSelected()
     {
