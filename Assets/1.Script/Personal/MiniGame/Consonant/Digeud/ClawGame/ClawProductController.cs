@@ -5,6 +5,8 @@ using UnityEngine;
 public class ClawProductController : MonoBehaviour
 {
     #region 변수
+    [SerializeField]
+    Transform basket;
     [Header("뽑기 목록")]
     [SerializeField]
     List<GameObject> Products = new List<GameObject>();
@@ -35,12 +37,12 @@ public class ClawProductController : MonoBehaviour
 
         int index = Random.Range(0, Products.Count);
 
-        GameObject product = Instantiate(Products[index], pos, Quaternion.identity, transform);
+        GameObject product = Instantiate(Products[index], pos, Quaternion.identity, basket);
         product.transform.LookAt(center);
 
 
         product.name = "생성" +  ProductNum.ToString();
-        product.GetComponent<JointTest>().PrefabNumber = index;
+        product.GetComponent<ClawProductHandler>().PrefabNumber = index;
         ProductNum++;
     }
 
@@ -50,8 +52,8 @@ public class ClawProductController : MonoBehaviour
         Target.gameObject.GetComponent<Collider>().enabled = false;
         Target.gameObject.GetComponent<Rigidbody>().isKinematic = true;
 
-        GameObject go = Instantiate(Products[num], Target.transform.position, Target.transform.rotation, transform) as GameObject;
-        go.GetComponent<JointTest>().PrefabNumber = num;
+        GameObject go = Instantiate(Products[num], Target.transform.position, Target.transform.rotation, basket) as GameObject;
+        go.GetComponent<ClawProductHandler>().PrefabNumber = num;
 
         Destroy(Target.gameObject);
     }

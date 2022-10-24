@@ -30,4 +30,20 @@ public class StageController : MonoBehaviour
             Destroy(collision.gameObject);
         }
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        print(other.name);
+
+        other.gameObject.GetComponent<Collider>().enabled = false;
+        other.gameObject.GetComponent<Rigidbody>().isKinematic = true;
+
+        GameObject go = Instantiate(GG, other.transform.position, other.transform.rotation, Box) as GameObject;
+
+        go.GetComponent<Collider>().enabled = true;
+        go.GetComponent<Rigidbody>().isKinematic = false;
+        go.GetComponent<Rigidbody>().velocity = Vector3.zero;
+
+        Destroy(other.gameObject);
+    }
 }

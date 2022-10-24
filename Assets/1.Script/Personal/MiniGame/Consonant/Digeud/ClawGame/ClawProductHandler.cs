@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class JointTest : MonoBehaviour
+public class ClawProductHandler : MonoBehaviour
 {
     #region 변수
     ClawController clawController;
@@ -25,7 +25,6 @@ public class JointTest : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        print("LKJ" + collision.gameObject.name);
         if (collision.gameObject.name != "Stage")
         {
             if (GetComponent<Joint>())
@@ -55,8 +54,7 @@ public class JointTest : MonoBehaviour
         {
             if(GetComponent<Rigidbody>().velocity.magnitude < 1 && GetComponent<Rigidbody>().velocity.y >= 0)
             {
-                //여기서 호출을..?
-                print(collision.gameObject.name);
+                if (collision.transform.GetComponent<ClawProductController>() != null)
                 product.ResetDropProducts(transform, PrefabNumber);
             }
         }
@@ -65,6 +63,7 @@ public class JointTest : MonoBehaviour
     // 잡혀있는 오브젝트 떨어트리기
     public void PutDownObject()
     {
+        GetComponent<Collider>().isTrigger = true;
         if (transform.parent.GetComponent<Rigidbody>())
         {
             transform.SetParent(null);
@@ -84,5 +83,13 @@ public class JointTest : MonoBehaviour
     private void OnDestroy()
     {
         clawController.MagnetPutDown -= PutDownObject;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {   
+        if (other.transform.GetComponent<ClawProductController>() != null)
+        {
+            GetComponent<Collider>().isTrigger = false;
+        }
     }
 }
