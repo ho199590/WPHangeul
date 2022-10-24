@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// 뽑기 상품 핸들러
 public class ClawProductHandler : MonoBehaviour
 {
     #region 변수
@@ -41,6 +42,9 @@ public class ClawProductHandler : MonoBehaviour
                     //GetComponent<Joint>().connectedAnchor = collision.transform.childCount < 3 ? Vector3.down * 0.5f : Vector3.down * 2.1f;                    
                     GetComponent<Joint>().connectedAnchor = !collision.transform.GetComponent<MagnetHandler>() ? Vector3.down * 0.5f : Vector3.down * 2.1f;
                     //자석 올리기 이벤트 호출
+
+                    clawController.AddBodyPart(gameObject);
+
                     clawController.MagnetCollisionInvoke();
                 }
                 else if (GetComponent<Joint>().connectedBody != collision.rigidbody)
@@ -52,11 +56,15 @@ public class ClawProductHandler : MonoBehaviour
         }
         if (!GetComponent<Joint>())
         {
-            if(GetComponent<Rigidbody>().velocity.magnitude < 1 && GetComponent<Rigidbody>().velocity.y >= 0)
+            if (GetComponent<Rigidbody>().velocity.magnitude < 1 && GetComponent<Rigidbody>().velocity.y >= 0)
             {
                 if (collision.transform.GetComponent<ClawProductController>() != null)
-                product.ResetDropProducts(transform, PrefabNumber);
+                    product.ResetDropProducts(transform, PrefabNumber);
             }
+        }
+        if (transform.parent != parent)
+        {
+            clawController.MagnetCollisionInvoke();
         }
     }
 
@@ -71,7 +79,7 @@ public class ClawProductHandler : MonoBehaviour
             int r = Random.Range(10, 20);
             Vector3 RandomForce = new Vector3(Random.Range(-r, r), -2, Random.Range(-r, r));
             GetComponent<Rigidbody>().AddForce(RandomForce);
-            
+
 
             GetComponent<Joint>().breakForce = 0;
             transform.parent = parent;
@@ -86,7 +94,7 @@ public class ClawProductHandler : MonoBehaviour
     }
 
     private void OnTriggerEnter(Collider other)
-    {   
+    {
         if (other.transform.GetComponent<ClawProductController>() != null)
         {
             GetComponent<Collider>().isTrigger = false;

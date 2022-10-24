@@ -13,7 +13,8 @@ public class StageParam : MonoBehaviour
     {
         if (SceneName.Equals("Re"))
         {
-            SceneName = SceneManager.GetActiveScene().name;
+            // 씬 이름에 Re를 입력할 경우 현제 활성화된 씬으로 이동 = 새로고침
+            SceneName = SceneManager.GetActiveScene().name;            
         }
         changer = FindObjectOfType<SceneChanger>();
         GetComponent<ButtonAct>().FuncBasket += StageScene;
