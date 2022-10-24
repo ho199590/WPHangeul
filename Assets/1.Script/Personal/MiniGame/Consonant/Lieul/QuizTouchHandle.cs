@@ -4,10 +4,9 @@ using UnityEngine;
 //퀘스트별로 정답처리용 OnMouse관련 기능
 public class QuizTouchHandle : MonoBehaviour
 {
-    
     private void Start()
     {
-        FindObjectOfType<QuizManager>().ActiveObject = gameObject;
+        FindObjectOfType<QuizManager>().AddNRemove = gameObject;
     }
     private void OnMouseUp()
     {
@@ -16,6 +15,6 @@ public class QuizTouchHandle : MonoBehaviour
         {
             GetComponent<Rigidbody>().useGravity = true;
         }
-        FindObjectOfType<QuizManager>().MouseUpCheck = gameObject;
+        FindObjectOfType<QuizManager>().AddNRemove = gameObject;
     }
 }

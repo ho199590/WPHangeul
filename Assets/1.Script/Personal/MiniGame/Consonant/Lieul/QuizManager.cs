@@ -1,40 +1,37 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-[Tooltip ("퀴즈순서대로 장애물들을 넣어주세요")]
+[Tooltip("퀴즈순서대로 장애물들을 넣어주세요")]
 [System.Serializable]
 public class obstacles
 {
     public GameObject[] roadObstacles; //배열안에 배열: 퀴즈별 장애물
 }
-//퀴즈의 정답처리 매니저
-public class QuizManager : MonoBehaviour
+public class QuizManager : MonoBehaviour //퀴즈의 정답처리 관련 총괄 매니저
 {
     public List<GameObject> quizObjects; //활성화된 <QuizTouchHandle>스크립트가 들어있는 오브젝트를 넣었다 뺐다 할 리스트
     [SerializeField]
-    obstacles[] perQuizObstacles;
-    int count;
+    obstacles[] perQuizObstacles; //퀴즈별 장애물
+    int count; //몇번째 퀴즈인지 체크용
+
     public event System.Action<GameObject> QuizCheck; //퀴즈 맞췄을 때 발생할 이벤트
 
     private void Start()
     {
         QuizCheck += RemoveObject;
     }
-    //<QuizTouchHandle>스크립트가 들어있는 오브젝트가 활성화되면 가져오게될 프로퍼티
-    public GameObject ActiveObject
+    //퀴즈 오브젝트가 활성화되면 리스트에 오브젝트 추가 & OnMouseUp된 퀴즈의 정답처리가 끝난 오브젝트를 리스트에서 제거하게 하는 프로퍼티
+    public GameObject AddNRemove
     {
         set
         {
-            quizObjects.Add(value);
-            print("정답 처리 카운트 값" + quizObjects.Count);
-        }
-    }
-    //<QuizTouchHandle>스크립트에서 OnMouseUp된 오브젝트 보내줘서 리스트에서 제거하게 하는 프로퍼티
-    public GameObject MouseUpCheck
-    {
-        set
-        {
-            QuizCheck?.Invoke(value);
+            if (!quizObjects.Contains(value)) 
+            {
+                quizObjects.Add(value);
+                print("정답 처리 카운트 값" + quizObjects.Count);
+            }
+            else
+                QuizCheck?.Invoke(value);
         }
     }
     //몇번째 퀴즈인지 카운트용 프로퍼티 //퀴즈별 장애물 제거용 인덱스로 사용
@@ -42,7 +39,8 @@ public class QuizManager : MonoBehaviour
     {
         set
         {
-            print(count++ + "번째 퀴즈 ");
+            count++;
+            print(count + "번째 퀴즈 ");
         }
     }
     //<QuizTouchHandle>스크립트에서 OnMouseUp일때 리스트에서 오브젝트 제거해주는 함수
