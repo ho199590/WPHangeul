@@ -11,16 +11,17 @@ public class Hammer : MonoBehaviour
     public float minY;       //망치의 최소 y위치
     [SerializeField]
     private GameObject moleHitEffectPrefab;     //두더지 타격 효과 프리팹
-
+    [SerializeField]
+    private AudioClip[] audioClips;             //두더지를 타격했을 떄 재생되는 사운드
     public ObjectDetector objectDetector;       //마우스 클릭으로 오브젝트 선택을 위한 ObjectDetector 
     private Movement3D movement3D;              //망치 이동을위한 movement
-
+    private AudioSource audioSource;            //두더지를 타격했을 때 소리를 재생하는 AudioSource
 
 
     private void Awake()
     {
         movement3D = GetComponent<Movement3D>();
-
+        audioSource = GetComponent<AudioSource>();  
         //OnHit 메소드를 objectDetector Class의 raycast에 이벤트로 등록
         //objectDetector의 raycastEvent.Invoke(hit.transform)메소드가
         //호출될때 마다Onhit 메소드가 호출된다.
@@ -52,6 +53,11 @@ public class Hammer : MonoBehaviour
             ParticleSystem.MainModule main = clone.GetComponent<ParticleSystem>().main;
             main.startColor = mole.GetComponent<MeshRenderer>().material.color;
 
+            //점수 증가 (+50)
+            //gameController.Score += 50;
+            //두더지 색상에 따라 처리 (점수 , 시간 , 사운드재생)
+            MoleHitProcess(mole);
+
             //망치를 다시 위로 이동시키는 코루틴함수 재생
             StartCoroutine("MoveUp");
         }
@@ -72,10 +78,18 @@ public class Hammer : MonoBehaviour
             }
 
             yield return null;
-
         }
-
-
+    }
+    private void MoleHitProcess(MoleFSM mole)
+    {
+       //사운드 재생 (Normal = 0 , Red = 1 , Blue = 2)
+      PlaySound((int)mole.MoleType);
+    }
+    private void PlaySound(int index)
+    {
+        audioSource.Stop();
+        audioSource.clip = audioClips[index];   
+        audioSource.Play();
     }
 
 }
