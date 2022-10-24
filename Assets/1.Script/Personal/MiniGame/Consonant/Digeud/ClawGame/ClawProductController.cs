@@ -14,6 +14,11 @@ public class ClawProductController : MonoBehaviour
     //상품 갯수
     [SerializeField]
     int ProductNum;
+    [SerializeField]
+    Transform magenticRoot;
+
+    [SerializeField]
+    ClawController GameBox;
 
     [Header("뽑기 상품 배치 위치 조정")]
     [SerializeField]
@@ -57,9 +62,15 @@ public class ClawProductController : MonoBehaviour
 
         Destroy(Target.gameObject);
     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.transform.root == magenticRoot)
+        {
+            GameBox.Collide = true;
+        }
+    }
     #endregion
-
-
 
     //화면에 그림 그리기
     private void OnDrawGizmosSelected()
@@ -67,4 +78,6 @@ public class ClawProductController : MonoBehaviour
         Gizmos.color = new Color(0, 0, 1, 0.5f);
         Gizmos.DrawCube(center, size);
     }
+
+    
 }

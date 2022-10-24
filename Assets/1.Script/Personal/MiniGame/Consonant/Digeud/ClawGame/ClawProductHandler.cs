@@ -12,6 +12,8 @@ public class ClawProductHandler : MonoBehaviour
     Transform parent;
 
     public int PrefabNumber;
+    [SerializeField]
+    Rigidbody magnet;
     #endregion
 
     private void Start()
@@ -39,17 +41,18 @@ public class ClawProductHandler : MonoBehaviour
 
                     GetComponent<Joint>().autoConfigureConnectedAnchor = false;
                     //자식 갯수로 판별시 꾸미기 어려움이 있음
-                    //GetComponent<Joint>().connectedAnchor = collision.transform.childCount < 3 ? Vector3.down * 0.5f : Vector3.down * 2.1f;                    
-                    GetComponent<Joint>().connectedAnchor = !collision.transform.GetComponent<MagnetHandler>() ? Vector3.down * 0.5f : Vector3.down * 2.1f;
+                    //GetComponent<Joint>().connectedAnchor = collision.transform.childCount < 3 ? Vector3.down * 0.5f : Vector3.down * 2.1f;
+                    print(collision.transform.parent.name);
+                    GetComponent<Joint>().connectedAnchor = !transform.parent.name.Contains("Magnet") ? Vector3.down * 0.5f : Vector3.down * 2.1f;
                     //자석 올리기 이벤트 호출
 
                     clawController.AddBodyPart(gameObject);
 
-                    clawController.MagnetCollisionInvoke();
+                    clawController.Collide = true;
                 }
                 else if (GetComponent<Joint>().connectedBody != collision.rigidbody)
                 {
-                    clawController.MagnetCollisionInvoke();
+                    clawController.Collide = true;
                 }
             }
             //GetComponent<Joint>(). = 50;
@@ -64,7 +67,7 @@ public class ClawProductHandler : MonoBehaviour
         }
         if (transform.parent != parent)
         {
-            clawController.MagnetCollisionInvoke();
+            clawController.Collide = true;
         }
     }
 
@@ -93,6 +96,8 @@ public class ClawProductHandler : MonoBehaviour
         clawController.MagnetPutDown -= PutDownObject;
     }
 
+
+    // 오브젝트가 바닥에 충돌할 경우 트리거를 끄기 
     private void OnTriggerEnter(Collider other)
     {
         if (other.transform.GetComponent<ClawProductController>() != null)
