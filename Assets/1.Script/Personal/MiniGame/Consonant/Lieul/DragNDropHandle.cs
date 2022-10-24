@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-//마우스포인트따라 오브젝트 움직이기
+//마우스포인트따라 오브젝트 drag&drop으로 움직이게
 public class DragNDropHandle : MonoBehaviour
 {
     private float z_saved; //z값 부여용
