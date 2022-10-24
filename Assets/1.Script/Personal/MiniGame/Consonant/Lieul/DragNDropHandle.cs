@@ -6,6 +6,9 @@ public class DragNDropHandle : MonoBehaviour
 {
     private float z_saved; //z값 부여용
     private Vector3 posi;
+    Collider collider;
+    [SerializeField]
+    Collider lieulPosi;
   
     private void Start()
     {
@@ -26,9 +29,25 @@ public class DragNDropHandle : MonoBehaviour
     private void OnMouseDrag()
     {
         transform.position = GetMouseWorldPosition() + posi;
+        collider = CheckOb();
+        if(collider != null && collider.gameObject == lieulPosi.gameObject)
+        {
+            print("충돌체크확인");
+            FindObjectOfType<QuizManager>().AddNRemove = gameObject;
+        }
     }
-    private void OnMouseUp()
+    Collider CheckOb()
     {
-        FindObjectOfType<QuizManager>().AddNRemove = gameObject;
+        Ray ray = new Ray(transform.position, transform.forward);
+        if (Physics.SphereCast(ray, 0.1f, out RaycastHit hit))
+        {
+            print("충돌처리 감지" + hit.collider);
+            return hit.collider;
+        }
+        else return null;
     }
+    //private void OnMouseUp()
+    //{
+        //FindObjectOfType<QuizManager>().AddNRemove = gameObject;
+    //}
 }
