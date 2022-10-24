@@ -58,7 +58,6 @@ public class Balloon_Touch : MonoBehaviour
     {
         while (Animal.transform.localScale.x >= size)
         {
-            print("작아지는중");
             Animal.transform.localScale = new Vector3(Animal.transform.localScale.x - 0.01f ,
             Animal.transform.localScale.y - 0.01f , Animal.transform.localScale.z - 0.01f);
         }
@@ -68,7 +67,6 @@ public class Balloon_Touch : MonoBehaviour
     public void SizeReset()//실패시 동물 크기 리셋
     {
         Animal.transform.localScale = new Vector3(1f, 1f, 1f);
-        print($"{Animal}실행");
     }
     #endregion
 }

@@ -10,6 +10,8 @@ public class RePosition : MonoBehaviour
     [SerializeField]
     string Answer;//어디에 닿았는지 확인하기 위한 변수
     [SerializeField]
+    string notAnswer; //틀린정답
+    [SerializeField]
     GameObject bollon;//bollon 오브젝트
     [SerializeField]
     ScoreHandler scoreCase; //미션완료시 공통 별 프리팹 
@@ -20,7 +22,6 @@ public class RePosition : MonoBehaviour
     Balloon_Touch balloon_Touch; //Balloon_Touch SizeReset() 함수 불러오기
     Random_Enable random_Enable;//정답일시 다음 오브젝트 활성화 Choice()함수 불러오기
     Animal_Move animal_Move;//동물 움직임 변수 
-
     private void Start()
     {
         isMove = GetComponentInParent<Balloon_Move>();
@@ -50,13 +51,11 @@ public class RePosition : MonoBehaviour
         if(other.gameObject.layer == LayerMask.NameToLayer(Answer))
         {
             print("정답");
-            /*gameObject.SetActive(false);//충돌시 게임 오브젝트 false*/
             random_Enable.Choice();
             scoreCase.SetScore();//별 스코어가 올라간다
-            /*animal_Move.move = true;*/
             animal_Move.AnimalMove();
         }
-        else
+        if(other.gameObject.name == "DefaultCollision" || other.gameObject.name == notAnswer)
         {
             print("틀림");
             //사운드
@@ -64,8 +63,7 @@ public class RePosition : MonoBehaviour
             //원위치
             ReMove();
             //동물크기 리셋 
-            balloon_Touch.SizeReset();
-            
+            balloon_Touch.SizeReset();         
         }
     }
     //동물 원위치로 전환
