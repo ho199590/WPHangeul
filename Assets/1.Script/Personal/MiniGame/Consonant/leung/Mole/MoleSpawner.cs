@@ -9,7 +9,7 @@ public class MoleSpawner : MonoBehaviour
     [SerializeField]
     private float spawnTime;        //두더지 등장 주기
 
-    public void Start()
+    public void Setup()
     {
         StartCoroutine("SpawnMole");
 
