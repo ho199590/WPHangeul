@@ -11,7 +11,7 @@ public class CountDown : MonoBehaviour
     private CountDownEvent endOffCountDown;     //카운트 다운 종료 후 외부 메소드 실행을 위해 이벤트 클래스 사용
 
     private TextMeshProUGUI textCountDown;      //카운트 다운 텍스트를 출력하는 Text UI
-    private AudioSource audionSource;           //카운트 다운 사운드 재생
+    private AudioSource audioSource;           //카운트 다운 사운드 재생
 
     [SerializeField]
     private int maxFontSize;                    //폰트의 최대 크기
@@ -22,10 +22,15 @@ public class CountDown : MonoBehaviour
     {
         endOffCountDown = new CountDownEvent();
         textCountDown = GetComponent<TextMeshProUGUI>();
-        audionSource = GetComponent<AudioSource>();
+        audioSource = GetComponent<AudioSource>();
     }
     public void StartCountDown(UnityAction action, int start = 3 , int end = 1)
     {
-        //StartCoroutine
+        StartCoroutine(OnCountDown(action, start, end));
     }
+/*    private IEnumerator OnCountDown(UnityAction action , int start , int end)
+    {
+        //action 메소드를 이벤트에 등록
+        audioSource
+    }*/
 }
