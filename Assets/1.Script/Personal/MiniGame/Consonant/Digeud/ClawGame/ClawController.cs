@@ -4,7 +4,7 @@ using UnityEngine;
 using DG.Tweening;
 
 public enum ClawState
-{   
+{
     // None => Fall , None => Move , Move => None , Fall => None 만 가능하게 만들기
     None,  // 통상상태      =>  천장으로 자석이 올라오기
     Move,  // 움직이는 경우 =>  하강을 막으며 천장에 붙어있기
@@ -22,10 +22,21 @@ public class ClawController : MonoBehaviour
         get => state;
         set
         {
-            
+            Operate = value switch
+            {
+                ClawState.None => DefaultSetting,
+                ClawState.Move when state == ClawState.None => ClawMoveStart,
+                ClawState.Fall when state == ClawState.Move => MagnetFall,
+                _ => null,
+            };
+
+            state = value;
+            Operate?.Invoke();
         }
     }
     public System.Action Operate;
+
+    List<Transform> magnetParts = new List<Transform>();
 
     // 클릭 지점 레이 | 자석 기준 위아래 방향 레이 
     Ray moRay;
@@ -34,6 +45,7 @@ public class ClawController : MonoBehaviour
 
     // 자석 오브젝트 | 하단 오브젝트 | 천장 오브젝트
     public Transform magnetTransform;
+    public Transform Cable;
     Transform roofTransform;
     Transform underTransform;
 
@@ -53,17 +65,27 @@ public class ClawController : MonoBehaviour
     public float mouseposOffsetFromGround = 0;
     public Vector3 mousePos;
 
-    Rigidbody rigidbody;    
+    Rigidbody rigidbody;
+
+    Tweener MagnetMoveTween;
+    #endregion
+
+    #region 이벤트
+    public event System.Action MagnetCollision;
+    public event System.Action MagnetPutDown;
     #endregion
 
 
     #region
+    private void Awake()
+    {
+        rigidbody = magnetTransform.GetComponent<Rigidbody>();
 
-    private void Start()
-    {   
-        //magnetTransform.localPosition = StartPoint;
-        rigidbody = magnetTransform.GetComponent<Rigidbody>();        
+        State = ClawState.Move;
+        MagnetCollision += MagnetLift;
+        MagnetCollision += DefaultSetting;
     }
+    
 
     private void Update()
     {
@@ -71,30 +93,72 @@ public class ClawController : MonoBehaviour
 
         if (Input.GetMouseButtonUp(0))
         {
-            MagnetFall();
+            State = ClawState.Fall;
+            //
+            //MagnetFall();
         }
+
+
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
             MagnetLift();
         }
+
+        if (Input.GetMouseButton(0))
+        {
+            ClawMove();
+        }
+
+        if (Input.GetMouseButtonDown(1))
+        {
+            MagnetPutDown?.Invoke();
+        }
     }
 
-    #region None
 
+    #region Catch & Release
+    public void AddBodyPart(GameObject obj)
+    {
+        Transform newpart = obj.transform;
+        magnetParts.Add(newpart);
+    }
+
+    public void RemovePart()
+    {
+        magnetParts.Clear();
+    }
+    #endregion
+
+    #region None
+    public void DefaultSetting()
+    {
+        mousePosMarker.gameObject.SetActive(false);
+    }
     #endregion
 
     #region Move
     void ClawMove()
     {
-        if (Physics.Raycast(moRay, out mousePosHit, Mathf.Infinity, UnderLayer))
+        if (state == ClawState.None || state == ClawState.Move)
         {
-            mousePos = mousePosHit.point;
+            if (Physics.Raycast(moRay, out mousePosHit, Mathf.Infinity, UnderLayer))
+            {
+                State = ClawState.Move;
+                mousePos = mousePosHit.point;
 
-            Vector3 vec = new Vector3(mousePos.x, magnetTransform.position.y, mousePos.z);
+                Vector3 vec = new Vector3(mousePos.x, magnetTransform.position.y, mousePos.z);
 
-            mousePosMarker.position = new Vector3(mousePos.x, mousePos.y + mouseposOffsetFromGround, mousePos.z);
+                magnetTransform.position = vec;
+                //Cable.position = new Vector3(mousePos.x, Cable.position.y, mousePos.z);
+                mousePosMarker.position = new Vector3(mousePos.x, mousePos.y + mouseposOffsetFromGround, mousePos.z);
+            }
         }
+    }
+
+    void ClawMoveStart()
+    {
+        mousePosMarker.gameObject.SetActive(true);
     }
     #endregion
 
@@ -106,16 +170,26 @@ public class ClawController : MonoBehaviour
             roofTransform = RoofHit.transform;
         }
 
+
         rigidbody.isKinematic = false;
         underTransform = null;
     }
 
-    void MagnetLift()
-    {
+    public void MagnetLift()
+    {   
         rigidbody.isKinematic = true;
-        magnetTransform.DOMoveY(roofTransform.position.y - offsetY, 1f).OnComplete(()=> state = ClawState.None);
+        if (roofTransform != null)
+        {
+            Vector3 vec3 = new Vector3(Cable.position.x, roofTransform.position.y - offsetY, Cable.position.z);
+            magnetTransform.DOMove(vec3, 2f).OnComplete(() => state = ClawState.None);
+        }
 
         roofTransform = null;
+    }
+
+    public void MagnetCollisionInvoke()
+    {
+        MagnetCollision?.Invoke();
     }
     #endregion
 
