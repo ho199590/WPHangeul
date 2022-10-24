@@ -12,6 +12,8 @@ public enum ClawState
     End
 }
 
+
+// 게임박스에 삽입하여 전체 게임을 조종하기 위한 컨트롤러
 public class ClawController : MonoBehaviour
 {
     #region 변수
@@ -65,13 +67,13 @@ public class ClawController : MonoBehaviour
     public float mouseposOffsetFromGround = 0;
     public Vector3 mousePos;
 
-    Rigidbody rigidbody;
-
-    Tweener MagnetMoveTween;
+    Rigidbody rig;
     #endregion
 
     #region 이벤트
+    // 자석 충돌시 발생할 이벤트
     public event System.Action MagnetCollision;
+    // 자석에서 물체를 떨어트릴 때 발생할 이벤트
     public event System.Action MagnetPutDown;
     #endregion
 
@@ -79,13 +81,17 @@ public class ClawController : MonoBehaviour
     #region
     private void Awake()
     {
-        rigidbody = magnetTransform.GetComponent<Rigidbody>();
+        rig = magnetTransform.GetComponent<Rigidbody>();
 
         State = ClawState.Move;
+
         MagnetCollision += MagnetLift;
         MagnetCollision += DefaultSetting;
+        MagnetCollision += RelaxProduct;
+
+        MagnetPutDown += RemovePart;
     }
-    
+
 
     private void Update()
     {
@@ -134,6 +140,7 @@ public class ClawController : MonoBehaviour
     public void DefaultSetting()
     {
         mousePosMarker.gameObject.SetActive(false);
+        RelaxProduct();
     }
     #endregion
 
@@ -171,13 +178,13 @@ public class ClawController : MonoBehaviour
         }
 
 
-        rigidbody.isKinematic = false;
+        rig.isKinematic = false;
         underTransform = null;
     }
 
     public void MagnetLift()
-    {   
-        rigidbody.isKinematic = true;
+    {
+        rig.isKinematic = true;
         if (roofTransform != null)
         {
             Vector3 vec3 = new Vector3(Cable.position.x, roofTransform.position.y - offsetY, Cable.position.z);
@@ -191,7 +198,15 @@ public class ClawController : MonoBehaviour
     {
         MagnetCollision?.Invoke();
     }
-    #endregion
 
+    public void RelaxProduct()
+    {
+        foreach (Transform t in magnetParts)
+        {
+            t.GetComponent<Rigidbody>().velocity = Vector3.zero;
+
+        }
+    }
+    #endregion
     #endregion
 }
