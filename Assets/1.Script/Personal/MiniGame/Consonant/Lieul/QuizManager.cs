@@ -12,8 +12,6 @@ public class QuizManager : MonoBehaviour
 {
     public List<GameObject> quizObjects; //활성화된 <QuizTouchHandle>스크립트가 들어있는 오브젝트를 넣었다 뺐다 할 리스트
     [SerializeField]
-    List<GameObject> obstacles; //퀴즈 종료 후 제거해줄 장애물
-    [SerializeField]
     obstacles[] perQuizObstacles;
     int count;
     public event System.Action<GameObject> QuizCheck; //퀴즈 맞췄을 때 발생할 이벤트

@@ -2,14 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 //공의 움직임
-public class TriggerCollisionHandle : MonoBehaviour
+public class WASDMoveHandle : MonoBehaviour
 {
     private Rigidbody mRigidBody;
     private AudioSource mAudioSource;
     public AudioClip JumpSound;
     public AudioClip HitSound;
     public Camera ViewCamera;
-    int i = 0;
+
     void Start()
     {
         mRigidBody = GetComponent<Rigidbody>();
