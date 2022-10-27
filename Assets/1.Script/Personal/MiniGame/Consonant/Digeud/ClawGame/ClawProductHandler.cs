@@ -28,10 +28,12 @@ public class ClawProductHandler : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        // 충돌 대상이 스테이지가 아니라면
         if (collision.gameObject.name != "Stage")
         {
+            // 조인트가 있을 때
             if (GetComponent<Joint>())
-            {
+            {                
                 if (GetComponent<Joint>().connectedBody == null && collision.transform.parent != parent)
                 {
                     transform.SetParent(collision.transform);
@@ -45,8 +47,6 @@ public class ClawProductHandler : MonoBehaviour
                     print(collision.transform.parent.name);
                     GetComponent<Joint>().connectedAnchor = !transform.parent.name.Contains("Magnet") ? Vector3.down * 0.5f : Vector3.down * 2.1f;
                     //자석 올리기 이벤트 호출
-
-                    clawController.AddBodyPart(gameObject);
 
                     clawController.Collide = true;
                 }
@@ -102,6 +102,7 @@ public class ClawProductHandler : MonoBehaviour
     {
         if (other.transform.GetComponent<ClawProductController>() != null)
         {
+            if(GetComponent<Joint>() != null){ print("붙어있음"); return;}
             GetComponent<Collider>().isTrigger = false;
         }
     }
