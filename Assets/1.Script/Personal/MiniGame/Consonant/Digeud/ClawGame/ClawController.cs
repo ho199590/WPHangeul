@@ -17,13 +17,15 @@ public enum ClawState
 public class ClawController : MonoBehaviour
 {
     #region 변수
+    // Get을 사용할 경우에만 필요, 이전 상태 비교 용으로도 있으므로 삭제 하면 안 됨
     [SerializeField]
     ClawState state;
     public ClawState State
     {
+        //get은 삭제 가능
         get => state;
         set
-        {
+        {   
             Operate = value switch
             {
                 ClawState.None => DefaultSetting,
@@ -31,7 +33,6 @@ public class ClawController : MonoBehaviour
                 ClawState.Fall when state == ClawState.Move => MagnetFall,
                 _ => null,
             };
-
             state = value;
             Operate?.Invoke();
         }
@@ -42,11 +43,22 @@ public class ClawController : MonoBehaviour
         set
         {
             MagnetCollision?.Invoke();
+            IsTrigger = true;
+            //SetBodyTrigger(true);
         }
     }
-
+    public bool IsTrigger
+    {
+        set
+        {
+            magnetTransform.GetComponent<Collider>().isTrigger = value;
+            foreach (Transform t in magnetParts)
+            {
+                t.GetComponent<Collider>().isTrigger = value;
+            }
+        }
+    }
     public System.Action Operate;
-
     List<Transform> magnetParts = new List<Transform>();
 
     // 클릭 지점 레이 | 자석 기준 위아래 방향 레이 
@@ -95,7 +107,7 @@ public class ClawController : MonoBehaviour
         State = ClawState.Move;
 
         MagnetCollision += MagnetLift;
-        MagnetCollision += DefaultSetting;
+        //MagnetCollision += DefaultSetting;
         MagnetCollision += RelaxProduct;
 
         MagnetPutDown += RemovePart;
@@ -133,22 +145,27 @@ public class ClawController : MonoBehaviour
 
 
     #region Catch & Release
+    // 잡은 오브젝트 리스트에 추가
     public void AddBodyPart(GameObject obj)
     {
         Transform newpart = obj.transform;
         magnetParts.Add(newpart);
     }
-
-    public void RemovePart()
+    // 리스트 비우기
+    void RemovePart()
     {
         magnetParts.Clear();
     }
+
+    
     #endregion
 
     #region None
+    // 기본 세팅으로 변경
     public void DefaultSetting()
     {
-        mousePosMarker.gameObject.SetActive(false);
+        IsTrigger = false;
+        //SetBodyTrigger(false);
         RelaxProduct();
     }
     #endregion
@@ -179,6 +196,7 @@ public class ClawController : MonoBehaviour
     #endregion
 
     #region Fall
+    // 자석 내리기
     void MagnetFall()
     {
         if (Physics.Raycast(magnetTransform.position, Vector3.up, out RoofHit, Mathf.Infinity, roofLayer))
@@ -186,23 +204,23 @@ public class ClawController : MonoBehaviour
             roofTransform = RoofHit.transform;
         }
 
-
         rig.isKinematic = false;
         underTransform = null;
     }
-
+    //자석 올리기
     public void MagnetLift()
-    {
+    {   
         rig.isKinematic = true;
         if (roofTransform != null)
         {
             Vector3 vec3 = new Vector3(Cable.position.x, roofTransform.position.y - offsetY, Cable.position.z);
-            magnetTransform.DOMove(vec3, 2f).OnComplete(() => state = ClawState.None);
+            magnetTransform.DOMove(vec3, 2f).OnComplete(() => State = ClawState.None);
         }
+        mousePosMarker.gameObject.SetActive(false);
 
         roofTransform = null;
     }
-
+    // 오브젝트 회전력 줄이기
     public void RelaxProduct()
     {
         foreach (Transform t in magnetParts)
