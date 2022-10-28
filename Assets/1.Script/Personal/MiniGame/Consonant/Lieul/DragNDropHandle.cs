@@ -9,9 +9,6 @@ public class DragNDropHandle : MonoBehaviour
     Collider collider;
     [SerializeField]
     Collider lieulPosi;
-    bool check = false;
-    [SerializeField]
-    GameObject active;
   
     private void Start()
     {
@@ -36,9 +33,6 @@ public class DragNDropHandle : MonoBehaviour
         if(collider != null && collider.gameObject == lieulPosi.gameObject)
         {
             print("충돌체크확인");
-            gameObject.SetActive(false);
-            collider.gameObject.SetActive(false);    
-            active.SetActive(true);
             FindObjectOfType<QuizManager>().AddNRemove = gameObject;
         }
     }
@@ -52,4 +46,8 @@ public class DragNDropHandle : MonoBehaviour
         }
         else return null;
     }
+    //private void OnMouseUp()
+    //{
+        //FindObjectOfType<QuizManager>().AddNRemove = gameObject;
+    //}
 }
