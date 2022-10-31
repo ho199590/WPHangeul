@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.AI;
+using System;
 public class RePosition : MonoBehaviour
 {
     [SerializeField]
@@ -22,6 +23,9 @@ public class RePosition : MonoBehaviour
     Balloon_Touch balloon_Touch; //Balloon_Touch SizeReset() 함수 불러오기
     Random_Enable random_Enable;//정답일시 다음 오브젝트 활성화 Choice()함수 불러오기
     Animal_Move animal_Move;//동물 움직임 변수 
+    [SerializeField]
+    Animation_Controller animal_Controller;
+
     private void Start()
     {
         isMove = GetComponentInParent<Balloon_Move>();
@@ -47,15 +51,17 @@ public class RePosition : MonoBehaviour
     }
     //농장에 닿였을때 일어나는 상황
     private void OnTriggerEnter(Collider other)
-    { 
-        if(other.gameObject.layer == LayerMask.NameToLayer(Answer))
+    {
+        if (other.gameObject.layer == LayerMask.NameToLayer(Answer))
         {
             print("정답");
             random_Enable.Choice();
             scoreCase.SetScore();//별 스코어가 올라간다
             animal_Move.AnimalMove();
+            //정답일때만 IndexNum()함수 호
+            animal_Controller.IndexNum();
         }
-        if(other.gameObject.name == "DefaultCollision" || other.gameObject.name == notAnswer)
+        if (other.gameObject.name == "DefaultCollision" || other.gameObject.name == notAnswer)
         {
             print("틀림");
             //사운드
@@ -63,7 +69,7 @@ public class RePosition : MonoBehaviour
             //원위치
             ReMove();
             //동물크기 리셋 
-            balloon_Touch.SizeReset();         
+            balloon_Touch.SizeReset();
         }
     }
     //동물 원위치로 전환
