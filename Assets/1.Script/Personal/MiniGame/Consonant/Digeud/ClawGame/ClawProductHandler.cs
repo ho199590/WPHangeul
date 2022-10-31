@@ -44,7 +44,7 @@ public class ClawProductHandler : MonoBehaviour
                     GetComponent<Joint>().autoConfigureConnectedAnchor = false;
                     //자식 갯수로 판별시 꾸미기 어려움이 있음
                     //GetComponent<Joint>().connectedAnchor = collision.transform.childCount < 3 ? Vector3.down * 0.5f : Vector3.down * 2.1f;
-                    print(collision.transform.parent.name);
+                    
                     GetComponent<Joint>().connectedAnchor = !transform.parent.name.Contains("Magnet") ? Vector3.down * 0.5f : Vector3.down * 2.1f;
                     //자석 올리기 이벤트 호출
 
