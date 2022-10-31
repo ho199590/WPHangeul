@@ -6,6 +6,8 @@ public class Animation_Controller : MonoBehaviour
 {
     public static Action plusNum;
     private int index;
+    [SerializeField]
+    Animator animalAnimation;
     public void IndexNum()
     {
         Index++;
