@@ -167,6 +167,7 @@ public class ClawController : MonoBehaviour
         IsTrigger = false;
         //SetBodyTrigger(false);
         RelaxProduct();
+        magnetTransform.GetComponent<Collider>().isTrigger = false;
     }
     #endregion
 
@@ -205,12 +206,13 @@ public class ClawController : MonoBehaviour
         }
 
         rig.isKinematic = false;
-        underTransform = null;
+        underTransform = null;        
     }
     //자석 올리기
     public void MagnetLift()
     {   
         rig.isKinematic = true;
+        magnetTransform.GetComponent<Collider>().isTrigger = true;
         if (roofTransform != null)
         {
             Vector3 vec3 = new Vector3(Cable.position.x, roofTransform.position.y - offsetY, Cable.position.z);
