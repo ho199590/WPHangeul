@@ -98,12 +98,12 @@ public class LetterDrawHandler : MonoBehaviour, IPointerExitHandler, IDragHandle
         raycaster.Raycast(eventData, result);
         if (onDraw)
         {
+            // 이벤트 데이터의 델타값과 현재 라인 플래그 값으로 방향성 체크
             if (dirCheck.CheckDir(eventData.delta, DirectionFlag.GetDirection(directions[curLineIndex])))
             {
                 if (!arrow.GetDraw()) { return; }
                 outTime = 0;
                 Draw?.Invoke(eventData);
-
                 if (!speaker.GetComponent<AudioSource>().isPlaying)
                 {   
                     speaker.SoundByClip(ClickSound[1]);
@@ -111,8 +111,10 @@ public class LetterDrawHandler : MonoBehaviour, IPointerExitHandler, IDragHandle
 
                 foreach (var item in result)
                 {
+                    // 인터페이스가 상속된 경우에만 실행
                     if (item.gameObject.GetComponent<IPointer>() != null)
                     {
+                        // 디렉션 카운터보다 작고, 디렉션이 알맞을 경우
                         if (item.gameObject.GetComponent<IPointer>().NextLine().Item1 < directions.Count &&
                             item.gameObject.GetComponent<IPointer>().NextLine().Item2 ==
                            DirectionFlag.GetDirection(directions[item.gameObject.GetComponent<IPointer>().NextLine().Item1]))
@@ -137,6 +139,7 @@ public class LetterDrawHandler : MonoBehaviour, IPointerExitHandler, IDragHandle
                                 break;
                             }
                         }
+                        // 디렉션 백터가 0에 인덱스가 현재치 +1이 대상 => 끝라인에 도착하였을 경우
                         else if (item.gameObject.GetComponent<IPointer>().NextLine().Item2 == Vector2.zero
                                     && item.gameObject.GetComponent<IPointer>().NextLine().Item1 == curLineIndex + 1)
                         {
@@ -154,7 +157,7 @@ public class LetterDrawHandler : MonoBehaviour, IPointerExitHandler, IDragHandle
                     }
                 }
             }
-            else
+            else // 일정시간 틀렸을 경우 리셋
             {
                 outTime += Time.deltaTime * 10;
                 if (outTime > 0.5f)
