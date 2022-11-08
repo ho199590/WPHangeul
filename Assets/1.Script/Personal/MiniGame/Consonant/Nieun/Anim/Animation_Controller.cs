@@ -39,5 +39,6 @@ public class Animation_Controller : MonoBehaviour
     public void AnimalDance()
     {
         transform.GetChild(choice.number).GetComponent<Animator>().Play("Jump");
+        transform.GetChild(choice.number).GetComponent<Animator>().Play("Eyes_Happy");
     }
 }
