@@ -65,7 +65,7 @@ public class StageArrayController : MonoBehaviour
     // count에 맞춰서 count * count 스테이지 생성
     public void MakeStage()
     {
-        RemoveStage();
+        RemoveStage();        
         GameObject obj = state switch
         {
             BlockState.Stage => block[0],
@@ -73,6 +73,14 @@ public class StageArrayController : MonoBehaviour
             BlockState.Wall => block[2],
             _ => null
         };
+
+        if (state == BlockState.Wall)
+        {
+            var wall = Instantiate(obj, transform);
+            wall.transform.localScale = new Vector3(size * count, 20, 1f);
+            wall.transform.position = new Vector3(size, transform.parent.position.y + 10, count * size);
+            return;
+        }
 
         float alpha = (state == BlockState.Roof) ? 0.5f : 0.5f;        
         for (int i = 0; i < Mathf.Pow(count, 2); i++)
@@ -85,7 +93,8 @@ public class StageArrayController : MonoBehaviour
             t.localScale = new Vector3(t.localScale.x * size, t.localScale.y, t.localScale.z * size);
             stage.name = i.ToString();
 
-            stage.transform.GetChild(0).GetComponent<Renderer>().material.color = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f), alpha);
+            //stage.transform.GetChild(0).GetComponent<Renderer>().material.color = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f), alpha);
+            stage.transform.GetChild(0).GetComponent<Renderer>().material.color = Color.blue;
         }
         if(state == BlockState.Stage)
         {
