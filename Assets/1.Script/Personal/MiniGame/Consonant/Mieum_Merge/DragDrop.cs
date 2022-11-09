@@ -1,11 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
+using UnityEngine.EventSystems;
 /*using Rito.MouseEvents;*/
 //https://rito15.github.io/posts/unity-toy-custom-mouse-events/
 public class DragDrop : MonoBehaviour
 {
+    [SerializeField]
+    GameObject hangleOb;
+
+    private Vector3 dePosition;
+    private void Awake()
+    {
+        //기존위치 값 저장 
+        dePosition = transform.position;
+    }
     //Mouse Event
     //오브젝트 클릭시
     private void OnMouseDown()
@@ -25,9 +34,26 @@ public class DragDrop : MonoBehaviour
     private void OnMouseUp()
     {
 /*        print("OnMouseUp");*/
+        //원위치로 돌아감
+        StartCoroutine(ResetPosition());
     }
-    private void OnMouseOver()
+    private void OnCollisionEnter(Collision collision)
     {
-        print("OnMouseOver");
+        print("충돌했을때");
+        transform.gameObject.SetActive(false);
+        collision.gameObject.SetActive(false);
+        hangleOb.SetActive(true);
+        hangleOb.transform.position = collision.transform.position;
+    }
+    IEnumerator ResetPosition()
+    {
+        while(Vector3.Distance(transform.position , dePosition) >3)        
+        {
+            transform.position = Vector3.MoveTowards(transform.position, dePosition,
+                Time.deltaTime * 40);
+            yield return new WaitForSeconds(Time.deltaTime);
+        }
+        transform.position = dePosition;
+        yield break;
     }
 }
