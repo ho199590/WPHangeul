@@ -14,6 +14,8 @@ public class QuizManager : MonoBehaviour //퀴즈의 정답처리 관련 총괄 매니저
     [SerializeField]
     obstacles[] perQuizObstacles; //퀴즈별 장애물
     int count; //몇번째 퀴즈인지 체크용
+    [SerializeField]
+    GameObject[] poles; //퀴즈가 끝나면 회전이 시작될 이정표
 
     public event System.Action<GameObject> QuizCheck; //퀴즈 맞췄을 때 발생할 이벤트
 
@@ -56,6 +58,7 @@ public class QuizManager : MonoBehaviour //퀴즈의 정답처리 관련 총괄 매니저
             {
                 perQuizObstacles[count - 1].roadObstacles[i].gameObject.SetActive(false);
             }
+            poles[count - 1].GetComponent<PoleRotationHandle>().enabled = true;
             FindObjectOfType<NaviMoveManager>().Check = true; //다시 네브메쉬 움직이게 bool값 보내주기
         }
     }

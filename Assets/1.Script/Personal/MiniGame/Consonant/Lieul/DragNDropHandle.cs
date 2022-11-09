@@ -8,7 +8,7 @@ public class DragNDropHandle : MonoBehaviour
     private Vector3 posi;
     Collider collider;
     [SerializeField]
-    Collider lieulPosi;
+    GameObject lieulPosi;
     bool check = false;
     [SerializeField]
     GameObject active;
@@ -27,13 +27,14 @@ public class DragNDropHandle : MonoBehaviour
     {
         z_saved = Camera.main.WorldToScreenPoint(gameObject.transform.position).z;
         posi = gameObject.transform.position - GetMouseWorldPosition();
-        if(GetComponent<Rigidbody>() == true) GetComponent<Rigidbody>().useGravity = false;
+        if(GetComponent<Rigidbody>()) GetComponent<Rigidbody>().useGravity = false;
+        lieulPosi.SetActive(true);
     }
     private void OnMouseDrag()
     {
         transform.position = GetMouseWorldPosition() + posi;
         collider = CheckOb();
-        if(collider != null && collider.gameObject == lieulPosi.gameObject)
+        if(collider != null && collider.gameObject == lieulPosi)
         {
             print("충돌체크확인");
             gameObject.SetActive(false);

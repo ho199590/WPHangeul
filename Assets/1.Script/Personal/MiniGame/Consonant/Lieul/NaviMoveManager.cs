@@ -12,6 +12,9 @@ public class NaviMoveManager : MonoBehaviour
     Vector3 destination;
     NavMeshAgent agent;
 
+    [SerializeField]
+    Camera endCam;
+
     //골목 회전용
     int index;
     void Start()
@@ -60,6 +63,10 @@ public class NaviMoveManager : MonoBehaviour
             {
                 DestinationIndex = ++index; //다음 타겟으로 인덱스값 +1해서 넘겨주기
             }
+            if (collision.gameObject.name.Contains("Fin"))
+            {
+                endCam.depth = 1;
+                endCam.GetComponent<Animator>().enabled = true;            }
         }
     }
 }

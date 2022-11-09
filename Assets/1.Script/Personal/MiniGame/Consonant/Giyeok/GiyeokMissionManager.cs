@@ -45,9 +45,9 @@ public class GiyeokMissionManager : MonoBehaviour
     }
     private void Start()
     {
-        StartCoroutine(startDelay());
+        StartCoroutine(StartDelay());
     }
-    IEnumerator startDelay()
+    IEnumerator StartDelay()
     {
         yield return new WaitForFixedUpdate();
         invisible.SetActive(true);
