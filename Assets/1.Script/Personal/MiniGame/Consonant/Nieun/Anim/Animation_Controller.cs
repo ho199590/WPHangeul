@@ -3,15 +3,25 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 public class Animation_Controller : MonoBehaviour
-{
-    [SerializeField]
-    Animator[] animator;
+{   
+    //이벤트 함수 등록
     public static Action plusNum;
-    private int index;
+    //정답을 맞출경우 static 변수 선언
+    private static int index = 0;
+    //SerializeField로 choice.Number로 몇번째 동물인지 확인
+    [SerializeField]
+    Random_AnimalChoice choice;
+    private void Start()
+    {
+        //animalchoice 스크립트 초기화
+        choice = GetComponent<Random_AnimalChoice>();
+    }
+    //Index 증가 함수
     public void IndexNum()
     {
         Index++;
     }
+    //Property
     public int Index
     {
         get => index;
@@ -24,32 +34,10 @@ public class Animation_Controller : MonoBehaviour
             }
         }
     }
-
     //미션 클리어시 동물 춤 애니메이션 수정
-    private void AnimalDance()
+    public void AnimalDance()
     {
-        animator[0].SetInteger("Crow_LOD0Ani", 1);
-        animator[1].SetInteger("SnappingTurtle_LOD0", 1);
-        animator[2].SetInteger("Lobster_LOD0", 1);
-        animator[3].SetInteger("Goldfish_LOD0Ani", 1);
-        animator[4].SetInteger("Hedgehog_LOD0Ani", 1);
-        animator[5].SetInteger("Camel_LOD0Ani", 1);
-        animator[6].SetInteger("Sloth_LOD0", 1);
-    }
-    private void OnMouseDown()
-    {
-        /*Index++;*/
-/*        animator[0].SetInteger("Camel_LOD0Ani", 1);
-        animator[1].SetInteger("Crow_LOD0Ani", 1);
-        animator[2].SetInteger("Goldfish_LOD0Ani", 1);
-        animator[3].SetInteger("Hedgehog_LOD0Ani", 1);
-        animator[4].SetInteger("Sloth_LOD0", 1);
-        animator[5].SetInteger("Lobster_LOD0", 1);
-        animator[6].SetInteger("SnappingTurtle_LOD0", 1);*/
-    }
-
-    private void AnimalFace()
-    {
-
+        transform.GetChild(choice.number).GetComponent<Animator>().Play("Jump");
+        transform.GetChild(choice.number).GetComponent<Animator>().Play("Eyes_Happy");
     }
 }

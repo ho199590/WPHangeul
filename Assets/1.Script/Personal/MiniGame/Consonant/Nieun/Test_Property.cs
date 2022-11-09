@@ -5,8 +5,15 @@ using UnityEngine;
 
 public class Test_Property : MonoBehaviour
 {
+    private Animator animator;
+
+    private void Awake()
+    {
+       animator = GetComponent<Animator>();
+    }
     private void OnMouseDown()
     {
-        Test_Property2.Num();
+        print("Å¬¸¯¤¡");
+        animator.SetInteger("Camel_LOD0_SH", 1);
     }
 }

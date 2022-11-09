@@ -24,7 +24,7 @@ public class RePosition : MonoBehaviour
     Random_Enable random_Enable;//정답일시 다음 오브젝트 활성화 Choice()함수 불러오기
     Animal_Move animal_Move;//동물 움직임 변수 
     [SerializeField]
-    Animation_Controller animal_Controller;
+    Animation_Controller animation_Controller;
 
     private void Start()
     {
@@ -59,7 +59,8 @@ public class RePosition : MonoBehaviour
             scoreCase.SetScore();//별 스코어가 올라간다
             animal_Move.AnimalMove();
             //정답일때만 IndexNum()함수 호
-            animal_Controller.IndexNum();
+            /*            animation_Controller.IndexNum();*/
+            animation_Controller.AnimalDance();
         }
         if (other.gameObject.name == "DefaultCollision" || other.gameObject.name == notAnswer)
         {
