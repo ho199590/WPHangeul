@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class QuestTouch : MonoBehaviour
+public class NPCTalk : MonoBehaviour
 {
     //Text Effect
     [SerializeField]         //text 변수
@@ -16,6 +16,11 @@ public class QuestTouch : MonoBehaviour
     GameObject npc;    //대화가 끝나고 비활성화 해야하기 때문
     int talkIndex = 0; //배열 증감 변수
     bool imageTouch = true;  //대화 도중 터치 못하게 막기
+    //Npc와 대화가 끝나면 오브젝트 활성화
+    [SerializeField]
+    GameObject animalOb;
+    [SerializeField]
+    GameObject animalObTwo;
     private void OnMouseDown()
     {
         if (imageTouch)
@@ -35,6 +40,8 @@ public class QuestTouch : MonoBehaviour
     {
         talkImage.SetActive(false);
         npc.SetActive(false);
+        animalOb.SetActive(true);
+        animalObTwo.SetActive(true);    
     }
     IEnumerator OnType()
     {
