@@ -45,6 +45,9 @@ public class StageArrayController : MonoBehaviour
     List<GameObject> list = new List<GameObject>();
     [SerializeField]
     List<GameObject> sub = new List<GameObject>();
+    [SerializeField]
+    int[] indexs;
+
     #endregion
 
     #region 테스트용 함수
@@ -87,14 +90,16 @@ public class StageArrayController : MonoBehaviour
         {
             Vector3 Pos = new Vector3((i % count) * size, 0, i / count * size);
             
-            var stage = Instantiate(obj, transform.position + Pos, Quaternion.identity, transform);            
+            var stage = Instantiate(obj, transform.position + Pos, Quaternion.identity, transform);
             //stage.transform.GetChild(0).localScale *= size;
-            Transform t = stage.transform.GetChild(0);
+            Transform t = stage.transform;
+
+            //t = stage.transform.GetChild(0);
             t.localScale = new Vector3(t.localScale.x * size, t.localScale.y, t.localScale.z * size);
             stage.name = i.ToString();
 
             //stage.transform.GetChild(0).GetComponent<Renderer>().material.color = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f), alpha);
-            stage.transform.GetChild(0).GetComponent<Renderer>().material.color = Color.blue;
+            t.GetComponent<StageBlockHandler>().block.GetComponent<Renderer>().material.color = Color.blue;
         }
         if(state == BlockState.Stage)
         {
@@ -126,7 +131,6 @@ public class StageArrayController : MonoBehaviour
         }
         // 완성된 배열을 필요한 만큼만 남기고 잘라낸 이후 랜덤한 번호 배정
         sub = list.Take((int)Mathf.Pow(count, 2)).ToList();
-        int[] indexs;
         var array = Enumerable.Range(0, sub.Count);
         indexs = array.OrderBy(x => Random.value).ToArray();
         // 알맞은 위치에 배정

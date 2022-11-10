@@ -7,7 +7,7 @@ public class StageBlockHandler : MonoBehaviour
 {
     #region º¯¼ö
     [SerializeField]
-    GameObject beacon;
+    public GameObject block, beacon, Liner;
     Vector3 beaconPos;
 
     VacuumController controller;
@@ -26,10 +26,7 @@ public class StageBlockHandler : MonoBehaviour
         beaconPos = beacon.transform.position;
         controller = FindObjectOfType<VacuumController>();
         controller.BeaconCheck += BeaconOff;
-
-         
-         
-
+ 
 //      ObjectSpawn(TestOBJ);
     }
 
@@ -38,13 +35,13 @@ public class StageBlockHandler : MonoBehaviour
     {
         beacon.transform.localScale = beaconScale;
         beacon.SetActive(true);
-        GetComponent<Renderer>().material.color = Color.yellow;
+        block.GetComponent<Renderer>().material.color = Color.yellow;
         state = 1;
     }
     public void BeaconOff()
     {
         beacon.SetActive(false);
-        GetComponent<Renderer>().material.color = Color.blue;
+        block.GetComponent<Renderer>().material.color = Color.blue;
         state = 0;
     }
     public Transform ObjectSpawn(GameObject Target)

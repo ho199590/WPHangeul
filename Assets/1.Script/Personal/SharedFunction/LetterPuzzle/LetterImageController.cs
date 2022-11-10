@@ -73,6 +73,8 @@ public class LetterImageController : MonoBehaviour
     {
         var array = System.Linq.Enumerable.Range(0, Animals.childCount);
         indexs = array.OrderBy(x => Random.value).ToArray();
+
+
         if(narrationContainer.GetDictionary().TryGetValue(UnitNum, out List<NarrationSetContainer.Narraition> sp))
         {
             word = new List<string>();
