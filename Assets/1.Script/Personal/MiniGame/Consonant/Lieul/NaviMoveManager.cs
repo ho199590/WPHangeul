@@ -68,7 +68,9 @@ public class NaviMoveManager : MonoBehaviour
             }
             if (collision.gameObject.name.Contains("Fin"))
             {
-                endCam.depth = 1;
+                Camera.main.enabled = false;
+                //endCam.depth = 1;
+                //endCam.enabled = true;
                 endCam.GetComponent<Animator>().enabled = true;            }
         }
     }
