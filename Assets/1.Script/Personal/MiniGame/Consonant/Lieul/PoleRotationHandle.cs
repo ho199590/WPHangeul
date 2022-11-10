@@ -17,7 +17,7 @@ public class PoleRotationHandle : MonoBehaviour
         while(transform.rotation.eulerAngles.y > 180)
         {
             print("회전코루틴체크"+transform.rotation.eulerAngles.y);
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(0, 180, 0), Time.deltaTime *2);
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(0, 180, 0), Time.deltaTime * 5);
             yield return new WaitForSeconds(Time.deltaTime);
             if(transform.rotation.eulerAngles.y <= 180)
             {
