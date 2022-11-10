@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Generic;
 
-public class GameManager : MonoBehaviour
+public class MergeGameManager : MonoBehaviour
 {	
     [SerializeField]
     StageManager _stageManager;
