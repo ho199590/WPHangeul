@@ -8,12 +8,12 @@ public class DragDrop : MonoBehaviour
 {
     [SerializeField]
     GameObject hangleOb;
-
     private Vector3 dePosition;
     private void Awake()
     {
         //기존위치 값 저장 
         dePosition = transform.position;
+        //마우스 커서 적용 
     }
     //Mouse Event
     //오브젝트 클릭시
