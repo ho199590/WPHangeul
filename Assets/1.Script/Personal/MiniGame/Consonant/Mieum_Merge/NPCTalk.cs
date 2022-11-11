@@ -2,11 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+
 public class NPCTalk : MonoBehaviour
 {
-    //카메라 
-    [SerializeField]
-    Camera m_Camera;        //Talk가 끝나고 일어날 이벤트의 카메라 변수 
     //Text Effect
     [SerializeField]         //text 변수
     Text text;
@@ -30,6 +28,7 @@ public class NPCTalk : MonoBehaviour
             if (talk.Length == talkIndex)//대화가 다끝났다면 Npc를 꺼준다
             {
                 NpcOf();
+                CameraMove.CameraEvents();//카메라 이동 함수 호출
             }
             else
             {
@@ -58,4 +57,5 @@ public class NPCTalk : MonoBehaviour
         imageTouch = true;
         yield break;
     }
+
 }
