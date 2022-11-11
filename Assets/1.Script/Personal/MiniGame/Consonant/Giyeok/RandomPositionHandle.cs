@@ -23,7 +23,7 @@ public class RandomPositionHandle : MonoBehaviour
     GameObject[] wrongOb;
     int plus = 0;
 
-    void Start()
+    void Awake()
     {
         System.Random random = new System.Random(); 
         var randomArray1 = Enumerable.Range(0, randomPosition_inWater.Length).ToArray(); //인덱스용으로 순서대로 배열에 넣어주기
