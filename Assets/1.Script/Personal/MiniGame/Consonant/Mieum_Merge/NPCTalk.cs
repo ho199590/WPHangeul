@@ -2,9 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
 public class NPCTalk : MonoBehaviour
 {
+    //카메라 
+    [SerializeField]
+    Camera m_Camera;        //Talk가 끝나고 일어날 이벤트의 카메라 변수 
     //Text Effect
     [SerializeField]         //text 변수
     Text text;
