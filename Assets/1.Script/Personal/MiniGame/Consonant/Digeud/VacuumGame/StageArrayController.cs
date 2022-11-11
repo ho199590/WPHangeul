@@ -46,6 +46,8 @@ public class StageArrayController : MonoBehaviour
     [SerializeField]
     List<GameObject> sub = new List<GameObject>();
     [SerializeField]
+    List<Transform> movemontList = new List<Transform>();
+    [SerializeField]
     int[] indexs;
 
     #endregion
@@ -138,6 +140,10 @@ public class StageArrayController : MonoBehaviour
         {
             StageBlockHandler block = transform.GetChild(indexs[i]).GetComponentInChildren<StageBlockHandler>();
             var pro =  Instantiate(sub[i], block.GetBlock().Item1, Quaternion.identity, basket);
+            if(pro.GetComponent<VacuumAbsorbHandler>() != null)
+            {
+                pro.GetComponent<VacuumAbsorbHandler>().ProductInit(i < products[product_num].productList.Count ? 0 : 1);
+            }
         }
     }
 

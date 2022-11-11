@@ -88,8 +88,12 @@ public class VacuumController : MonoBehaviour
     // 청소기 하강
     public void VacuumFall()
     {
-        if(underTransform != null)
+        if(state != VacuumState.None)
         {
+            return;
+        }
+        if(underTransform != null)
+        {   
             state = VacuumState.Fall;
             liftPos = vacuumTranform.position;
 
@@ -107,15 +111,20 @@ public class VacuumController : MonoBehaviour
     #region
     private void OnTriggerEnter(Collider other)
     {
-        other.GetComponent<Rigidbody>().freezeRotation = false;
-        Spin(other.gameObject);
+        if(other.GetComponent<VacuumAbsorbHandler>() != null)
+        {
+            other.GetComponent<Rigidbody>().freezeRotation = false;
+            other.GetComponent<VacuumAbsorbHandler>().State = 1;
+            Spin(other.gameObject);
 
-        var obj = Instantiate(other, basketPos.position, Quaternion.identity);
-        obj.GetComponent<Rigidbody>().useGravity = true;
-        obj.GetComponent<Rigidbody>().freezeRotation = false;
+            var obj = Instantiate(other, basketPos.position, Quaternion.identity);
+            obj.GetComponent<Rigidbody>().useGravity = true;
+            obj.GetComponent<Rigidbody>().freezeRotation = false;
 
-        ForceTestList.Add(obj.gameObject);
+            ForceTestList.Add(obj.gameObject);
 
+            
+        }
         //Destroy(other.gameObject);
     }
 
@@ -126,6 +135,8 @@ public class VacuumController : MonoBehaviour
         {
             Vector3 force =  new Vector3(Random.Range(-10, 10), 15, Random.Range(-10, 10));
             g.GetComponent<Rigidbody>().AddForce(force, ForceMode.Impulse);
+
+            g.GetComponent<VacuumAbsorbHandler>().State = 3;
         }
     }
 
