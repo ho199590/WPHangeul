@@ -18,6 +18,10 @@ public class StageBlockHandler : MonoBehaviour
 
     [SerializeField]
     Vector3 beaconScale;
+
+    [SerializeField]
+    Material[] mats;
+
     #endregion
 
     private void Awake()
@@ -35,13 +39,13 @@ public class StageBlockHandler : MonoBehaviour
     {
         beacon.transform.localScale = beaconScale;
         beacon.SetActive(true);
-        block.GetComponent<Renderer>().material.color = Color.yellow;
+        block.GetComponent<Renderer>().material = mats[1];
         state = 1;
     }
     public void BeaconOff()
     {
         beacon.SetActive(false);
-        block.GetComponent<Renderer>().material.color = Color.blue;
+        block.GetComponent<Renderer>().material = mats[0];
         state = 0;
     }
     public Transform ObjectSpawn(GameObject Target)

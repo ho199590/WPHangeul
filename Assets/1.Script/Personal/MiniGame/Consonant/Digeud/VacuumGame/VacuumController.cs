@@ -117,7 +117,8 @@ public class VacuumController : MonoBehaviour
             other.GetComponent<VacuumAbsorbHandler>().State = 1;
             Spin(other.gameObject);
 
-            var obj = Instantiate(other, basketPos.position, Quaternion.identity);
+            var obj = Instantiate(other, basketPos.position, Quaternion.identity, basketPos);
+            obj.gameObject.layer = basketPos.gameObject.layer;
             obj.GetComponent<Rigidbody>().useGravity = true;
             obj.GetComponent<Rigidbody>().freezeRotation = false;
 
@@ -134,8 +135,8 @@ public class VacuumController : MonoBehaviour
         foreach(GameObject g in ForceTestList)
         {
             Vector3 force =  new Vector3(Random.Range(-10, 10), 15, Random.Range(-10, 10));
-            g.GetComponent<Rigidbody>().AddForce(force, ForceMode.Impulse);
-
+            //g.GetComponent<Rigidbody>().AddForce(force, ForceMode.Impulse);
+            g.GetComponent<Rigidbody>().AddForce(Vector3.up * 15, ForceMode.Impulse);
             g.GetComponent<VacuumAbsorbHandler>().State = 3;
         }
     }

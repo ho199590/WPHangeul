@@ -50,6 +50,9 @@ public class StageArrayController : MonoBehaviour
     [SerializeField]
     int[] indexs;
 
+
+    [SerializeField]
+    Material[] mats; 
     #endregion
 
     #region 테스트용 함수
@@ -90,7 +93,7 @@ public class StageArrayController : MonoBehaviour
         float alpha = (state == BlockState.Roof) ? 0.5f : 0.5f;        
         for (int i = 0; i < Mathf.Pow(count, 2); i++)
         {
-            Vector3 Pos = new Vector3((i % count) * size, 0, i / count * size);
+            Vector3 Pos = new Vector3((i % count) * size * transform.localScale.x, 0 , i / count * size * transform.localScale.z);
             
             var stage = Instantiate(obj, transform.position + Pos, Quaternion.identity, transform);
             //stage.transform.GetChild(0).localScale *= size;
@@ -101,7 +104,7 @@ public class StageArrayController : MonoBehaviour
             stage.name = i.ToString();
 
             //stage.transform.GetChild(0).GetComponent<Renderer>().material.color = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f), alpha);
-            t.GetComponent<StageBlockHandler>().block.GetComponent<Renderer>().material.color = Color.blue;
+            t.GetComponent<StageBlockHandler>().block.GetComponent<Renderer>().material = mats[0];
         }
         if(state == BlockState.Stage)
         {
@@ -143,6 +146,7 @@ public class StageArrayController : MonoBehaviour
             if(pro.GetComponent<VacuumAbsorbHandler>() != null)
             {
                 pro.GetComponent<VacuumAbsorbHandler>().ProductInit(i < products[product_num].productList.Count ? 0 : 1);
+                
             }
         }
     }

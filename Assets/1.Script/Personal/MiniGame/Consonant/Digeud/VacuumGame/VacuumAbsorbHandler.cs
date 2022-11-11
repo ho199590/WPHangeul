@@ -40,7 +40,6 @@ public class VacuumAbsorbHandler : MonoBehaviour
     // ¹èÄ¡
     public void ProductInit(int num)
     {
-        print("CHECK!");
         result = num;
         if (result == 0)
         {
