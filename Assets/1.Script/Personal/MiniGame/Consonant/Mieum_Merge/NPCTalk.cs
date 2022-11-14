@@ -28,6 +28,7 @@ public class NPCTalk : MonoBehaviour
             if (talk.Length == talkIndex)//대화가 다끝났다면 Npc를 꺼준다
             {
                 NpcOf();
+                CameraMove.CameraEvents();//카메라 이동 함수 호출
             }
             else
             {
@@ -56,4 +57,5 @@ public class NPCTalk : MonoBehaviour
         imageTouch = true;
         yield break;
     }
+
 }
