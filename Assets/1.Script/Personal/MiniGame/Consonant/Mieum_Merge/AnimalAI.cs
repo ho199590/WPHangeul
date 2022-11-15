@@ -5,46 +5,43 @@ using UnityEngine.AI;
 public class AnimalAI : MonoBehaviour
 {
     [SerializeField]
-    GameObject[] movePoint;    //몬스터 목표 위치 
+    Transform[] movePoint;    //몬스터 목표 위치 
     [SerializeField]
-    GameObject[] Monster;      //몬스터 배열
-    int num;
+    Transform spawnPoint;
     NavMeshAgent agent;
     Rigidbody rigid;
     Animator anim;
+    int num;
     public string animname;
-    [SerializeField]
-    GameObject spawnPoint;
-    bool firstpoint = false;
+
     protected void Awake()
     {
+        movePoint = GameObject.Find("Point").GetComponentsInChildren<Transform>();
+        spawnPoint = GameObject.Find("SpwanPoint").GetComponent<Transform>();
         agent = GetComponent<NavMeshAgent>();
-        num = Random.Range(0,movePoint.Length);
         rigid = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
+        num = Random.Range(0, movePoint.Length);
         anim.SetInteger(animname, 3);
         transform.position = spawnPoint.transform.position; //첫시작시 위치
     }
-
     private void Update()
     {
-/*        GameObject monster = Instantiate(Monster[Random.Range(0, Monster.Length)]);*/
         agent.SetDestination(movePoint[num].transform.position);
-/*        monster.GetComponent<NavMeshAgent>().SetDestination(movePoint[num].transform.position);*/
         FreezeVelocity();
-       if (Vector3.Distance(transform.position, movePoint[num].transform.position) < 1f)
-       {
-          num = Random.Range(0, movePoint.Length);
-       }
+        if (Vector3.Distance(transform.position, movePoint[num].transform.position) < 1f)
+        {
+            num = Random.Range(0, movePoint.Length);
+        }
     }
     void FreezeVelocity()
     {
-        rigid.velocity = Vector3.zero;  
+        rigid.velocity = Vector3.zero;
         rigid.angularVelocity = Vector3.zero;
     }
 }
-
-/*NavMeshAgent animal = null;
+/*
+NavMeshAgent animal = null;
 Rigidbody rb;
 [SerializeField] Transform[] walkpoint = null;
 int count = 0;
@@ -75,8 +72,8 @@ private void OnCollisionEnter(Collision collision)
     rb.angularVelocity = Vector3.zero;
     this.gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
     this.gameObject.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
-}*/
-/*public float currTime;     //시간을 담당할 변수를 하나 만들어준다.
+}
+public float currTime;     //시간을 담당할 변수를 하나 만들어준다.
 [SerializeField]
 GameObject[] Monster;      //몬스터 배열
 [SerializeField]
