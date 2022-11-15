@@ -16,12 +16,7 @@ public class AnimalAI : MonoBehaviour
     private IEnumerator coroutine;//코루틴 변수 선언
     public string animname;   //어떤 애니메이션을 실행할지 인스펙터창에서 지정 변수
     int randomInt;            //movePoint 순서를 랜덤하게 저장 할 변수
-    float distance = 0;
-    bool drag = false;                //Drag 체크 변수
-    GameObject objectHitPostion;
-    RaycastHit hitRay, hitLayerMask;
-    private Vector3 m_Offset;
-    private float m_ZCoord;
+    bool monsterDrag = false;         //드래그 중일때만 출돌 판별 변수
     protected void Awake()
     {
         GetPoint();
@@ -75,16 +70,24 @@ public class AnimalAI : MonoBehaviour
         float distance = Camera.main.WorldToScreenPoint(transform.position).z; //World 좌표를 스크린 좌표로 전환 , z좌표가 카메라의 표준위치 
         Vector3 mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, distance);
         Vector3 objPos = Camera.main.ScreenToWorldPoint(mousePos);             //ScreenToWorldPoint가 다시 스크린의 마우스 좌표를 오브젝트의 좌표로 전환.
-        objPos.y = 5f;//y축 고정
+        objPos.y = 0f;//y축 고정
         transform.position = objPos;
+
+        monsterDrag = true;
     }
     private void OnMouseUp()
     {
         agent.speed = 3.5f;
-    }
-    private void OnTriggerEnter(Collider other)
-    {
-        
-    }
+        monsterDrag = false;
 
+    }
+    private void OnTriggerEnter(Collider other) //드래그 중일때 똑같은 몬스터면 삭제
+    {
+        if (monsterDrag && other.name == transform.name)
+        {
+            Destroy(other.gameObject);  //두 오브젝트 삭제
+            Destroy(this.gameObject);
+            AnimalSpwan.plusCount();//몬스터 갯수 Count 늘려줌 
+        }
+    }
 }

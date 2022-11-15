@@ -33,4 +33,8 @@ public class TestScript : MonoBehaviour
         objPos.y = 0.7f;
         transform.position = objPos;
     }
+    private void OnTriggerEnter(Collider other)
+    {
+        print(other.name);
+    }
 }

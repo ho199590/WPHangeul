@@ -36,7 +36,7 @@ public class CameraMove : MonoBehaviour
         if(b_recipe && Vector3.Distance(m_Camera.transform.position , target.transform.position) <= 3f)
         {
             recipe.SetActive(true);
-            recipe.transform.DOLocalMoveY(120 , 1).SetEase(Ease.Linear).SetLoops(1);
+            recipe.transform.DOLocalMoveY(300 , 1).SetEase(Ease.Linear).SetLoops(1);
             b_recipe = false;
         }
     }
