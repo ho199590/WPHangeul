@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class TestScript : MonoBehaviour
 {
-    GameObject objectHitPostion;
-    RaycastHit hitRay, hitLayerMask;
-
+    [SerializeField]
+    GameObject Particle;
+    int i =0;
     private void OnMouseUp()
     {
 /*        this.transform.parent = null;
@@ -33,8 +33,11 @@ public class TestScript : MonoBehaviour
         objPos.y = 0.7f;
         transform.position = objPos;
     }
-    private void OnTriggerEnter(Collider other)
+    private void OnCollisionEnter(Collision collision)
     {
-        print(other.name);
-    }
+        print(collision.contacts[0].point);
+        GameObject effect = Instantiate(Particle);
+        effect.transform.position = collision.contacts[0].point;
+        Destroy(effect, 1f);
+    }    
 }

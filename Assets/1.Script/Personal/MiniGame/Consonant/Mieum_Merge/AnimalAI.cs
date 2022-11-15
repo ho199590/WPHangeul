@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting.Dependencies.Sqlite;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -81,13 +82,13 @@ public class AnimalAI : MonoBehaviour
         monsterDrag = false;
 
     }
-    private void OnTriggerEnter(Collider other) //드래그 중일때 똑같은 몬스터면 삭제
+    private void OnCollisionEnter(Collision col) //드래그 중일때 똑같은 몬스터면 삭제
     {
-        if (monsterDrag && other.name == transform.name)
+        if (monsterDrag && col.transform.name == transform.name)
         {
-            Destroy(other.gameObject);  //두 오브젝트 삭제
+            Destroy(col.gameObject);  //두 오브젝트 삭제
             Destroy(this.gameObject);
-            AnimalSpwan.plusCount(other.transform.position);//몬스터 갯수 Count 늘려줌 , 몬스터가 충돌한 위치 PlusCount에 전달
+            AnimalSpwan.plusCount(col.contacts[0].point);//몬스터 갯수 Count 늘려줌 , 몬스터가 충돌한 위치 PlusCount에 전달
         }
     }
 }
