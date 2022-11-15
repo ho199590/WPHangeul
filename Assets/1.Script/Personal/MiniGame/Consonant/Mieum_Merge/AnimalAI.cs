@@ -87,7 +87,7 @@ public class AnimalAI : MonoBehaviour
         {
             Destroy(other.gameObject);  //µŒ ø¿∫Í¡ß∆Æ ªË¡¶
             Destroy(this.gameObject);
-            AnimalSpwan.plusCount();//∏ÛΩ∫≈Õ ∞πºˆ Count ¥√∑¡¡‹ 
+            AnimalSpwan.plusCount(other.transform.position);//∏ÛΩ∫≈Õ ∞πºˆ Count ¥√∑¡¡‹ 
         }
     }
 }
