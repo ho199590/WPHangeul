@@ -63,7 +63,7 @@ public class AnimalAI : MonoBehaviour
     //ai몬스터들 드래그 할시 
     private void OnMouseDown()
     {
-        agent.speed = 0f;
+        agent.speed = 0f;//몬스터 속도 값
     }
     private void OnMouseDrag()
     {
@@ -77,7 +77,7 @@ public class AnimalAI : MonoBehaviour
     }
     private void OnMouseUp()
     {
-        agent.speed = 3.5f;
+        agent.speed = 3.5f;//몬스터 속도 값
         monsterDrag = false;
 
     }
@@ -87,7 +87,7 @@ public class AnimalAI : MonoBehaviour
         {
             Destroy(other.gameObject);  //두 오브젝트 삭제
             Destroy(this.gameObject);
-            AnimalSpwan.plusCount(other.transform.position);//몬스터 갯수 Count 늘려줌 
+            AnimalSpwan.plusCount(other.transform.position);//몬스터 갯수 Count 늘려줌 , 몬스터가 충돌한 위치 PlusCount에 전달
         }
     }
 }
