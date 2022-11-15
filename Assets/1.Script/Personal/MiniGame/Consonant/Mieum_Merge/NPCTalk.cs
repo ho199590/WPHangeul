@@ -19,8 +19,6 @@ public class NPCTalk : MonoBehaviour
     //Npc와 대화가 끝나면 오브젝트 활성화
     [SerializeField]
     GameObject animalOb;
-    [SerializeField]
-    GameObject animalObTwo;
     private void OnMouseDown()
     {
         if (imageTouch)
@@ -41,8 +39,7 @@ public class NPCTalk : MonoBehaviour
     {
         talkImage.SetActive(false);
         npc.SetActive(false);
-        animalOb.SetActive(true);
-        animalObTwo.SetActive(true);    
+        animalOb.SetActive(true);  
     }
     IEnumerator OnType()
     {
