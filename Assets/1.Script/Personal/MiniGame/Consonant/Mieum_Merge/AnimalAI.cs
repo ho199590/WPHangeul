@@ -11,6 +11,10 @@ public class AnimalAI : MonoBehaviour
     Transform[] movePoint;    //몬스터 목표 위치 변수
     [SerializeField]
     Transform spawnPoint;     //몬스터 생성 위치 변수
+    [SerializeField]
+    GameObject particle;      //몬스터 드래그 파티클
+    [SerializeField]
+    GameObject answerAnimal;  //완성될때 나올 동물 변수 
     NavMeshAgent agent;       //NMA 변수
     Rigidbody rigid;          //충돌시 일어나는 예외 상황 방지 변수
     Animator anim;            //동물 시작 애니메이션 지정 변수
@@ -76,6 +80,9 @@ public class AnimalAI : MonoBehaviour
         transform.position = objPos;
 
         monsterDrag = true;
+        GameObject effect = Instantiate(particle);
+        effect.transform.position = transform.position;
+        Destroy(effect, 0.5f);
     }
     private void OnMouseUp()
     {
@@ -90,6 +97,9 @@ public class AnimalAI : MonoBehaviour
             Destroy(col.gameObject);  //두 오브젝트 삭제
             Destroy(this.gameObject);
             AnimalSpwan.plusCount(col.contacts[0].point);//몬스터 갯수 Count 늘려줌 , 몬스터가 충돌한 위치 PlusCount에 전달
+            GameObject animalOb = Instantiate(answerAnimal);
+            animalOb.transform.position = col.contacts[0].point;
+            Destroy(animalOb, 2f);
         }
     }
 }
