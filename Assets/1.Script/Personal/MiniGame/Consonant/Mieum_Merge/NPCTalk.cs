@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using DG.Tweening;
 public class NPCTalk : MonoBehaviour
 {
     //Text Effect
@@ -19,13 +19,17 @@ public class NPCTalk : MonoBehaviour
     //Npc와 대화가 끝나면 오브젝트 활성화
     [SerializeField]
     GameObject animalOb;
+    [SerializeField]
+    GameObject npcBalloon;  //Npc말풍선
+
     private void OnMouseDown()
     {
         if (imageTouch)
         {
             if (talk.Length == talkIndex)//대화가 다끝났다면 Npc를 꺼준다
             {
-                NpcOf();
+                Npc();
+                NpcMove();
                 CameraMove.CameraEvents();//카메라 이동 함수 호출
             }
             else
@@ -35,10 +39,9 @@ public class NPCTalk : MonoBehaviour
         }
     }
     //대화창 끄기
-    private void NpcOf()
+    private void Npc()
     {
         talkImage.SetActive(false);
-        npc.SetActive(false);
         animalOb.SetActive(true);  
     }
     IEnumerator OnType()
@@ -54,5 +57,15 @@ public class NPCTalk : MonoBehaviour
         imageTouch = true;
         yield break;
     }
-
+    //Npc이동 Dotween
+    private void NpcMove()
+    {
+        Vector3 pos = new Vector3(130f, 646f, -7779f);
+        Vector3 ros = new Vector3(30f, 145f, -18f);
+        Vector3 scale = new Vector3(1000f, 1000f, 1000f);
+        npc.transform.DOLocalMove(pos, 3f);
+        npc.transform.DOLocalRotate(ros, 3f, RotateMode.Fast);
+        npc.transform.DOScale(scale, 3f);
+        npcBalloon.SetActive(true);
+    }
 }

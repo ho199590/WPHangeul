@@ -50,7 +50,8 @@ public class TouchEffectHandler : MonoBehaviour, IPointerDownHandler
                 _mousePos.z = -Camera.main.transform.position.z;
                 int num = Random.Range(0, touchEffect.Length);
                 var te = Instantiate(touchEffect[num], transform);
-                te.transform.position = Camera.main.ScreenToWorldPoint(_mousePos);                
+                te.transform.position = Camera.main.ScreenToWorldPoint(_mousePos);
+                Destroy(te, 1f);
             }
         }
     }
