@@ -65,6 +65,7 @@ public class AnimalAI : MonoBehaviour
     private void OnMouseDown()
     {
         agent.speed = 0f;//몬스터 속도 값
+        rigid.isKinematic = false;
     }
     private void OnMouseDrag()
     {
@@ -80,7 +81,7 @@ public class AnimalAI : MonoBehaviour
     {
         agent.speed = 3.5f;//몬스터 속도 값
         monsterDrag = false;
-
+        rigid.isKinematic = true;
     }
     private void OnCollisionEnter(Collision col) //드래그 중일때 똑같은 몬스터면 삭제
     {
