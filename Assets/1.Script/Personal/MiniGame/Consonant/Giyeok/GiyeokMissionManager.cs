@@ -4,7 +4,6 @@ using UnityEngine;
 using System.Linq;
 using UnityEngine.UI;
 using System;
-using UnityEngine.SceneManagement;
 // https://flowtree.tistory.com/46
 // https://wolstar.tistory.com/5
 
