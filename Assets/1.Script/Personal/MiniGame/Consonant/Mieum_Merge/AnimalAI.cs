@@ -19,7 +19,6 @@ public class AnimalAI : MonoBehaviour
     Rigidbody rigid;          //충돌시 일어나는 예외 상황 방지 변수
     Animator anim;            //동물 시작 애니메이션 지정 변수
     private IEnumerator coroutine;//코루틴 변수 선언
-    public string animname;   //어떤 애니메이션을 실행할지 인스펙터창에서 지정 변수
     int randomInt;            //movePoint 순서를 랜덤하게 저장 할 변수
     bool monsterDrag = false;         //드래그 중일때만 출돌 판별 변수
     protected void Awake()
@@ -28,7 +27,7 @@ public class AnimalAI : MonoBehaviour
         VariableRest();
         coroutine = AiMonster(); //Aimonster()코루틴으로 초기화 
         randomInt = Random.Range(0, movePoint.Length); //랜덤 변수 저장
-        anim.SetInteger(animname, 3);   //애니메이션 시작
+        anim.SetInteger(anim.GetParameter(0).name, 3);   //애니메이션 시작
         transform.position = spawnPoint.transform.position; //첫시작시 위치
         StartCoroutine(coroutine);
     }
@@ -97,9 +96,17 @@ public class AnimalAI : MonoBehaviour
             Destroy(col.gameObject);  //두 오브젝트 삭제
             Destroy(this.gameObject);
             AnimalSpwan.plusCount(col.contacts[0].point);//몬스터 갯수 Count 늘려줌 , 몬스터가 충돌한 위치 PlusCount에 전달
-            GameObject animalOb = Instantiate(answerAnimal);
-            animalOb.transform.position = col.contacts[0].point;
-            Destroy(animalOb, 2f);
+            AnswerAnimal(col);
         }
+    }
+    //정답을 맞출시 생성될 동물과 행동 애니메이션 
+    private void AnswerAnimal(Collision col)
+    {
+        //animator에 파라미터 이름을 알고싶을때 GetParameter(?)을 사용하면된다.
+        GameObject animalOb = Instantiate(answerAnimal);
+        animalOb.transform.position = col.contacts[0].point;
+        animalOb.transform.position = new Vector3(animalOb.transform.position.x, 0f, animalOb.transform.position.z);
+        animalOb.GetComponent<Animator>().SetInteger(animalOb.GetComponent<Animator>().GetParameter(0).name, 4);
+        CameraMove.MoveEvents(animalOb);
     }
 }
