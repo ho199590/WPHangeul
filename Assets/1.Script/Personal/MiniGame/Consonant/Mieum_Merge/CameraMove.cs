@@ -16,6 +16,7 @@ public class CameraMove : MonoBehaviour
     Camera m_Camera;        //Talk가 끝나고 일어날 이벤트의 카메라 변수 
     [SerializeField]
     GameObject target;      //바라볼 타겟
+    Image image;
     private void Awake()
     {
         CameraEvents = () =>
@@ -35,7 +36,7 @@ public class CameraMove : MonoBehaviour
         if(b_recipe && Vector3.Distance(m_Camera.transform.position , target.transform.position) <= 3f)
         {
             recipe.SetActive(true);
-            recipe.transform.DOLocalMoveX(-753 , 2f).SetEase(Ease.Linear).SetLoops(1);
+            recipe.transform.DOLocalMoveY(300 , 1).SetEase(Ease.Linear).SetLoops(1);
             b_recipe = false;
         }
     }
