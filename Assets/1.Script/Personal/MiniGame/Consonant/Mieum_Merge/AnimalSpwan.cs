@@ -9,7 +9,7 @@ public class AnimalSpwan : MonoBehaviour
     [SerializeField]
     int obCount;            //인스펙터 창에서 몬스터 갯수를 지정 할수있게 선언
     [SerializeField]
-    GameObject particle;
+    GameObject particle;    //오브젝트 충돌시 생성되는 파티클 변수 
     int num = 1;            //몬스터 생성시 증감 변수
     bool maxMonster;        //몬스터 max치인지 확인 변수
     public static Action<Vector3> plusCount; //Vector이벤트 변수
