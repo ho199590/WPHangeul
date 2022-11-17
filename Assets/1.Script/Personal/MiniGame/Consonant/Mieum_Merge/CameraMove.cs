@@ -67,7 +67,7 @@ public class CameraMove : MonoBehaviour
         {
             yield return new WaitForSecondsRealtime(5.35f);
             StarExplosion.ExplosionEffect(ob);
-            yield return new WaitForSecondsRealtime(0.15f);
+            yield return new WaitForSecondsRealtime(0.2f);
             Time.timeScale = 0.01f;
             yield return new WaitForSecondsRealtime(5f);
             Time.timeScale = 1f;//잠깐 멈추고 다시 시작되어야 하는 시점 

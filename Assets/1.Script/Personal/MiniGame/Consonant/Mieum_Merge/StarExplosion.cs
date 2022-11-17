@@ -5,8 +5,9 @@ using System;
 public class StarExplosion : MonoBehaviour
 {
     [SerializeField]
-    GameObject[] Star;
+    GameObject[] Star;      //별 프리팹
 
+    //이벤트 변수 
     public static Action<GameObject> ExplosionEffect;
 
     private void Awake()
@@ -16,7 +17,7 @@ public class StarExplosion : MonoBehaviour
             Effect(ob);
         };
     }
-
+    //별 particle 생성
     public void Effect(GameObject ob)
     {
         GameObject stars = Instantiate(Star[UnityEngine.Random.Range(0, Star.Length)]);
