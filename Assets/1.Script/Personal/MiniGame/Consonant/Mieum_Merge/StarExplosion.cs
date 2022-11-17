@@ -20,8 +20,9 @@ public class StarExplosion : MonoBehaviour
     //º° particle »ý¼º
     public void Effect(GameObject ob)
     {
+        Vector3 vec = new Vector3(ob.transform.position.x, -0.8f, ob.transform.position.z);
         GameObject stars = Instantiate(Star[UnityEngine.Random.Range(0, Star.Length)]);
-        stars.transform.localScale = new Vector3(5f, 5f, 5f);
-        stars.transform.position = ob.transform.position;
+        stars.transform.localScale = new Vector3(8f, 8f, 8f);
+        stars.transform.position = vec;
     }
 }

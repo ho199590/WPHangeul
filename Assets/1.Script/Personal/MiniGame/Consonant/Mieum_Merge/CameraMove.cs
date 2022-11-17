@@ -10,6 +10,9 @@ public class CameraMove : MonoBehaviour
 {
     public static Action CameraEvents;
     public static Action<GameObject> MoveEvents;
+    //Canvas
+    [SerializeField]
+    GameObject canvas;
     //레시피 오브젝트 
     [SerializeField]
     GameObject recipe;      //레시피 변수
@@ -22,9 +25,6 @@ public class CameraMove : MonoBehaviour
     Vector3 dePosition;     //카메라 원위치 저장 변수
     Quaternion deRotation;     //카메라 원방향 저장 변수
 
-    //슬로우 모션 변수  
-    private float slowFactor = 0.05f; //슬로우 값
-    private float slowLenght = 4f;    //슬로우 지속 시간 값
     private void Awake()
     {
         CameraEvents = () =>
@@ -36,31 +36,20 @@ public class CameraMove : MonoBehaviour
             AnswerMovie(ob);
         };
         deRotation = Quaternion.Euler(m_Camera.transform.eulerAngles);
+        CameraTargetPosition();
     }
-    //카메라 이동 
-    public void DoCamera()
-    {
-        m_Camera.transform.DOMove(target.transform.position, 5);
-        b_recipe = true;
-    }
+    
     private void Update()
     {
         //무한 루프 방지 
         if(b_recipe && Vector3.Distance(m_Camera.transform.position , target.transform.position) <= 3f)
         {
             recipe.SetActive(true);
-            recipe.transform.DOLocalMoveX(-753 , 5f).SetEase(Ease.Linear).SetLoops(1);
+            recipe.transform.DOLocalMoveX(-700, 5f).SetEase(Ease.Linear).SetLoops(1);
             b_recipe = false;
         }
     }
-    private void AnswerMovie(GameObject ob)
-    {
-        dePosition = transform.position; //원위치 저장 
-        deRotation = Quaternion.Euler(m_Camera.transform.eulerAngles);
-        m_Camera.transform.DORotateQuaternion(Quaternion.Euler(90f, ob.transform.position.y, ob.transform.position.z), 5f);
-        m_Camera.transform.DOMove(new Vector3(ob.transform.position.x,8.5f,ob.transform.position.z), 5);
-        StartCoroutine(FeverTime(ob));
-    }
+
     IEnumerator FeverTime(GameObject ob)
     {
         while(true)
@@ -72,9 +61,25 @@ public class CameraMove : MonoBehaviour
             yield return new WaitForSecondsRealtime(5f);
             Time.timeScale = 1f;//잠깐 멈추고 다시 시작되어야 하는 시점 
             CameraMoveReset();
-            Destroy(ob);
+            ClearAnimal.Clear(ob);
+            canvas.SetActive(true);//canvas킴
+            //AnswerAnimal(ob);
             yield break;
          }
+    }
+    //정답 맞추면 카메라 이동 
+    private void AnswerMovie(GameObject ob)
+    {
+        canvas.SetActive(false);//canvas 끔
+        m_Camera.transform.DORotateQuaternion(Quaternion.Euler(90f, ob.transform.position.y, ob.transform.position.z), 5f);
+        m_Camera.transform.DOMove(new Vector3(ob.transform.position.x, 13.5f, ob.transform.position.z), 5);
+        StartCoroutine(FeverTime(ob));
+    }
+    //게임 시작 카메라 이동 
+    public void DoCamera()
+    {
+        m_Camera.transform.DOMove(target.transform.position, 5);
+        b_recipe = true;
     }
     //카메라 위치 초기화 
     private void CameraMoveReset()
@@ -82,6 +87,15 @@ public class CameraMove : MonoBehaviour
         m_Camera.transform.DOMove(dePosition, 3f);
         m_Camera.transform.DORotateQuaternion(deRotation, 3f);
     }
-
-
+    //카메라 위치 저장
+    private void CameraTargetPosition()
+    {
+        dePosition = target.transform.position; //원위치 저장 
+        deRotation = Quaternion.Euler(m_Camera.transform.eulerAngles);
+    }
+    //정답 동물 이동 
+    private void AnswerAnimal(GameObject ob)
+    {
+        ob.GetComponent<Animator>().SetInteger(ob.GetComponent<Animator>().GetParameter(0).name,1 );
+    }
 }
