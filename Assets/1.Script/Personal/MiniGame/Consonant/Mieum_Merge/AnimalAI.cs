@@ -105,7 +105,7 @@ public class AnimalAI : MonoBehaviour
         //animator에 파라미터 이름을 알고싶을때 GetParameter(?)을 사용하면된다.
         GameObject animalOb = Instantiate(answerAnimal);
         animalOb.transform.position = col.contacts[0].point;
-        animalOb.transform.position = new Vector3(animalOb.transform.position.x, 0f, animalOb.transform.position.z);
+        animalOb.transform.position = new Vector3(animalOb.transform.position.x, 5f, animalOb.transform.position.z);
         animalOb.GetComponent<Animator>().SetInteger(animalOb.GetComponent<Animator>().GetParameter(0).name, 4);
         CameraMove.MoveEvents(animalOb);
     }
