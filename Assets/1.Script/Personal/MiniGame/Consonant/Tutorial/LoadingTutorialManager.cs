@@ -4,8 +4,13 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 //https://www.youtube.com/watch?v=MyVY-y_jK1I&t=346s
 //https://wergia.tistory.com/59
+
+//씬호출시 LoadingTutorialManager.LoadScene("호출할 씬의 이름"); 한줄 추가
+
 public class LoadingTutorialManager : MonoBehaviour
 {
+    [SerializeField]
+    TutorialObjects tutorialObjects;
     Vector3 endposition = new Vector3(5, -2, 0);
     Vector3 startposition;
     [SerializeField]
@@ -16,7 +21,6 @@ public class LoadingTutorialManager : MonoBehaviour
     Transform pipe;
    
     public Transform arrive;
-    Animator anim;
     float lerpTime;
     float currentTime;
     float move;
@@ -26,9 +30,11 @@ public class LoadingTutorialManager : MonoBehaviour
     bool check = false;
 
     public static string nextScene;
+    
+    //Animator anim;
     public static void LoadScene(string sceneName)
     {
-        nextScene = sceneName; //LoadingTutorialManager.LoadScene("튜토리얼끝나고 재생될 씬이름");
+        nextScene = sceneName;
         SceneManager.LoadScene("Tutorial");
     }
     //씬 재생 전에 튜토리얼 먼저 재생해주는 비동기식 재생 지연 함수
@@ -51,8 +57,15 @@ public class LoadingTutorialManager : MonoBehaviour
     }
     private void Start()
     {
+        //for(i = 0 ; i < tutorialObjects.SaveObjects.Length; i++)
+        print(tutorialObjects.GiyeokObjects[0].Object);
+        print(tutorialObjects.GiyeokObjects[0].perAudio);
+        print(tutorialObjects.GiyeokObjects.Length);
+        print(tutorialObjects.GiyeokObjects.GetValue(0));
+        print(tutorialObjects.GiyeokObjects.IsReadOnly);
         StartCoroutine(Begin());
     }
+
     //void Update()
     //{
     //    currentTime += Time.deltaTime;
@@ -60,6 +73,16 @@ public class LoadingTutorialManager : MonoBehaviour
     //    //transform.position = Vector3.Lerp(startposition, endposition, Mathf.SmoothStep(0,1,currentTime / lerpTime));
     //    //transform.position = Vector3.Lerp(startposition, endposition, curve.Evaluate(currentTime / lerpTime));
     //}
+
+    /*    private void OnCollisionEnter(Collision collision)
+        {
+            print(collision.contacts[0].point);
+        }
+    /*    private void sh()
+        {
+            anim.SetInteger(anim.GetComponent<Animator>().GetParameter(0).name,1);
+        }*/
+
     //IEnumerator Delay()
     //{
     //    while(i < objects.Length)
@@ -71,14 +94,7 @@ public class LoadingTutorialManager : MonoBehaviour
     //        yield return new WaitForSeconds(3); //오브젝트들 등장 간격
     //    }
     //}
-    /*    private void OnCollisionEnter(Collision collision)
-        {
-            print(collision.contacts[0].point);
-        }
-    /*    private void sh()
-        {
-            anim.SetInteger(anim.GetComponent<Animator>().GetParameter(0).name,1);
-        }*/
+
     //코루틴 호출을 지연
     IEnumerator Begin()
     {
