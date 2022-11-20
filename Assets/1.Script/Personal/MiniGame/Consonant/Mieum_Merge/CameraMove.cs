@@ -15,14 +15,14 @@ public class CameraMove : MonoBehaviour
     GameObject canvas;
     //레시피 오브젝트 
     [SerializeField]
-    GameObject recipe;      //레시피 변수
-    bool b_recipe;          //레시피형 불값
+    GameObject recipe;         //레시피 변수
+    bool b_recipe;             //레시피형 불값
     //카메라 
     [SerializeField]
-    Camera m_Camera;        //Talk가 끝나고 일어날 이벤트의 카메라 변수 
+    Camera m_Camera;           //Talk가 끝나고 일어날 이벤트의 카메라 변수 
     [SerializeField]
-    GameObject target;      //바라볼 타겟
-    Vector3 dePosition;     //카메라 원위치 저장 변수
+    GameObject target;         //바라볼 타겟
+    Vector3 dePosition;        //카메라 원위치 저장 변수
     Quaternion deRotation;     //카메라 원방향 저장 변수
 
     private void Awake()
@@ -67,6 +67,7 @@ public class CameraMove : MonoBehaviour
             yield break;
          }
     }
+
     //정답 맞추면 카메라 이동 
     private void AnswerMovie(GameObject ob)
     {
