@@ -75,7 +75,6 @@ public class ScoreHandler : MonoBehaviour
     {   
         var filled = Instantiate(fillParticle);
         filled.transform.position = transform.GetChild(curScore).position;
-
         transform.GetChild(curScore).GetComponent<UnityEngine.UI.Image>().sprite = scoreFill;
         transform.GetChild(curScore).GetComponent<UnityEngine.UI.Image>().DOFade(1, 4f).From(0);
 

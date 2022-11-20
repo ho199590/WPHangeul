@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using System.Security.Permissions;
+
 public class NPCTalk : MonoBehaviour
 {
     //Text Effect
@@ -21,7 +23,11 @@ public class NPCTalk : MonoBehaviour
     GameObject animalOb;
     [SerializeField]
     GameObject npcBalloon;  //Npc말풍선
-
+    SpeakerHandler speaker; //스피커 변수
+    private void Awake()
+    {
+        speaker = FindObjectOfType<SpeakerHandler>();
+    }
     private void OnMouseDown()
     {
         if (imageTouch)
@@ -37,6 +43,7 @@ public class NPCTalk : MonoBehaviour
                 StartCoroutine(OnType());//대화가 끝나지 않았다면 다음 대화로 넘어간다.
             }
         }
+        speaker.SoundByNum2(3);
     }
     //대화창 끄기
     private void Npc()

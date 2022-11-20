@@ -24,7 +24,7 @@ public class CameraMove : MonoBehaviour
     GameObject target;         //바라볼 타겟
     Vector3 dePosition;        //카메라 원위치 저장 변수
     Quaternion deRotation;     //카메라 원방향 저장 변수
-
+    SpeakerHandler speaker;    //스피커 
     private void Awake()
     {
         CameraEvents = () =>
@@ -37,6 +37,7 @@ public class CameraMove : MonoBehaviour
         };
         deRotation = Quaternion.Euler(m_Camera.transform.eulerAngles);
         CameraTargetPosition();
+        speaker = FindObjectOfType<SpeakerHandler>();
     }
     
     private void Update()
@@ -56,6 +57,7 @@ public class CameraMove : MonoBehaviour
         {
             yield return new WaitForSecondsRealtime(5.35f);
             StarExplosion.ExplosionEffect(ob);
+            speaker.SoundByNum2(4);
             yield return new WaitForSecondsRealtime(0.2f);
             Time.timeScale = 0.01f;
             yield return new WaitForSecondsRealtime(5f);
