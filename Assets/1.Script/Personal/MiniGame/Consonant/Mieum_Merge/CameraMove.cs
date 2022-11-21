@@ -50,7 +50,6 @@ public class CameraMove : MonoBehaviour
             b_recipe = false;
         }
     }
-
     IEnumerator FeverTime(GameObject ob)
     {
         while(true)
