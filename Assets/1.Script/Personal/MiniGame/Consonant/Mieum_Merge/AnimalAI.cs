@@ -21,6 +21,7 @@ public class AnimalAI : MonoBehaviour
     private IEnumerator coroutine;//코루틴 변수 선언
     int randomInt;            //movePoint 순서를 랜덤하게 저장 할 변수
     bool monsterDrag = false;         //드래그 중일때만 출돌 판별 변수
+    SpeakerHandler speaker;     //스피커 변수
     protected void Awake()
     {
         GetPoint();
@@ -30,6 +31,7 @@ public class AnimalAI : MonoBehaviour
         anim.SetInteger(anim.GetParameter(0).name, 3);   //애니메이션 시작
         transform.position = spawnPoint.transform.position; //첫시작시 위치
         StartCoroutine(coroutine);
+        speaker = FindObjectOfType<SpeakerHandler>();
     }
     IEnumerator AiMonster()             //Ai몬스터 이동시작
     {
@@ -69,6 +71,7 @@ public class AnimalAI : MonoBehaviour
     {
         agent.speed = 0f;//몬스터 속도 값
         rigid.isKinematic = false;
+        speaker.SoundByNum2(3);//사운드
     }
     private void OnMouseDrag()
     {
@@ -102,6 +105,7 @@ public class AnimalAI : MonoBehaviour
     //정답을 맞출시 생성될 동물과 행동 애니메이션 
     private void AnswerAnimal(Collision col)
     {
+        speaker.SoundByNum2(2);
         //animator에 파라미터 이름을 알고싶을때 GetParameter(?)을 사용하면된다.
         GameObject animalOb = Instantiate(answerAnimal);
         animalOb.transform.position = col.contacts[0].point;
