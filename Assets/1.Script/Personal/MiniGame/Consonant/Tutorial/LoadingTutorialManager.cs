@@ -174,7 +174,7 @@ public class LoadingTutorialManager : MonoBehaviour
         if (index == objects.Length - 1) 
         {
             StopAllCoroutines();
-            StartCoroutine(LoadScene()); 
+            //StartCoroutine(LoadScene()); 
             print("코루틴끝나는지 체크");
         }
     }
