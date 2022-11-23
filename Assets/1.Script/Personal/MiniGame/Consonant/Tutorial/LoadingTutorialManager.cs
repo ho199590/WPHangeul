@@ -28,7 +28,8 @@ public class LoadingTutorialManager : MonoBehaviour
     int i = 0;
     float term = 0;
     bool check = false;
-
+    float plusTime = 3;
+    int count = 0;
     public static string nextScene;
     
     //Animator anim;
@@ -48,12 +49,12 @@ public class LoadingTutorialManager : MonoBehaviour
         while (!async.isDone)
         {
             yield return null;
-            timer += Time.deltaTime;
-            if (async.progress >= 0.9f)
-            {
-                yield return new WaitForSeconds(10); //90%진행 체크라 100%진행율을 위한 추가 10초
+            //timer += Time.deltaTime;
+            //if (async.progress >= 0.9f)
+            //{
+                //yield return new WaitForSeconds(10); //90%진행 체크라 100%진행율을 위한 추가 10초
                 async.allowSceneActivation = true;
-            }
+            //}
         }
     }
     private void Start()
@@ -65,7 +66,14 @@ public class LoadingTutorialManager : MonoBehaviour
         print(tutorialObjects.GiyeokObjects.GetValue(0));
         //print(IntroductionObjects.);
 
-        StartCoroutine(Begin());
+        //StartCoroutine(Begin());
+        for (int i = 0; i < objects.Length; i++)
+        {
+            startposition = objects[i].transform.position;
+            StartCoroutine(Move1(i, startposition, term, plusTime));
+            term += 3f;
+            plusTime += 5f;  
+        }
     }
 
     //void Update()
@@ -103,24 +111,26 @@ public class LoadingTutorialManager : MonoBehaviour
         while(i < objects.Length) //세번만
         {
             startposition = objects[i].transform.position;
-            StartCoroutine(Move1(i, startposition, term, check));
+            //StartCoroutine(Move1(i, startposition, term));
             i++;
-            if(i == objects.Length) check = true;
             term += 3f;
             yield return new WaitForSeconds(3);
         }
-        StartCoroutine(MoveOrdered());
+        //StartCoroutine(MoveOrdered());
     }
-    IEnumerator Move1(int index, Vector3 startPosi, float term, bool check)
+    IEnumerator Move1(int index, Vector3 startPosi, float term, float plusLerpTime)
     {
-        lerpTime = 2f;
+        lerpTime = plusLerpTime;
         currentTime = 0;
-        while ((currentTime / lerpTime) < 1)
+        while ((currentTime / lerpTime) <= 1)
         {
             currentTime += Time.deltaTime;
             objects[index].transform.position = Vector3.Lerp(startPosi, new Vector3(arrive.position.x + term, arrive.position.y, arrive.position.z), currentTime / lerpTime);
             yield return null;
         }
+        yield return new WaitUntil(() => index == objects.Length - 1);
+        print("체크5");
+        StartCoroutine(MoveOrdered());
     }
     //코루틴 호출을 지연
     IEnumerator MoveOrdered()
@@ -130,17 +140,21 @@ public class LoadingTutorialManager : MonoBehaviour
         {
             print(i + "번째 오브젝트 출발");
             startposition = objects[i].transform.position;
-            StartCoroutine(Move3(i, startposition));
-            yield return new WaitForSeconds(4); //여기서 소개멘트 (플레이되는 시간만큼 지연)
-            StartCoroutine(Move4(i));
+            yield return StartCoroutine(Move3(i, startposition));
+            print("체크1");
+            yield return new WaitForSeconds(6); //여기서 소개멘트 (플레이되는 시간만큼 지연)
+            print("체크2");
+            yield return StartCoroutine(Move4(i));
+            print("체크3");
             i++;
         }
     }
     IEnumerator Move3(int index, Vector3 startPosi)
     {
-        lerpTime = 3f;
+        //print("어디서 튕기는지 체크3");
+        lerpTime = 2f;
         currentTime = 0;
-        while ((currentTime / lerpTime) < 1)
+        while ((currentTime / lerpTime) <= 1)
         {
             currentTime += Time.deltaTime;
             objects[index].transform.position = Vector3.Lerp(startPosi, pipe.position, currentTime / lerpTime);
@@ -149,14 +163,19 @@ public class LoadingTutorialManager : MonoBehaviour
     }
     IEnumerator Move4(int index)
     {
-        lerpTime = 5f;
+        lerpTime = 0.5f;
         currentTime = 0;
-        while ((currentTime / lerpTime) < 1)
+        while ((currentTime / lerpTime) <= 1)
         {
             currentTime += Time.deltaTime;
             objects[index].transform.position = Vector3.Lerp(pipe.position, new Vector3(pipe.position.x, pipe.position.y + 5, pipe.position.z), currentTime / lerpTime);
             yield return null;
         }
-        //StartCoroutine(LoadScene()); 
+        if (index == objects.Length - 1) 
+        {
+            StopAllCoroutines();
+            StartCoroutine(LoadScene()); 
+            print("코루틴끝나는지 체크");
+        }
     }
 }

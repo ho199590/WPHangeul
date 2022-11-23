@@ -23,13 +23,13 @@ public class CameraMoveHandle : MonoBehaviour
     {
         GetComponent<Camera>().depth = 2;
         startposition = transform.position;
-        lerpTime = 10f;
+        lerpTime = 4f;
         currentTime = 0;
         while (move < 1)
         {
             currentTime += Time.deltaTime;
             move = currentTime / lerpTime;
-            transform.position = Vector3.Lerp(startposition, camPosi.position, move);
+            //transform.position = Vector3.Lerp(startposition, camPosi.position, move);
             transform.position = Vector3.Lerp(startposition, camPosi.position, curve.Evaluate(currentTime / lerpTime));
             yield return null;
         }
