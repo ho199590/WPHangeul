@@ -50,13 +50,14 @@ public class CameraMove : MonoBehaviour
             b_recipe = false;
         }
     }
+    //동물 정답 액션
     IEnumerator FeverTime(GameObject ob)
     {
         while(true)
         {
             yield return new WaitForSecondsRealtime(5.35f);
             StarExplosion.ExplosionEffect(ob);
-            speaker.SoundByNum2(4);
+            speaker.SoundByNum2(3);
             yield return new WaitForSecondsRealtime(0.2f);
             Time.timeScale = 0.01f;
             yield return new WaitForSecondsRealtime(5f);
