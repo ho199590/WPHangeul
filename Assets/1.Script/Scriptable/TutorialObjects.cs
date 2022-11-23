@@ -12,8 +12,8 @@ public class IntroductionObjects
 }
 public class TutorialObjects : ScriptableObject
 {
-    [SerializeField]
-    IntroductionObjects[] Giyeok, Nieun, Digeud, Lieul, Mieum, Bieub, Sioat, Ieong, Jieuj, Chioat, Kieuk, Tigeut, Pieup, Hieuh;
+    //[SerializeField]
+    public IntroductionObjects[] Giyeok, Nieun, Digeud, Lieul, Mieum, Bieub, Sioat, Ieong, Jieuj, Chioat, Kieuk, Tigeut, Pieup, Hieuh;
     public IntroductionObjects[] GiyeokObjects { get => Giyeok; }
     public IntroductionObjects[] NieunObjects { get => Nieun; }
     public IntroductionObjects[] DigeudObjects { get => Digeud; }

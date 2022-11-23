@@ -34,6 +34,7 @@ public class LoadingTutorialManager : MonoBehaviour
     //Animator anim;
     public static void LoadScene(string sceneName)
     {
+        print("æ¿¿Ã∏ß √º≈©:" + sceneName);
         nextScene = sceneName;
         SceneManager.LoadScene("Tutorial");
     }
@@ -62,7 +63,8 @@ public class LoadingTutorialManager : MonoBehaviour
         print(tutorialObjects.GiyeokObjects[0].perAudio);
         print(tutorialObjects.GiyeokObjects.Length);
         print(tutorialObjects.GiyeokObjects.GetValue(0));
-        print(tutorialObjects.GiyeokObjects.IsReadOnly);
+        //print(IntroductionObjects.);
+
         StartCoroutine(Begin());
     }
 
