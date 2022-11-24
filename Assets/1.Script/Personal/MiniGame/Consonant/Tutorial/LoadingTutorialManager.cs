@@ -13,6 +13,8 @@ public class LoadingTutorialManager : MonoBehaviour
     GameObject[] objects; //없어질 예정
     [SerializeField]
     Transform pipe; //파이프 밑에 Lerp의 도착위치
+    [SerializeField]
+    GameObject[] objectPosi;
    
     public Transform arrive; //Lerp의 도착위치
     float lerpTime; //Lerp의 도착때까지 총 소요시간
@@ -24,6 +26,7 @@ public class LoadingTutorialManager : MonoBehaviour
 
     public static string nextScene; //씬재생 지연함수가 끝나면(튜토리얼이 끝나면) 재생할 씬의 이름 저장용
     string nameCheck;
+    
 
     //공부용
     //Animator anim;
@@ -64,24 +67,36 @@ public class LoadingTutorialManager : MonoBehaviour
     }
     private void Start()
     {
-        nameCheck = nextScene.Split('_')[0]+"Objects";
-        print(nameCheck);
-        //print(tutorialObjects.);
-        print(tutorialObjects.GiyeokObjects[0].Object.transform.root);
-        print(tutorialObjects.GiyeokObjects[0].perAudio);
-        print(tutorialObjects.GiyeokObjects.Length);
-        print(tutorialObjects.GiyeokObjects.GetValue(0));        
-        //print(TutorialObjects);
+        tutorialObjects.insert();
 
-        //StartCoroutine(Begin());
-        //동시에 Lerp로 움직이게 하기 위해 for문으로 빠르게 돌려서 코루틴 호출하기 위한 것
-        for (int i = 0; i < objects.Length; i++)
+        //nameCheck = nextScene.Split('_')[0]+"Objects";
+        //print(nameCheck);
+        //print(nextScene.Split('_')[0]);
+
+        if(tutorialObjects.GetIndex().TryGetValue(nextScene.Split('_')[0], out IntroductionObjects[] check))
         {
-            startposition = objects[i].transform.position; //시작위치 고정용
-            StartCoroutine(Move1(i, startposition, term, plusTime));
-            term += 3f; //일렬 간격 조정용
-            plusTime += 5f; //동시에 움직임으로 속도 조절로 일렬 유지
+           
+            for(int i = 0; i < check.Length; i++)
+            {
+                print(check[i].Object);
+                objectPosi[i].transform.position = check[i].Object.transform.position;
+                objectPosi[i] = check[i].Object;
+                startposition = objectPosi[i].transform.position; //시작위치 고정용
+                StartCoroutine(Move1(i, startposition, term, plusTime));
+                term += 3f; //일렬 간격 조정용
+                plusTime += 5f; //동시에 움직임으로 속도 조절로 일렬 유지
+            }
         }
+
+        ////StartCoroutine(Begin());
+        ////동시에 Lerp로 움직이게 하기 위해 for문으로 빠르게 돌려서 코루틴 호출하기 위한 것
+        //for (int i = 0; i < objectPosi.Length; i++)
+        //{
+        //    startposition = objectPosi[i].transform.position; //시작위치 고정용
+        //    StartCoroutine(Move1(i, startposition, term, plusTime));
+        //    term += 3f; //일렬 간격 조정용
+        //    plusTime += 5f; //동시에 움직임으로 속도 조절로 일렬 유지
+        //}
     }
     //void Update()
     //{
@@ -94,9 +109,9 @@ public class LoadingTutorialManager : MonoBehaviour
     //코루틴 호출을 지연(for문이랑 다르게 3초 간격으로 코루틴을 천천히 호출하기 위한 지연 함수)
     IEnumerator Begin()
     {
-        while(i < objects.Length) //오브젝트 갯수만큼만 반복
+        while(i < objectPosi.Length) //오브젝트 갯수만큼만 반복
         {
-            startposition = objects[i].transform.position;
+            startposition = objectPosi[i].transform.position;
             //StartCoroutine(Move1(i, startposition, term));
             i++;
             term += 3f;
@@ -111,10 +126,10 @@ public class LoadingTutorialManager : MonoBehaviour
         while ((currentTime / lerpTime) <= 1) //Lerp의 등속운동
         {
             currentTime += Time.deltaTime;
-            objects[index].transform.position = Vector3.Lerp(startPosi, new Vector3(arrive.position.x + term, arrive.position.y, arrive.position.z), currentTime / lerpTime);
+            objectPosi[index].transform.position = Vector3.Lerp(startPosi, new Vector3(arrive.position.x + term, arrive.position.y, arrive.position.z), currentTime / lerpTime);
             yield return null;
         }
-        yield return new WaitUntil(() => index == objects.Length - 1); //괄호안에 조건이 true가 될 때 밑에 줄 실행
+        yield return new WaitUntil(() => index == objectPosi.Length - 1); //괄호안에 조건이 true가 될 때 밑에 줄 실행
         StartCoroutine(MoveOrdered());
     }
     //코루틴 호출을 지연
@@ -124,7 +139,7 @@ public class LoadingTutorialManager : MonoBehaviour
         while (i < objects.Length)
         {
             print(i + "번째 오브젝트 출발");
-            startposition = objects[i].transform.position;
+            startposition = objectPosi[i].transform.position;
             yield return StartCoroutine(Move3(i, startposition)); //Move3코루틴이 끝나야지 밑에 줄 실행
             yield return new WaitForSeconds(6); //여기서 소개멘트 (플레이되는 시간만큼 지연)
             yield return StartCoroutine(Move4(i)); //Move4코루틴이 끝나야지 밑에 줄 실행
@@ -138,7 +153,7 @@ public class LoadingTutorialManager : MonoBehaviour
         while ((currentTime / lerpTime) <= 1)
         {
             currentTime += Time.deltaTime;
-            objects[index].transform.position = Vector3.Lerp(startPosi, pipe.position, currentTime / lerpTime);
+            objectPosi[index].transform.position = Vector3.Lerp(startPosi, pipe.position, currentTime / lerpTime);
             yield return null;
         }
     }
@@ -149,10 +164,10 @@ public class LoadingTutorialManager : MonoBehaviour
         while ((currentTime / lerpTime) <= 1)
         {
             currentTime += Time.deltaTime;
-            objects[index].transform.position = Vector3.Lerp(pipe.position, new Vector3(pipe.position.x, pipe.position.y + 5, pipe.position.z), currentTime / lerpTime);
+            objectPosi[index].transform.position = Vector3.Lerp(pipe.position, new Vector3(pipe.position.x, pipe.position.y + 5, pipe.position.z), currentTime / lerpTime);
             yield return null;
         }
-        if (index == objects.Length - 1) 
+        if (index == objectPosi.Length - 1) 
         {
             StopAllCoroutines();
             //StartCoroutine(LoadScene()); 
