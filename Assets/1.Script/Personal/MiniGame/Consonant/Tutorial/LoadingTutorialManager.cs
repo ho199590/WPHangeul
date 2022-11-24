@@ -67,12 +67,8 @@ public class LoadingTutorialManager : MonoBehaviour
     }
     private void Start()
     {
-        tutorialObjects.insert();
-
-        //nameCheck = nextScene.Split('_')[0]+"Objects";
-        //print(nameCheck);
-        //print(nextScene.Split('_')[0]);
-
+        tutorialObjects.Insert();
+        //print(nextScene.Split('_')[0]); //소괄호안에 언더바를 기준으로 string값 쪼개기
         if(tutorialObjects.GetIndex().TryGetValue(nextScene.Split('_')[0], out IntroductionObjects[] check))
         {
            

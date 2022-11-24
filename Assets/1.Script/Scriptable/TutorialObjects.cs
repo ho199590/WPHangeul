@@ -18,7 +18,7 @@ public class TutorialObjects : ScriptableObject
     {
         return Index;
     }
-    public void insert()
+    public void Insert()
     {
         Index.Add("Giyeok", Giyeok);
         Index.Add("Nieun", Nieun);
