@@ -67,12 +67,11 @@ public class NPCTalk : MonoBehaviour
     //Npc¿Ãµø Dotween
     private void NpcMove()
     {
-        Vector3 pos = new Vector3(130f, 646f, -7779f);
-        Vector3 ros = new Vector3(30f, 145f, -18f);
+        Vector3 pos = new Vector3(-1813.252f, 278.0504f, -9733.855f);
+        Vector3 ros = new Vector3(-15.019f, -206.942f, 2.116f);
         Vector3 scale = new Vector3(1000f, 1000f, 1000f);
         npc.transform.DOLocalMove(pos, 3f);
         npc.transform.DOLocalRotate(ros, 3f, RotateMode.Fast);
         npc.transform.DOScale(scale, 3f);
-        npcBalloon.SetActive(true);
     }
 }
