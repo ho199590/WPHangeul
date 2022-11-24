@@ -4,9 +4,6 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 //https://www.youtube.com/watch?v=MyVY-y_jK1I&t=346s
 //https://wergia.tistory.com/59
-
-//씬호출시 LoadingTutorialManager.LoadScene("호출할 씬의 이름"); 한줄 추가
-
 public class LoadingTutorialManager : MonoBehaviour
 {
     [SerializeField]
@@ -26,7 +23,8 @@ public class LoadingTutorialManager : MonoBehaviour
     float plusTime = 3; //오브젝트별로 일렬로 세우기 위한 Lerp의 속도 조절용
 
     public static string nextScene; //씬재생 지연함수가 끝나면(튜토리얼이 끝나면) 재생할 씬의 이름 저장용
-    
+    string nameCheck;
+
     //공부용
     //Animator anim;
     /*    private void OnCollisionEnter(Collision collision)
@@ -37,6 +35,8 @@ public class LoadingTutorialManager : MonoBehaviour
         {
             anim.SetInteger(anim.GetComponent<Animator>().GetParameter(0).name,1); //애니메이터 파라미터 값 가져오기
         }*/
+
+    //씬호출시 LoadingTutorialManager.LoadScene("호출할 씬의 이름");로 참조
     //객체 생성없이 바로 갖다 쓸수 있는 정적(static) 함수
     public static void LoadScene(string sceneName)
     {
@@ -50,7 +50,7 @@ public class LoadingTutorialManager : MonoBehaviour
         yield return null;
         AsyncOperation async = SceneManager.LoadSceneAsync(nextScene);
         async.allowSceneActivation = false;
-        float timer = 0f;
+        //float timer = 0f;
         while (!async.isDone)
         {
             yield return null;
@@ -64,11 +64,14 @@ public class LoadingTutorialManager : MonoBehaviour
     }
     private void Start()
     {
-        print(tutorialObjects.GiyeokObjects[0].Object);
+        nameCheck = nextScene.Split('_')[0]+"Objects";
+        print(nameCheck);
+        //print(tutorialObjects.);
+        print(tutorialObjects.GiyeokObjects[0].Object.transform.root);
         print(tutorialObjects.GiyeokObjects[0].perAudio);
         print(tutorialObjects.GiyeokObjects.Length);
-        print(tutorialObjects.GiyeokObjects.GetValue(0));
-        //print(IntroductionObjects.);
+        print(tutorialObjects.GiyeokObjects.GetValue(0));        
+        //print(TutorialObjects);
 
         //StartCoroutine(Begin());
         //동시에 Lerp로 움직이게 하기 위해 for문으로 빠르게 돌려서 코루틴 호출하기 위한 것
@@ -83,21 +86,9 @@ public class LoadingTutorialManager : MonoBehaviour
     //void Update()
     //{
     //    currentTime += Time.deltaTime;
-    //    transform.position = Vector3.Lerp(startposition, arrive.position, currentTime / lerpTime);
-    //    //transform.position = Vector3.Lerp(startposition, endposition, Mathf.SmoothStep(0,1,currentTime / lerpTime));
-    //    //transform.position = Vector3.Lerp(startposition, endposition, curve.Evaluate(currentTime / lerpTime));
-    //}
-
-    //IEnumerator Delay()
-    //{
-    //    while(i < objects.Length)
-    //    {
-    //        startposition = objects[i].transform.position;
-    //        StartCoroutine(Move1(i, startposition, term));
-    //        i++;
-    //        term += 3f;
-    //        yield return new WaitForSeconds(3); //오브젝트들 등장 간격
-    //    }
+    //    transform.position = Vector3.Lerp(startposition, arrive.position, currentTime / lerpTime); //등속
+    //    //transform.position = Vector3.Lerp(startposition, endposition, Mathf.SmoothStep(0,1,currentTime / lerpTime)); //감속
+    //    //transform.position = Vector3.Lerp(startposition, endposition, curve.Evaluate(currentTime / lerpTime)); //애니메이션커브로 속도 조절
     //}
 
     //코루틴 호출을 지연(for문이랑 다르게 3초 간격으로 코루틴을 천천히 호출하기 위한 지연 함수)
@@ -117,7 +108,7 @@ public class LoadingTutorialManager : MonoBehaviour
     {
         lerpTime = plusLerpTime;
         currentTime = 0;
-        while ((currentTime / lerpTime) <= 1) //https://www.youtube.com/watch?v=MyVY-y_jK1I&t=346s //Lerp의 등속운동
+        while ((currentTime / lerpTime) <= 1) //Lerp의 등속운동
         {
             currentTime += Time.deltaTime;
             objects[index].transform.position = Vector3.Lerp(startPosi, new Vector3(arrive.position.x + term, arrive.position.y, arrive.position.z), currentTime / lerpTime);
@@ -142,7 +133,6 @@ public class LoadingTutorialManager : MonoBehaviour
     }
     IEnumerator Move3(int index, Vector3 startPosi)
     {
-        //print("어디서 튕기는지 체크3");
         lerpTime = 2f;
         currentTime = 0;
         while ((currentTime / lerpTime) <= 1)
