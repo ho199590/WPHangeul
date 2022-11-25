@@ -20,6 +20,7 @@ public class TutorialObjects : ScriptableObject
     }
     public void Insert()
     {
+        Index.Clear();
         Index.Add("Giyeok", Giyeok);
         Index.Add("Nieun", Nieun);
         Index.Add("Digeud", Digeud);
