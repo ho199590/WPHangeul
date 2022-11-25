@@ -61,8 +61,8 @@ public class CameraMove : MonoBehaviour
             Time.timeScale = 0.01f;
             yield return new WaitForSecondsRealtime(5f);
             Time.timeScale = 1f;//잠깐 멈추고 다시 시작되어야 하는 시점 
-            CameraMoveReset();
-            ClearAnimal.Clear(ob);
+            CameraMoveReset(ob);
+/*            ClearAnimal.Clear(ob);*/
             canvas.SetActive(true);//canvas킴
             //AnswerAnimal(ob);
             yield break;
@@ -84,8 +84,9 @@ public class CameraMove : MonoBehaviour
         StartCoroutine(IntroMove());
     }
     //카메라 위치 초기화 
-    private void CameraMoveReset()
+    private void CameraMoveReset(GameObject ob)
     {
+        Destroy(ob);
         m_Camera.transform.DOMove(dePosition, 3f);
         m_Camera.transform.DORotateQuaternion(deRotation, 3f);
     }
