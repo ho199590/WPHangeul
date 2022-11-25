@@ -8,8 +8,6 @@ public class CameraMoveHandle : MonoBehaviour
     Transform camPosi;
     [SerializeField]
     AnimationCurve curve;
-    [SerializeField]
-    GameObject mask;
     Vector3 startposition;
 
     float lerpTime;
@@ -33,6 +31,5 @@ public class CameraMoveHandle : MonoBehaviour
             transform.position = Vector3.Lerp(startposition, camPosi.position, curve.Evaluate(currentTime / lerpTime));
             yield return null;
         }
-        mask.SetActive(true);
     }
 }
