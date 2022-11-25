@@ -10,12 +10,10 @@ public class CameraMove : MonoBehaviour
 {
     public static Action CameraEvents;
     public static Action<GameObject> MoveEvents;
+    public static Action CameraReset;
     //Canvas
     [SerializeField]
     GameObject canvas;
-    //레시피 오브젝트 
-    [SerializeField]
-    GameObject recipe;         //레시피 변수
     //카메라 
     [SerializeField]
     Camera m_Camera;           //Talk가 끝나고 일어날 이벤트의 카메라 변수 
@@ -23,6 +21,8 @@ public class CameraMove : MonoBehaviour
     GameObject target;         //바라볼 타겟
     [SerializeField]
     GameObject npcBalloon;     //NPC말풍선
+    [SerializeField]
+    GameObject introOb;        //Intro 오브젝트
     Vector3 dePosition;        //카메라 원위치 저장 변수
     Quaternion deRotation;     //카메라 원방향 저장 변수
     SpeakerHandler speaker;    //스피커 
@@ -35,6 +35,10 @@ public class CameraMove : MonoBehaviour
         MoveEvents = (GameObject ob) =>
         {
             AnswerMovie(ob);
+        };
+        CameraReset = () =>
+        {
+            CameraPosition();
         };
         deRotation = Quaternion.Euler(m_Camera.transform.eulerAngles);
         CameraTargetPosition();
@@ -61,8 +65,8 @@ public class CameraMove : MonoBehaviour
             Time.timeScale = 0.01f;
             yield return new WaitForSecondsRealtime(5f);
             Time.timeScale = 1f;//잠깐 멈추고 다시 시작되어야 하는 시점 
-            CameraMoveReset();
-            ClearAnimal.Clear(ob);
+            CameraMoveReset(ob);
+/*            ClearAnimal.Clear(ob);*/
             canvas.SetActive(true);//canvas킴
             //AnswerAnimal(ob);
             yield break;
@@ -84,10 +88,10 @@ public class CameraMove : MonoBehaviour
         StartCoroutine(IntroMove());
     }
     //카메라 위치 초기화 
-    private void CameraMoveReset()
+    private void CameraMoveReset(GameObject ob)
     {
-        m_Camera.transform.DOMove(dePosition, 3f);
-        m_Camera.transform.DORotateQuaternion(deRotation, 3f);
+        Destroy(ob);
+        CameraPosition();
     }
     //카메라 위치 저장
     private void CameraTargetPosition()
@@ -102,9 +106,20 @@ public class CameraMove : MonoBehaviour
         while (true)
         {
             yield return new WaitForSeconds(5f);
-            m_Camera.transform.DOLocalMove(pos, 3f).OnComplete(() => { recipe.SetActive(true);npcBalloon.SetActive(true); }); ;
-            m_Camera.transform.DOLocalRotate(ros, 3f, RotateMode.Fast);
+            m_Camera.transform.DOLocalMove(pos, 3f);
+            m_Camera.transform.DOLocalRotate(ros, 3f, RotateMode.Fast).OnComplete(() => { IntroStart(); /*여기서 지도 펼쳐야함*/});
             yield break;
         }
+    }
+    //Intro끝나고 카메라 포지션 전환 
+    public void CameraPosition()
+    {
+        m_Camera.transform.DOMove(dePosition, 3f);
+        m_Camera.transform.DORotateQuaternion(deRotation, 3f);
+    }
+    private void IntroStart()
+    {
+        npcBalloon.SetActive(true);
+        introOb.SetActive(true);
     }
 }
