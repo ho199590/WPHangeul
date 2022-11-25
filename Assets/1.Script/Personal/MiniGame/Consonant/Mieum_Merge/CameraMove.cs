@@ -21,6 +21,8 @@ public class CameraMove : MonoBehaviour
     GameObject target;         //바라볼 타겟
     [SerializeField]
     GameObject npcBalloon;     //NPC말풍선
+    [SerializeField]
+    GameObject introOb;        //Intro 오브젝트
     Vector3 dePosition;        //카메라 원위치 저장 변수
     Quaternion deRotation;     //카메라 원방향 저장 변수
     SpeakerHandler speaker;    //스피커 
@@ -105,13 +107,19 @@ public class CameraMove : MonoBehaviour
         {
             yield return new WaitForSeconds(5f);
             m_Camera.transform.DOLocalMove(pos, 3f);
-            m_Camera.transform.DOLocalRotate(ros, 3f, RotateMode.Fast).OnComplete(() => { npcBalloon.SetActive(true); });
+            m_Camera.transform.DOLocalRotate(ros, 3f, RotateMode.Fast).OnComplete(() => { IntroStart(); /*여기서 지도 펼쳐야함*/});
             yield break;
         }
     }
+    //Intro끝나고 카메라 포지션 전환 
     public void CameraPosition()
     {
         m_Camera.transform.DOMove(dePosition, 3f);
         m_Camera.transform.DORotateQuaternion(deRotation, 3f);
+    }
+    private void IntroStart()
+    {
+        npcBalloon.SetActive(true);
+        introOb.SetActive(true);
     }
 }

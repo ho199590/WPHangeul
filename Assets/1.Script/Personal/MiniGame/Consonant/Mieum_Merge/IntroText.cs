@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using System;
 public class IntroText : MonoBehaviour
 {
     [SerializeField]         //text 변수
@@ -10,11 +11,17 @@ public class IntroText : MonoBehaviour
     [SerializeField]
     string[] talk;          //인스펙터에서 대화 수정 할수있게 하고 배열로 선언
     [SerializeField]
-    GameObject image;       //Image GameObject
+    GameObject image , introMap;       //Image GameObject
+    BoxCollider2D boxCollider;
+    [SerializeField]
+    GameObject[] ob;
     int talkIndex = 0; //배열 증감 변수
     bool imageTouch = true;  //대화 도중 터치 못하게 막기
+    public static Action PlusIndex; 
     private void Start()
     {
+        boxCollider = GetComponent<BoxCollider2D>();
+        PlusIndex = () => { UpIndex(); };
         StartCoroutine(OnType());//대화가 끝나지 않았다면 다음 대화로 넘어간다
     }
 
@@ -39,11 +46,30 @@ public class IntroText : MonoBehaviour
             {
                 CameraMove.CameraReset();//카메라 이동
                 image.SetActive(false);
+                introMap.SetActive(false);
             }
             else
             StartCoroutine(OnType());
         }
-
     }
-
+    private void Update()
+    {
+        if(talkIndex==4 || talkIndex == 6)
+        {
+            if(talkIndex == 4)
+            {
+                ob[0].SetActive(true);
+            }
+            if (talkIndex == 6)
+            {
+                ob[1].SetActive(true);
+            }
+            boxCollider.enabled = false;
+        }
+    }
+    public void UpIndex()
+    {
+        StartCoroutine(OnType());
+        boxCollider.enabled = true; 
+    }
 }
