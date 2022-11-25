@@ -115,11 +115,15 @@ public class CameraMove : MonoBehaviour
     public void CameraPosition()
     {
         m_Camera.transform.DOMove(target.transform.position, 3f);
-        m_Camera.transform.DOLocalRotateQuaternion(target.transform.rotation, 3f);
+        m_Camera.transform.DOLocalRotateQuaternion(target.transform.rotation, 3f).OnComplete(() => { Invoke("MissionOn", 0f); });
     }
     private void IntroStart()
     {
         npcBalloon.SetActive(true);
         introOb.SetActive(true);
+    }
+    private void MissionOn(GameObject ob)
+    {
+        MissionList.ObjectOn(ob);
     }
 }
