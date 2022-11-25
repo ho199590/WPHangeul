@@ -114,8 +114,8 @@ public class CameraMove : MonoBehaviour
     //Intro끝나고 카메라 포지션 전환 
     public void CameraPosition()
     {
-        m_Camera.transform.DOMove(dePosition, 3f);
-        m_Camera.transform.DORotateQuaternion(deRotation, 3f);
+        m_Camera.transform.DOMove(target.transform.position, 3f);
+        m_Camera.transform.DOLocalRotateQuaternion(target.transform.rotation, 3f);
     }
     private void IntroStart()
     {
