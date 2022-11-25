@@ -10,12 +10,10 @@ public class CameraMove : MonoBehaviour
 {
     public static Action CameraEvents;
     public static Action<GameObject> MoveEvents;
+    public static Action CameraReset;
     //Canvas
     [SerializeField]
     GameObject canvas;
-    //레시피 오브젝트 
-    [SerializeField]
-    GameObject recipe;         //레시피 변수
     //카메라 
     [SerializeField]
     Camera m_Camera;           //Talk가 끝나고 일어날 이벤트의 카메라 변수 
@@ -35,6 +33,10 @@ public class CameraMove : MonoBehaviour
         MoveEvents = (GameObject ob) =>
         {
             AnswerMovie(ob);
+        };
+        CameraReset = () =>
+        {
+            CameraPosition();
         };
         deRotation = Quaternion.Euler(m_Camera.transform.eulerAngles);
         CameraTargetPosition();
@@ -87,8 +89,7 @@ public class CameraMove : MonoBehaviour
     private void CameraMoveReset(GameObject ob)
     {
         Destroy(ob);
-        m_Camera.transform.DOMove(dePosition, 3f);
-        m_Camera.transform.DORotateQuaternion(deRotation, 3f);
+        CameraPosition();
     }
     //카메라 위치 저장
     private void CameraTargetPosition()
@@ -103,9 +104,14 @@ public class CameraMove : MonoBehaviour
         while (true)
         {
             yield return new WaitForSeconds(5f);
-            m_Camera.transform.DOLocalMove(pos, 3f).OnComplete(() => { recipe.SetActive(true);npcBalloon.SetActive(true); }); ;
-            m_Camera.transform.DOLocalRotate(ros, 3f, RotateMode.Fast);
+            m_Camera.transform.DOLocalMove(pos, 3f);
+            m_Camera.transform.DOLocalRotate(ros, 3f, RotateMode.Fast).OnComplete(() => { npcBalloon.SetActive(true); });
             yield break;
         }
+    }
+    public void CameraPosition()
+    {
+        m_Camera.transform.DOMove(dePosition, 3f);
+        m_Camera.transform.DORotateQuaternion(deRotation, 3f);
     }
 }

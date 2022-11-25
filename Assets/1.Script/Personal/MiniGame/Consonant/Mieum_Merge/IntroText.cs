@@ -10,37 +10,40 @@ public class IntroText : MonoBehaviour
     [SerializeField]
     string[] talk;          //인스펙터에서 대화 수정 할수있게 하고 배열로 선언
     [SerializeField]
-    GameObject ob1,ob2;          //레시피 변수
+    GameObject image;       //Image GameObject
     int talkIndex = 0; //배열 증감 변수
+    bool imageTouch = true;  //대화 도중 터치 못하게 막기
     private void Start()
     {
-        StartCoroutine(OnType());//대화가 끝나지 않았다면 다음 대화로 넘어간다.
+        StartCoroutine(OnType());//대화가 끝나지 않았다면 다음 대화로 넘어간다
     }
 
     IEnumerator OnType()
     {
         text.text = " ";
+        imageTouch = false;
         foreach (char item in talk[talkIndex++])
         {
             text.text += item;
             yield return new WaitForSeconds(0.1f);
         }
+        imageTouch = true;
         yield return new WaitForSeconds(1f);
         yield break;
     }
     private void OnMouseDown()
     {
-        StartCoroutine(OnType());
-    }
-    private void Update()
-    {
-        if (talkIndex == 4)
+        if(imageTouch)
         {
-            ob1.SetActive(true);
+            if (talk.Length == talkIndex)//대화가 다끝났다면
+            {
+                CameraMove.CameraReset();//카메라 이동
+                image.SetActive(false);
+            }
+            else
+            StartCoroutine(OnType());
         }
-        else if (talkIndex == 6)
-        {
-            ob2.SetActive(true);
-        }
+
     }
+
 }
