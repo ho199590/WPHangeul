@@ -16,13 +16,12 @@ public class CameraMove : MonoBehaviour
     //레시피 오브젝트 
     [SerializeField]
     GameObject recipe;         //레시피 변수
+    bool b_recipe;             //레시피형 불값
     //카메라 
     [SerializeField]
     Camera m_Camera;           //Talk가 끝나고 일어날 이벤트의 카메라 변수 
     [SerializeField]
     GameObject target;         //바라볼 타겟
-    [SerializeField]
-    GameObject npcBalloon;     //NPC말풍선
     Vector3 dePosition;        //카메라 원위치 저장 변수
     Quaternion deRotation;     //카메라 원방향 저장 변수
     SpeakerHandler speaker;    //스피커 
@@ -44,9 +43,11 @@ public class CameraMove : MonoBehaviour
     private void Update()
     {
         //무한 루프 방지 
-        if(Vector3.Distance(m_Camera.transform.position , target.transform.position) <= 3f)
+        if(b_recipe && Vector3.Distance(m_Camera.transform.position , target.transform.position) <= 3f)
         {
-           /* recipe.transform.DOLocalMoveX(-327f, 3f).SetEase(Ease.Linear).SetLoops(1).OnComplete(() => { IntroDrag.Position(); });*/
+            recipe.SetActive(true);
+            recipe.transform.DOLocalMoveX(-700, 5f).SetEase(Ease.Linear).SetLoops(1);
+            b_recipe = false;
         }
     }
     //동물 정답 액션
@@ -81,7 +82,7 @@ public class CameraMove : MonoBehaviour
     public void DoCamera()
     {
         m_Camera.transform.DOMove(target.transform.position, 5);
-        StartCoroutine(IntroMove());
+        b_recipe = true;
     }
     //카메라 위치 초기화 
     private void CameraMoveReset()
@@ -95,16 +96,9 @@ public class CameraMove : MonoBehaviour
         dePosition = target.transform.position; //원위치 저장 
         deRotation = Quaternion.Euler(m_Camera.transform.eulerAngles);
     }
-    IEnumerator IntroMove()
+    //정답 동물 이동 
+    private void AnswerAnimal(GameObject ob)
     {
-        Vector3 pos = new Vector3(-12.34f, 10.21f, 2.31f);
-        Vector3 ros = new Vector3(21.9f, -46.1f, -9.5f);
-        while (true)
-        {
-            yield return new WaitForSeconds(5f);
-            m_Camera.transform.DOLocalMove(pos, 3f).OnComplete(() => { recipe.SetActive(true);npcBalloon.SetActive(true); }); ;
-            m_Camera.transform.DOLocalRotate(ros, 3f, RotateMode.Fast);
-            yield break;
-        }
+        ob.GetComponent<Animator>().SetInteger(ob.GetComponent<Animator>().GetParameter(0).name,1 );
     }
 }
