@@ -112,6 +112,6 @@ public class AnimalAI : MonoBehaviour
         animalOb.transform.position = new Vector3(animalOb.transform.position.x, 5f, animalOb.transform.position.z);
         animalOb.GetComponent<Animator>().SetInteger(animalOb.GetComponent<Animator>().GetParameter(0).name, 4);
         CameraMove.MoveEvents(animalOb);
-/*        MissionList.ObjectOn(animalOb);*/
+        MissionList.ObjectOn(animalOb);
     }
 }
