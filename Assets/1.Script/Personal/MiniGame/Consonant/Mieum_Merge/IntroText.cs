@@ -11,7 +11,7 @@ public class IntroText : MonoBehaviour
     [SerializeField]
     string[] talk;          //인스펙터에서 대화 수정 할수있게 하고 배열로 선언
     [SerializeField]
-    GameObject image , introMap , mission , resipe;       //Image GameObject
+    GameObject image , introMap , mission ;       //Image GameObject
     BoxCollider2D boxCollider;
     [SerializeField]
     GameObject[] ob;
@@ -51,7 +51,6 @@ public class IntroText : MonoBehaviour
                 image.SetActive(false);
                 introMap.SetActive(false);
                 mission.SetActive(true);
-                resipe.SetActive(true);
             }
             else
             StartCoroutine(OnType());

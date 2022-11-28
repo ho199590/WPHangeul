@@ -116,6 +116,7 @@ public class CameraMove : MonoBehaviour
     {
         m_Camera.transform.DOMove(target.transform.position, 3f);
         m_Camera.transform.DOLocalRotateQuaternion(target.transform.rotation, 3f);
+        NPCHint.Hint();
     }
     //∏ª«≥º± , IntroMap≈¥
     private void IntroStart()
