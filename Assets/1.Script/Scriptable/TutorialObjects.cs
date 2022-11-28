@@ -1,7 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+//NarrationSetContainer.cs 참고
+//튜토리얼에서 사용될 Scriptable Object
 [CreateAssetMenu(menuName = "Scriptable/Tutorial", fileName = "TutorialObjects")]
 [System.Serializable]
 public class IntroductionObjects
@@ -14,6 +15,10 @@ public class TutorialObjects : ScriptableObject
     [SerializeField]
     IntroductionObjects[] Giyeok, Nieun, Digeud, Lieul, Mieum, Bieub, Sioat, Ieong, Jieuj, Chioat, Kieuk, Tigeut, Pieup, Hieuh;
     Dictionary<string, IntroductionObjects[]> Index = new Dictionary<string, IntroductionObjects[]>();
+
+    [SerializeField]
+    GameObject[] eviroments;
+    public GameObject[] Eviroments { get => eviroments; }
     public Dictionary<string, IntroductionObjects[]> GetIndex()
     {
         return Index;
