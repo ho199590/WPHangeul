@@ -11,17 +11,21 @@ public class IntroDrag : MonoBehaviour
     Vector3 dePosition;    //원래 위치 저장 변수
     [SerializeField]
     GameObject particle;    //파티클 오브젝트
+    SpeakerHandler speaker; //사운드 스크립트 변수 
     //현재 위치값 저장 
     private void Start()
     {
+        speaker = FindObjectOfType<SpeakerHandler>();
         dePosition  = transform.position;
     }
-
+    private void OnMouseDown()
+    {
+        speaker.SoundByNum2(4);
+    }
     //Canvas 기준으로 카메라 드래그 , 높이 안맞아서 y축 - 20f 해버림 ㅜ
     void OnMouseDrag()
     {
         float distance = m_Camera.ScreenToWorldPoint(transform.position).z;
-
         Vector3 mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y - 20f, distance);
         Vector3 objPos = m_Camera.ScreenToWorldPoint(mousePos);
         transform.position = objPos;
@@ -36,6 +40,7 @@ public class IntroDrag : MonoBehaviour
     {
         if(transform.name == other.gameObject.name)
         {
+            speaker.SoundByNum2(3);
             answerOb.SetActive(true);
             this.transform.GetComponent<Collider>().enabled = false;
             GameObject par = Instantiate(particle);

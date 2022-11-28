@@ -15,11 +15,13 @@ public class IntroText : MonoBehaviour
     BoxCollider2D boxCollider;
     [SerializeField]
     GameObject[] ob;
+    SpeakerHandler speakerHandler; //사운드 변수 
     int talkIndex = 0; //배열 증감 변수
     bool imageTouch = true;  //대화 도중 터치 못하게 막기
     public static Action PlusIndex; 
     private void Start()
     {
+        speakerHandler = FindObjectOfType<SpeakerHandler>();
         boxCollider = GetComponent<BoxCollider2D>();
         PlusIndex = () => { UpIndex(); };
         StartCoroutine(OnType());//대화가 끝나지 않았다면 다음 대화로 넘어간다
@@ -40,6 +42,7 @@ public class IntroText : MonoBehaviour
     }
     private void OnMouseDown()
     {
+        speakerHandler.SoundByNum2(3);
         if(imageTouch)
         {
             if (talk.Length == talkIndex)//대화가 다끝났다면
