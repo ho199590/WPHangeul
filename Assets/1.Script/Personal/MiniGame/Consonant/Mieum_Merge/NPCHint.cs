@@ -13,6 +13,7 @@ public class NPCHint : MonoBehaviour
         Hint = () =>
         {
             onOff = true;
+            typingMessage.SetActive(true);
         };
     }
     private void OnMouseDown()
@@ -20,12 +21,12 @@ public class NPCHint : MonoBehaviour
         if(onOff)
         {
             resipe.SetActive(true);
-            typingMessage.SetActive(true);
+            typingMessage.SetActive(false);
         }
     }
     private void OnMouseUp()
     {
         resipe.SetActive(false);
-        typingMessage.SetActive(false);
+        typingMessage.SetActive(true);
     }
 }
