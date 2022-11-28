@@ -1,11 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+//카메라 이동
 public class CameraMoveHandle : MonoBehaviour
 {
     [SerializeField]
-    Transform camPosi;
+    Transform camArrive;
     [SerializeField]
     AnimationCurve curve;
     Vector3 startposition;
@@ -28,7 +28,7 @@ public class CameraMoveHandle : MonoBehaviour
             currentTime += Time.deltaTime;
             move = currentTime / lerpTime;
             //transform.position = Vector3.Lerp(startposition, camPosi.position, move);
-            transform.position = Vector3.Lerp(startposition, camPosi.position, curve.Evaluate(currentTime / lerpTime));
+            transform.position = Vector3.Lerp(startposition, camArrive.position, curve.Evaluate(currentTime / lerpTime));
             yield return null;
         }
     }
