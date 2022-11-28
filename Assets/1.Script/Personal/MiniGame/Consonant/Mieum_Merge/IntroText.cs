@@ -11,15 +11,17 @@ public class IntroText : MonoBehaviour
     [SerializeField]
     string[] talk;          //인스펙터에서 대화 수정 할수있게 하고 배열로 선언
     [SerializeField]
-    GameObject image , introMap , mission , resipe;       //Image GameObject
+    GameObject image , introMap , mission ;       //Image GameObject
     BoxCollider2D boxCollider;
     [SerializeField]
     GameObject[] ob;
+    SpeakerHandler speakerHandler; //사운드 변수 
     int talkIndex = 0; //배열 증감 변수
     bool imageTouch = true;  //대화 도중 터치 못하게 막기
     public static Action PlusIndex; 
     private void Start()
     {
+        speakerHandler = FindObjectOfType<SpeakerHandler>();
         boxCollider = GetComponent<BoxCollider2D>();
         PlusIndex = () => { UpIndex(); };
         StartCoroutine(OnType());//대화가 끝나지 않았다면 다음 대화로 넘어간다
@@ -40,6 +42,7 @@ public class IntroText : MonoBehaviour
     }
     private void OnMouseDown()
     {
+        speakerHandler.SoundByNum2(3);
         if(imageTouch)
         {
             if (talk.Length == talkIndex)//대화가 다끝났다면
@@ -48,7 +51,6 @@ public class IntroText : MonoBehaviour
                 image.SetActive(false);
                 introMap.SetActive(false);
                 mission.SetActive(true);
-                resipe.SetActive(true);
             }
             else
             StartCoroutine(OnType());
