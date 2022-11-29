@@ -24,12 +24,12 @@ public class StageParam_minigame : MonoBehaviour
     void StageScene()
     {
         changer.ChangeScene("Tutorial");
-        StartCoroutine(delay());
+        FindObjectOfType<SceneChanger>().TutorialAction += playTutorial;
     }
-    IEnumerator delay()
+    //HJ_미니게임 시작전에 튜토리얼씬 재생해주는 함수
+    public void playTutorial()
     {
-        yield return new WaitForSeconds(2.3f);
         LoadingTutorialManager.LoadScene(SceneName);
-        yield return null;
+        FindObjectOfType<SceneChanger>().TutorialAction -= playTutorial;
     }
 }
