@@ -176,7 +176,7 @@ public class LoadingTutorialManager : MonoBehaviour
             yield return null;
         }
         anim = objectPosi[index].GetComponent<Animator>();
-        anim.SetInteger("Tutorial", 2); //anim.SetInteger(anim.GetParameter(1).name, 2);
+        anim.SetInteger("Tutorial", 2); /* anim.SetInteger(anim.GetParameter(1).name, 2);*/
         objectPosi[index].transform.rotation = Quaternion.LookRotation(Vector3.back+Vector3.right); //왼쪽으로 대각선 방향 보게하기
         actionMask?.Invoke(); //마스크(돋보기) 켜주기 위한 이벤트 실행
         objectPosi[i].GetComponent<AudioSource>().Play(); //소개멘트 플레이
