@@ -6,6 +6,6 @@ public class TestTutorial : MonoBehaviour
 {
     void Start()
     {
-        LoadingTutorialManager.LoadScene("Giyeok_Mission");
+        LoadingTutorialManager.LoadScene("Nieun_Form");
     }
 }
