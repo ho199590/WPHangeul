@@ -12,9 +12,9 @@ public class TreeMakerMovementController : MonoBehaviour
     [SerializeField]
     float mindistance, speed, rotationSpeed;
     float timer;
-    // 길이
+
     [SerializeField]
-    int beginSize;
+    Transform walker;
 
     // 줄세우기
     private float dis;
@@ -76,9 +76,25 @@ public class TreeMakerMovementController : MonoBehaviour
         {
             RemoveBodyPart(check);
         }
+
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            WalkerSled(bomb);
+        }
     }
     #endregion
+    #region 오브젝트 장식 관련
+    public void WalkerSled(GameObject obj)
+    {
+        SplineWalker sp = walker.GetComponent<SplineWalker>();
 
+        Transform ty =  Instantiate(obj, walker.transform.position, Quaternion.identity, null).transform;        
+        ty.SetParent(walker);
+     
+        sp.passenger = ty;
+        sp.gameObject.SetActive(true);
+    }
+    #endregion
     #region 경로 구현
     public void TrainRailSet(int num)
     {
@@ -129,7 +145,6 @@ public class TreeMakerMovementController : MonoBehaviour
             if (heading.sqrMagnitude > dos)
             {
                 curBodyParts.transform.position = Vector3.Lerp(curBodyParts.transform.position, prevBodyParts.position, Time.deltaTime * curSpeed);
-
                 prevBodyParts.transform.LookAt(curBodyParts);
             }
         }

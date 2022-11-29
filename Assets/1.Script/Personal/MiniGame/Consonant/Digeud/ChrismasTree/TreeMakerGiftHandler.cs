@@ -6,16 +6,51 @@ using UnityEngine;
 public class TreeMakerGiftHandler : MonoBehaviour
 {
     #region º¯¼ö
-
+    
     #endregion
-    
-    
+    #region ÇÁ·ÎÆÛÆ¼
+    // 0 Á¤´ä , 1 ¿À´ä, 2 ÆøÅº
+    public int giftProperty;
+    public int GiftProperty
+    {
+        set
+        {
+            Operate = value switch
+            {
+                0 => GiftForAnswer,
+                1 => GiftForWrong,
+                2 => GiftForBomb,
+                _ => null
+            };
+            giftProperty = value;
+        }
+    }
+    public System.Action Operate;
+    #endregion
     #region ÇÔ¼ö
+    // Á¤´ä => È¸ÀüÇÏ¸ç ´Þ¸®±â + 1Ãþ »ó½Â
+    public void GiftForAnswer()
+    {
 
+    }
+    // ¿À´ä => ¿À´ä 1Ãþ ÇÏ°­
+    public void GiftForWrong()
+    {
+
+    }
+    // ÆøÅº => 2Ãþ ÇÏ°­
+    public void GiftForBomb()
+    {
+
+    }
+    #endregion
+
+    #region Ãæµ¹ °ü·Ã
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.GetComponent<TreeMakerGiftHandler>() != null) { return; }
+
+    }
     #endregion
     
-    #region
-    #endregion
-    #region
-    #endregion
 }
