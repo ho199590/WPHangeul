@@ -9,10 +9,17 @@ public class AppearHandle : MonoBehaviour
     Vector3 start;
     [SerializeField]
     Transform arrive; //µµÂøÁöÁ¡
+
+    Animator animator;
     void Start()
     {
         start = transform.position;
         StartCoroutine(Appear());
+        if (GetComponent<Animator>()) 
+        { 
+            animator = GetComponent<Animator>();
+            animator.SetInteger("Lieul_Quiz", 1);
+        }
     }
     IEnumerator Appear()
     {
@@ -21,6 +28,11 @@ public class AppearHandle : MonoBehaviour
             currentTime += Time.deltaTime;
             transform.position = Vector3.Lerp(start, arrive.position, currentTime / lerpTime);
             yield return null;
+        }
+        if (GetComponent<Animator>())
+        {
+            animator = GetComponent<Animator>();
+            animator.SetInteger("Lieul_Quiz", 2);
         }
     }
 }
