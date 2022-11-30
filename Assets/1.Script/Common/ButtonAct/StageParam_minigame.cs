@@ -23,13 +23,13 @@ public class StageParam_minigame : MonoBehaviour
 
     void StageScene()
     {
-        changer.ChangeScene("Tutorial");
-        FindObjectOfType<SceneChanger>().TutorialAction += playTutorial;
+        changer.ChangeScene("Introduction");
+        FindObjectOfType<SceneChanger>().IntroductionAction += playTutorial;
     }
     //HJ_미니게임 시작전에 튜토리얼씬 재생해주는 함수
     public void playTutorial()
     {
         LoadingTutorialManager.LoadScene(SceneName);
-        FindObjectOfType<SceneChanger>().TutorialAction -= playTutorial;
+        FindObjectOfType<SceneChanger>().IntroductionAction -= playTutorial;
     }
 }

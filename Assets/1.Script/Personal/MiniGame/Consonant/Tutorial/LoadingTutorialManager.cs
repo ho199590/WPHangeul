@@ -71,7 +71,7 @@ public class LoadingTutorialManager : MonoBehaviour
     {
         print("다음씬이름 체크:" + sceneName);
         nextScene = sceneName;
-        SceneManager.LoadScene("Tutorial");
+        SceneManager.LoadScene("Introduction");
     }
     IEnumerator LoadScene() //씬 재생 전에 튜토리얼 먼저 재생해주는 비동기식 재생 지연 함수
     {
