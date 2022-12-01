@@ -37,11 +37,15 @@ public class GiyeokMissionManager : MonoBehaviour
     bool playstart; //소리 재생 파일 바꿀 때 전에꺼가 재생중인지 아닌지 체크하는용 파라미터
     bool check; //마우스다운시에 처음에 한번만 성우 안내 목소리 나오게끔 하는 파라미터
     SpeakerHandler speakerHandler;
+
+    float currentTime; //lerp용 deltaTime증가용
+    Vector3 startPosi; //lerp의 시작위치 고정용
     #endregion
 
     private void Awake()
     {
-        StartCoroutine(Speed_StartZoom());
+        GetComponent<CapsuleCollider>().enabled = false;
+        StartCoroutine(ZoomMove(6f));
     }
     private void Start()
     {
@@ -59,27 +63,36 @@ public class GiyeokMissionManager : MonoBehaviour
         scoreCase.SceneComplete += MissionComplete;
         yield break;
     }
-
     #region 함수
     //돋보기가 씬 안으로 천천히 들어오게 만들어주는 지연 함수
-    public IEnumerator Speed_StartZoom()
+    IEnumerator ZoomMove(float lerpTime)
     {
-        GetComponent<CapsuleCollider>().enabled = false;
-        while (Vector3.Distance(transform.position, zoomPosition.transform.position) > 0.2f)//둘사이의 거리가 있는 동안 //첨에 0으로 했다가 너무 느려서 10으로 바꿈
+        currentTime = 0;
+        startPosi = transform.position;
+        while((currentTime/lerpTime) < 1)
         {
-            transform.position = Vector3.Lerp(transform.position, zoomPosition.transform.position, Time.deltaTime * 0.7f);
-            yield return new WaitForSeconds(Time.deltaTime*0.2f); //제자리로 돌아갈때 속도 조절하는 곳
-            if (Vector3.Distance(transform.position, zoomPosition.transform.position) <= 0.2f)
-            {
-                break;
-            }
-
+            currentTime += Time.deltaTime;
+            transform.position = Vector3.Lerp(startPosi, zoomPosition.transform.position, currentTime / lerpTime);
+            //transform.position = Vector3.Lerp(startPosi, zoomPosition.transform.position, Mathf.SmoothStep(0, 1, currentTime / lerpTime));
+            yield return null;
         }
-        transform.position = zoomPosition.transform.position;
-        invisible.SetActive(false);
-        GetComponent<CapsuleCollider>().enabled = true;
-        hand.SetActive(true);
-        yield break;
+        //---------------------------------------------------------------- Lerp 잘못사용했을 때-----------------------------------------------------------------------
+        //while (Vector3.Distance(transform.position, zoomPosition.transform.position) > 0.2f)//둘사이의 거리가 있는 동안 //첨에 0으로 했다가 너무 느려서 10으로 바꿈
+        //{
+        //    transform.position = Vector3.Lerp(transform.position, zoomPosition.transform.position, Time.deltaTime * 0.7f);
+        //    yield return new WaitForSeconds(Time.deltaTime*0.2f); //제자리로 돌아갈때 속도 조절하는 곳
+        //    if (Vector3.Distance(transform.position, zoomPosition.transform.position) <= 0.2f)
+        //    {
+        //        break;
+        //    }
+        //}
+        //transform.position = zoomPosition.transform.position;
+        if (lerpTime == 6f) //Awake에서 호출시에만 해야할 일
+        {
+            invisible.SetActive(false);
+            GetComponent<CapsuleCollider>().enabled = true;
+            hand.SetActive(true);
+        }
     }
     private void OnMouseDown()
     {
@@ -178,7 +191,8 @@ public class GiyeokMissionManager : MonoBehaviour
             else
             {
                 animatorPico.SetInteger("PicoAction", 2);
-                StartCoroutine(Speed_forZoom());
+                speakerHandler.SoundByNum(10);
+                StartCoroutine(ZoomMove(0.5f));
             }
         }
     }
@@ -193,24 +207,8 @@ public class GiyeokMissionManager : MonoBehaviour
         invisible.SetActive(true);
         GetComponent<CapsuleCollider>().enabled = false; //돋보기 못하게 하기
         transform.GetChild(0).gameObject.SetActive(false); //마스크 꺼주기
-        StartCoroutine(Speed_forZoom());
+        StartCoroutine(ZoomMove(1f));
         animatorPico.SetInteger("PicoAction", 3); //피코애니메이션 중에 3번 hi-host켜기   
-    }
-    //틀린 단어를 골랐을 경우, 미션 전체완료시에 돋보기가 제자리로 천천히 돌아가게 해주는 지연함수
-    public IEnumerator Speed_forZoom()
-    {
-        speakerHandler.SoundByNum(10);
-        while (Vector3.Distance(transform.position, zoomPosition.transform.position) > 0.2f) //둘사이의 거리가 있는 동안 //첨에 0으로 했다가 너무 느려서 10으로 바꿈
-        {
-            transform.position = Vector3.Lerp(transform.position, zoomPosition.transform.position, Time.deltaTime*10); //출발하는 곳과 도착할 곳의 Lerp
-            yield return new WaitForSeconds(Time.deltaTime * 0.2f); //제자리로 돌아갈때 속도 조절하는 곳
-            if (Vector3.Distance(transform.position, zoomPosition.transform.position) <= 0.2f)
-            {
-                break;
-            }
-        }
-        transform.position = zoomPosition.transform.position;
-        yield break;
     }
     #endregion
 }

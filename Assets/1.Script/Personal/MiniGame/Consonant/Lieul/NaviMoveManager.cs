@@ -14,6 +14,8 @@ public class NaviMoveManager : MonoBehaviour
 
     [SerializeField]
     Camera endCam;
+    [SerializeField]
+    GameObject[] poles; //회전할 이정표
 
     //골목 회전용
     int index;
@@ -61,11 +63,14 @@ public class NaviMoveManager : MonoBehaviour
             print("온콜리전엔터" + collision.gameObject.name);
             if (index < 4)
             {
+                poles[index].GetComponent<PoleRotationHandle>().enabled = true;
                 DestinationIndex = ++index; //다음 타겟으로 인덱스값 +1해서 넘겨주기
             }
             if (collision.gameObject.name.Contains("Fin"))
             {
-                endCam.depth = 1;
+                Camera.main.enabled = false;
+                //endCam.depth = 1;
+                //endCam.enabled = true;
                 endCam.GetComponent<Animator>().enabled = true;            }
         }
     }

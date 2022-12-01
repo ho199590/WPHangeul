@@ -29,6 +29,8 @@ public class SceneChanger : MonoBehaviour
     Text Loading_text;
 
     AudioSource[] AllAudio;
+
+    public Action IntroductionAction;
     #endregion
     void Awake()
     {
@@ -90,6 +92,7 @@ public class SceneChanger : MonoBehaviour
                 if (percentage == 100)
                 {
                     async.allowSceneActivation = true;
+                    if(IntroductionAction != null) IntroductionAction?.Invoke(); //HJ_로딩끝나면 튜토리얼 재생하는 이벤트 실행
                 }
             }
             else
