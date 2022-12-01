@@ -28,7 +28,7 @@ public class AnimalAI : MonoBehaviour
         VariableRest();
         coroutine = AiMonster(); //Aimonster()코루틴으로 초기화 
         randomInt = Random.Range(0, movePoint.Length); //랜덤 변수 저장
-        anim.SetInteger(anim.GetParameter(0).name, 3);   //애니메이션 시작
+        anim.SetInteger(anim.GetParameter(0).name, 5);   //애니메이션 시작
         transform.position = spawnPoint.transform.position; //첫시작시 위치
         StartCoroutine(coroutine);
         speaker = FindObjectOfType<SpeakerHandler>();
