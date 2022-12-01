@@ -259,7 +259,7 @@ public class TreeMakerMovementController : MonoBehaviour
     #region 제거 관련
     public void RemoveBodyPart()
     {
-        if (TrainParts.Count > 2)
+        if (TrainParts.Count > 1)
         {
             Transform tt = TrainParts[TrainParts.Count - 1];
             TrainParts.RemoveAt(TrainParts.Count - 1);
@@ -268,7 +268,7 @@ public class TreeMakerMovementController : MonoBehaviour
 
     public void RemoveBodyPart(int num)
     {
-        if (TrainParts.Count > 2)
+        if (TrainParts.Count > 1)
         {
             Transform tt = TrainParts[num+1];
             TrainParts.RemoveAt(num+1);
@@ -278,9 +278,9 @@ public class TreeMakerMovementController : MonoBehaviour
     }
 
     public void RemoveBodyPart(Transform t)
-    {
+    {   
         int num = t.GetSiblingIndex();
-        if (TrainParts.Count > 2)
+        if (TrainParts.Count > 1)
         {
             Transform tt = TrainParts[num + 1];
             WalkerSled(tt.gameObject);
