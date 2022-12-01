@@ -149,7 +149,7 @@ public class ReadmeEditorBE3 : Editor {
 		Handles.color = Color.white;
 		Handles.EndGUI ();
 
-		EditorGUIUtility.AddCursorRect (position, MouseCursor.Link);
+/*		EditorGUIUtility.AddCursorRect (position, MouseCursor.Link);*/ //에러나서 일단 잠금
 
 		return GUI.Button (position, label, LinkStyle);
 	}
