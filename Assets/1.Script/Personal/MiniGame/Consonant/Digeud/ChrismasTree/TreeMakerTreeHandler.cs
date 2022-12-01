@@ -42,6 +42,13 @@ public class TreeMakerTreeHandler : MonoBehaviour
     [SerializeField]
     Transform catchGift;
     #endregion
+
+
+    Ray ray;
+    RaycastHit hit;
+
+    public bool SiedLock;
+
     #endregion
     #region 함수
     private void Awake()
@@ -67,7 +74,10 @@ public class TreeMakerTreeHandler : MonoBehaviour
     // 카메라 상하 이동
     public void CameraLift(int num)
     {
-        if((floorCount + num) < 0){return;}
+        if((floorCount + num) < 0){
+            floorCount = 0;
+            num = floorCount - num;
+        }
         Vector3 Target = new Vector3(camera.position.x, camera.position.y + num, camera.position.z);
         camera.DOKill();
         camera.DOMove(Target, 1f).From(camera.position);
@@ -75,16 +85,13 @@ public class TreeMakerTreeHandler : MonoBehaviour
 
         if (floorCount + num < floors.Length)
         {
-            floorCount += num;            
-        }
-        else
-        {
-            floorCount = 0;
+            floorCount += num;
         }
     }
     // 카메라 리셋
     public void CameraReset()
     {
+        print("TEST!");
         camera.DOKill();
         transform.DOKill();
         camera.DOMove(cameraOriginPos, 2);
@@ -113,7 +120,7 @@ public class TreeMakerTreeHandler : MonoBehaviour
         g.transform.DOScale(Vector3.zero, 1f).From(ori);
         gg.transform.DOScale(ori, 1f).From(Vector3.zero);
 
-
+        g.GetComponent<TreeMakerGiftHandler>().Operate?.Invoke();
     }
     #endregion
     #endregion
@@ -135,6 +142,9 @@ public class TreeMakerTreeHandler : MonoBehaviour
     }
     #endregion
 
+    #region 트리 클릭 관련
+
+    #endregion
     #region DEBUG
     private void Update()
     {
@@ -152,15 +162,26 @@ public class TreeMakerTreeHandler : MonoBehaviour
             CameraReset();
         }
 
-        if (Input.GetKeyDown(KeyCode.R))
+        if (Input.GetMouseButtonDown(0))
         {
-            if (catchGift != null)
-            m_MovementController.RemoveBodyPart(catchGift);
+            ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if(Physics.Raycast(ray, out hit))
+            {   
+                if(hit.transform == transform)
+                {
+                    if (catchGift != null)
+                    {
+                        if (!SiedLock)
+                        {
+                            m_MovementController.RemoveBodyPart(catchGift);
+                        }
+                    }
+                }
+            }
         }
 
         FloorLevel = floors[floorCount];
     }
-
     #endregion
 
 }

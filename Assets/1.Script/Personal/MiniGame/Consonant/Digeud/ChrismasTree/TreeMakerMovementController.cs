@@ -82,25 +82,16 @@ public class TreeMakerMovementController : MonoBehaviour
     #endregion
     #region 함수
     #region 디버그
+    private void Start()
+    {
+        AddBodyPart(InitTrain());
+
+        RootNum = check;
+    }
+
     private void Update()
     {
-        //TrainMove();
         FollowTheHead();
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            RootNum = check;
-        }
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            AddBodyPart(bomb);
-        }
-        
-
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            WalkerSled(bomb);
-        }
-
         if (Input.GetKeyDown(KeyCode.P))
         {
             //TestTrain = InitTrain();
@@ -159,9 +150,9 @@ public class TreeMakerMovementController : MonoBehaviour
         float dos = mindistance;
 
         if (TrainParts.Count > 1) 
-        TrainParts[1].position = TrainParts[0].position;
+        //TrainParts[1].position = TrainParts[0].position;
 
-        for (int i = 2; i < TrainParts.Count; i++)
+        for (int i = 1; i < TrainParts.Count; i++)
         {
             curBodyParts = TrainParts[i];
             prevBodyParts = TrainParts[i - 1];
@@ -195,6 +186,7 @@ public class TreeMakerMovementController : MonoBehaviour
         {
             GameObject gift = Instantiate(list[indexs[i]], TrainParts[0].position, Quaternion.identity, transform);
             TrainParts.Add(gift.transform);
+            gift.name = i.ToString();
         }
     }
     // 트레인을 위한 오브젝트 리스트 생성
@@ -259,7 +251,7 @@ public class TreeMakerMovementController : MonoBehaviour
     #region 제거 관련
     public void RemoveBodyPart()
     {
-        if (TrainParts.Count > 2)
+        if (TrainParts.Count > 1)
         {
             Transform tt = TrainParts[TrainParts.Count - 1];
             TrainParts.RemoveAt(TrainParts.Count - 1);
@@ -268,7 +260,7 @@ public class TreeMakerMovementController : MonoBehaviour
 
     public void RemoveBodyPart(int num)
     {
-        if (TrainParts.Count > 2)
+        if (TrainParts.Count > 1)
         {
             Transform tt = TrainParts[num+1];
             TrainParts.RemoveAt(num+1);
@@ -278,14 +270,19 @@ public class TreeMakerMovementController : MonoBehaviour
     }
 
     public void RemoveBodyPart(Transform t)
-    {
-        int num = t.GetSiblingIndex();
-        if (TrainParts.Count > 2)
+    {   
+        int num = t.GetSiblingIndex();        
+        if (TrainParts.Count > 1)
         {
             Transform tt = TrainParts[num + 1];
-            TrainParts.RemoveAt(num + 1);
             WalkerSled(tt.gameObject);
+            TrainParts.RemoveAt(num + 1);            
             Destroy(tt.gameObject);
+
+            if(TrainParts.Count <= 1)
+            {
+                AddBodyPart(InitTrain());
+            }
         }
     }
 

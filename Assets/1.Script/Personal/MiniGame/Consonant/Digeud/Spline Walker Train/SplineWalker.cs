@@ -24,6 +24,8 @@ public class SplineWalker : MonoBehaviour {
                     {
 						tree.GiftBear(passenger.gameObject);
 						gameObject.SetActive(false);
+						tree.SiedLock = false;
+
 					}
 					passenger = null;
 				}
@@ -56,5 +58,7 @@ public class SplineWalker : MonoBehaviour {
 		tree = FindObjectOfType<TreeMakerTreeHandler>();
 		progress = 0f;
 		passenger = transform.GetChild(transform.childCount-1);
+
+		tree.SiedLock = true;
     }
 }
