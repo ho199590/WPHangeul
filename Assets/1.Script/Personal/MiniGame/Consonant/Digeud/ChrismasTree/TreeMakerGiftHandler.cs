@@ -6,7 +6,9 @@ using UnityEngine;
 public class TreeMakerGiftHandler : MonoBehaviour
 {
     #region 변수
-    
+    TreeMakerTreeHandler tree;
+    TreeMakerMovementController train;
+    Transform sied;
     #endregion
     #region 프로퍼티
     // 0 정답 , 1 오답, 2 폭탄
@@ -31,26 +33,42 @@ public class TreeMakerGiftHandler : MonoBehaviour
     // 정답 => 회전하며 달리기 + 1층 상승
     public void GiftForAnswer()
     {
+        print("Answer");
+        tree.CameraLift(1);
 
     }
     // 오답 => 오답 1층 하강
     public void GiftForWrong()
     {
+        print("Wrong");
+        tree.CameraLift(-1);
 
+        //tree.GiftBear(gameObject);
     }
     // 폭탄 => 2층 하강
     public void GiftForBomb()
     {
-
+        print("BOMB");
+        tree.CameraLift(-2);
     }
-    #endregion
 
-    #region 충돌 관련
-    private void OnTriggerEnter(Collider other)
+    public void OperateInvoke()
     {
-        if(other.GetComponent<TreeMakerGiftHandler>() != null) { return; }
+        Operate?.Invoke();
+    }
 
+    public void OnEnable()
+    {
+        tree = FindObjectOfType<TreeMakerTreeHandler>();
+        train = FindObjectOfType<TreeMakerMovementController>();
     }
     #endregion
-    
+    #region 디버그
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.H)){
+            OperateInvoke();
+        }
+    }
+    #endregion
 }

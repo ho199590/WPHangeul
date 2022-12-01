@@ -73,8 +73,14 @@ public class TreeMakerTreeHandler : MonoBehaviour
         camera.DOMove(Target, 1f).From(camera.position);
         cameraCurPos = Target;
 
-        if (floorCount + num < floors.Length) 
-        floorCount += num;        
+        if (floorCount + num < floors.Length)
+        {
+            floorCount += num;            
+        }
+        else
+        {
+            floorCount = 0;
+        }
     }
     // 카메라 리셋
     public void CameraReset()
@@ -96,6 +102,18 @@ public class TreeMakerTreeHandler : MonoBehaviour
         Transform targetPoint = floorSpot[ran];
 
         return targetPoint;
+    }
+
+    public void GiftBear(GameObject g)
+    {
+        Vector3 ori = g.transform.localScale;
+        Transform point = GetFloorSpotPoint();
+        GameObject gg = Instantiate(g, point.position, Quaternion.identity, null);
+
+        g.transform.DOScale(Vector3.zero, 1f).From(ori);
+        gg.transform.DOScale(ori, 1f).From(Vector3.zero);
+
+
     }
     #endregion
     #endregion
@@ -132,6 +150,12 @@ public class TreeMakerTreeHandler : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.L))
         {
             CameraReset();
+        }
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            if (catchGift != null)
+            m_MovementController.RemoveBodyPart(catchGift);
         }
 
         FloorLevel = floors[floorCount];

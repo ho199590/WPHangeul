@@ -11,6 +11,8 @@ public class SplineWalker : MonoBehaviour {
 	[SerializeField]
 	public Transform passenger;
 
+	TreeMakerTreeHandler tree;
+
 	private void Update () {
 		if (goingForward) {
 			progress += (Time.deltaTime / duration);
@@ -18,6 +20,11 @@ public class SplineWalker : MonoBehaviour {
 				if (mode == SplineWalkerMode.Once) {
 					progress = 1f;
 
+					if(passenger != null)
+                    {
+						tree.GiftBear(passenger.gameObject);
+						gameObject.SetActive(false);
+					}
 					passenger = null;
 				}
 				else if (mode == SplineWalkerMode.Loop) {
@@ -46,6 +53,8 @@ public class SplineWalker : MonoBehaviour {
 
     private void OnEnable()
     {
+		tree = FindObjectOfType<TreeMakerTreeHandler>();
 		progress = 0f;
+		passenger = transform.GetChild(transform.childCount-1);
     }
 }
