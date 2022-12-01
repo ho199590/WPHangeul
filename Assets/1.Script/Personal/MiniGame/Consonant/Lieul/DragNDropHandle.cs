@@ -27,7 +27,11 @@ public class DragNDropHandle : MonoBehaviour
     {
         z_saved = Camera.main.WorldToScreenPoint(gameObject.transform.position).z;
         posi = gameObject.transform.position - GetMouseWorldPosition();
-        if(GetComponent<Rigidbody>()) GetComponent<Rigidbody>().useGravity = false;
+        if (GetComponent<Rigidbody>()) 
+        { 
+            GetComponent<Rigidbody>().useGravity = false;
+            GetComponent<Rigidbody>().isKinematic = true;
+        }
         lieulPosi.SetActive(true);
     }
     private void OnMouseDrag()
