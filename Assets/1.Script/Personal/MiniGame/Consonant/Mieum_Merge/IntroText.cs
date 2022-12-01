@@ -51,6 +51,7 @@ public class IntroText : MonoBehaviour
                 image.SetActive(false);
                 introMap.SetActive(false);
                 mission.SetActive(true);
+                NPCHint.ColliderOn();//콜라이더 킴
             }
             else
             StartCoroutine(OnType());

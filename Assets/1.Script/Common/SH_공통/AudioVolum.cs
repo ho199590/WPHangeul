@@ -7,19 +7,14 @@ using UnityEngine.UI;
 
 public class AudioVolum : MonoBehaviour
 {
-
     public Slider audioSlider;
     public AudioSource audioSource;
-
-
     public void AudioControl()
     {
         float sound = audioSlider.value;
         audioSource.volume = audioSlider.value;
         PlayerPrefs.SetFloat("audioSlider", audioSlider.value);
     }
-
-
     public void MuteToggle(bool muted)
     {
         if(muted)
@@ -31,6 +26,4 @@ public class AudioVolum : MonoBehaviour
             AudioListener.volume = 1;
         }
     }
-
-
 }

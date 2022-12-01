@@ -135,6 +135,5 @@ public class FishHandler : MonoBehaviour
             rigidbody.isKinematic = true;
             State = FishState.None;
         }
-        
     }
 }
