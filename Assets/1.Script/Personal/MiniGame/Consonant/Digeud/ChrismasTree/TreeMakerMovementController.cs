@@ -283,8 +283,8 @@ public class TreeMakerMovementController : MonoBehaviour
         if (TrainParts.Count > 2)
         {
             Transform tt = TrainParts[num + 1];
-            TrainParts.RemoveAt(num + 1);
             WalkerSled(tt.gameObject);
+            TrainParts.RemoveAt(num + 1);            
             Destroy(tt.gameObject);
         }
     }
