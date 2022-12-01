@@ -74,7 +74,10 @@ public class TreeMakerTreeHandler : MonoBehaviour
     // 카메라 상하 이동
     public void CameraLift(int num)
     {
-        if((floorCount + num) < 0){return;}
+        if((floorCount + num) < 0){
+            floorCount = 0;
+            num = floorCount - num;
+        }
         Vector3 Target = new Vector3(camera.position.x, camera.position.y + num, camera.position.z);
         camera.DOKill();
         camera.DOMove(Target, 1f).From(camera.position);
@@ -82,16 +85,13 @@ public class TreeMakerTreeHandler : MonoBehaviour
 
         if (floorCount + num < floors.Length)
         {
-            floorCount += num;            
-        }
-        else
-        {
-            floorCount = 0;
+            floorCount += num;
         }
     }
     // 카메라 리셋
     public void CameraReset()
     {
+        print("TEST!");
         camera.DOKill();
         transform.DOKill();
         camera.DOMove(cameraOriginPos, 2);

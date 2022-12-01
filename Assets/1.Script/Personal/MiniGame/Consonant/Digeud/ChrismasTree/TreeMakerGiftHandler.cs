@@ -63,7 +63,6 @@ public class TreeMakerGiftHandler : MonoBehaviour
         train = FindObjectOfType<TreeMakerMovementController>();
 
         GiftProperty = giftProperty;
-        print(Operate != null);
     }
     #endregion
     #region µð¹ö±×
