@@ -75,15 +75,15 @@ public class TreeMakerTreeHandler : MonoBehaviour
     public void CameraLift(int num)
     {
         if((floorCount + num) < 0){
-            floorCount = 0;
-            num = floorCount - num;
+            num = floorCount + num;
+            floorCount = 0;            
         }
         Vector3 Target = new Vector3(camera.position.x, camera.position.y + num, camera.position.z);
         camera.DOKill();
         camera.DOMove(Target, 1f).From(camera.position);
         cameraCurPos = Target;
 
-        if (floorCount + num < floors.Length)
+        if (floorCount + num < floors.Length && floorCount + num >= 0)
         {
             floorCount += num;
         }
