@@ -9,7 +9,7 @@ public class MaskHandle : MonoBehaviour
 
     private void Start()
     {
-        FindObjectOfType<LoadingTutorialManager>().actionMask += Cover;
+        FindObjectOfType<LoadingIntroductionManager>().actionMask += Cover;
     }
     void Cover()
     {
