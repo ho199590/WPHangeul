@@ -30,7 +30,7 @@ public class GiyeokMissionManager : MonoBehaviour
     [SerializeField]
     string obName; //이 씬의 자음 이름
 
-    private Animator animatorPico;
+    //private Animator animatorPico; //원래 피코캐릭터가 등장했었음
     private Animator animatorColl;
     private Animator animatorSave;
     int count = 0; //충돌완료 체크용 파라미터
@@ -41,7 +41,6 @@ public class GiyeokMissionManager : MonoBehaviour
     float currentTime; //lerp용 deltaTime증가용
     Vector3 startPosi; //lerp의 시작위치 고정용
     #endregion
-
     private void Awake()
     {
         GetComponent<CapsuleCollider>().enabled = false;
@@ -58,7 +57,7 @@ public class GiyeokMissionManager : MonoBehaviour
         speakerHandler = FindObjectOfType<SpeakerHandler>();
         speakerHandler.SoundByNum2(0);
         speakerHandler.SoundByNum(1);
-        animatorPico = pico.GetComponent<Animator>();
+        //animatorPico = pico.GetComponent<Animator>();
         check = true;
         scoreCase.SceneComplete += MissionComplete;
         yield break;
@@ -107,40 +106,37 @@ public class GiyeokMissionManager : MonoBehaviour
         posi = gameObject.transform.position - GetMouseWorldPosition();
         count = 0;
     }
-    
+    //드래그 중 충돌처리된 오브젝트의 애니메이션이 겹치지 않게 애니메이션을 그때그때 바꿔줌
     private void OnMouseDrag()
     {
         transform.position = GetMouseWorldPosition() + posi;
         speakerHandler.SoundByNum(8);
-        animatorPico.SetInteger("PicoAction", 4);
+        //animatorPico.SetInteger("PicoAction", 4);
         collider = CheckOb(); //충돌처리 함수 호출
         if(collider != null)
         {
             if (!playstart)
             {
                 speakerHandler.SoundByNum(9);
-                if (collider.GetComponentInChildren<AudioSource>())
-                {
-                    collider.GetComponentInChildren<AudioSource>().Play();
-                }
+                if (collider.GetComponentInChildren<AudioSource>()) collider.GetComponentInChildren<AudioSource>().Play();
                 playstart = true;
             }
             animatorColl = collider.gameObject.GetComponent<Animator>();
             if (collider.transform.parent.name.Contains(obName))
             {
                 if (savedOb != null && savedOb.GetComponent<CapsuleCollider>().enabled && savedOb.transform.parent.name.Contains(obName))
-                {
+                { //정답처리가 안된 오브젝트는 캡슐콜라이더가 켜져있다
                     animatorSave = savedOb.GetComponent<Animator>();
                     animatorSave.SetInteger(savedOb.gameObject.name + "Ani", 0);
                 }
-                savedOb = collider.gameObject;
+                savedOb = collider.gameObject; //직전의 충돌 오브젝트를 기억해뒀다가 애니메이션을 바꿔주기 위한 저장용 
                 animatorColl = collider.gameObject.GetComponent<Animator>();
                 animatorColl.SetInteger(collider.name + "Ani", 2);
             }
             else
-            {
-                if (animatorColl != null) animatorColl.SetInteger(collider.name + "Ani", 0);
-                if(savedOb != null) animatorSave.SetInteger(savedOb.gameObject.name + "Ani", 0);
+            { //정답처리가 완료된 오브젝트들은 캡슐콜라이더 꺼져있다
+                if (animatorColl != null && animatorColl.GetComponent<CapsuleCollider>().enabled) animatorColl.SetInteger(collider.name + "Ani", 0);
+                if (savedOb != null && savedOb.GetComponent<CapsuleCollider>().enabled) animatorSave.SetInteger(savedOb.gameObject.name + "Ani", 0);
             }
         }
         else
@@ -181,16 +177,15 @@ public class GiyeokMissionManager : MonoBehaviour
                 if (count == 1)
                 {
                     print("ㄱ포함단어 확인");
-                    animatorPico.SetInteger("PicoAction", 1);
+                    //animatorPico.SetInteger("PicoAction", 1);
                     animatorColl.SetInteger(collider.name + "Ani", 1);
                     scoreCase.SetScore();
-                    
-                    collider.gameObject.GetComponent<CapsuleCollider>().enabled = false;
+                    collider.gameObject.GetComponent<CapsuleCollider>().enabled = false; //정답처리 완료된 오브젝트의 충돌처리를 방지하기위해 콜라이더 꺼주기
                 }
             }
             else
             {
-                animatorPico.SetInteger("PicoAction", 2);
+                //animatorPico.SetInteger("PicoAction", 2);
                 speakerHandler.SoundByNum(10);
                 StartCoroutine(ZoomMove(0.5f));
             }
@@ -208,7 +203,7 @@ public class GiyeokMissionManager : MonoBehaviour
         GetComponent<CapsuleCollider>().enabled = false; //돋보기 못하게 하기
         transform.GetChild(0).gameObject.SetActive(false); //마스크 꺼주기
         StartCoroutine(ZoomMove(1f));
-        animatorPico.SetInteger("PicoAction", 3); //피코애니메이션 중에 3번 hi-host켜기   
+        //animatorPico.SetInteger("PicoAction", 3); //피코애니메이션 중에 3번 hi-host켜기   
     }
     #endregion
 }
