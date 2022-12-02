@@ -111,7 +111,7 @@ public class LoadingTutorialManager : MonoBehaviour
                 objects[i].Object.transform.localScale = new Vector3(1.5f, 1.5f, 1.5f); 
                 objectPosi[i] = Instantiate(objects[i].Object, objectPosi[i].transform.position, Quaternion.LookRotation(Vector3.left)); //파괴도 해주기? //objects[i].Object.transform.position = objectPosi[i].transform.position;
                 anim = objectPosi[i].GetComponent<Animator>();
-                anim.SetInteger("Tutorial", 1); // anim.SetInteger(anim.GetParameter(1).name, 1);
+                anim.SetInteger("Introduction", 1); // anim.SetInteger(anim.GetParameter(1).name, 1);
                 objectPosi[i].AddComponent<AudioSource>();
                 perAudio = objectPosi[i].GetComponent<AudioSource>();
                 perAudio.clip = objects[i].perAudio;
@@ -176,7 +176,7 @@ public class LoadingTutorialManager : MonoBehaviour
             yield return null;
         }
         anim = objectPosi[index].GetComponent<Animator>();
-        anim.SetInteger("Tutorial", 2); /* anim.SetInteger(anim.GetParameter(1).name, 2);*/
+        anim.SetInteger("Introduction", 2); /* anim.SetInteger(anim.GetParameter(1).name, 2);*/
         objectPosi[index].transform.rotation = Quaternion.LookRotation(Vector3.back+Vector3.right); //왼쪽으로 대각선 방향 보게하기
         actionMask?.Invoke(); //마스크(돋보기) 켜주기 위한 이벤트 실행
         objectPosi[i].GetComponent<AudioSource>().Play(); //소개멘트 플레이
