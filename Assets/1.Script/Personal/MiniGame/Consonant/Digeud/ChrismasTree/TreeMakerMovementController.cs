@@ -195,7 +195,9 @@ public class TreeMakerMovementController : MonoBehaviour
         List<GameObject> list = new List<GameObject>();
         List<GameObject> anotherList = new List<GameObject>();
         anotherList.AddRange(giftParams[RandomNumberPicker.GetRandomNumberByNum(giftListNum, giftParams.Count)].gifts);
+        
         int num = Random.Range(0, giftParams[giftListNum].gifts.Count);
+        
         GameObject answerObj = giftParams[giftListNum].gifts[num];
         GameObject wrongObj = anotherList[Random.Range(0, anotherList.Count)];
 
