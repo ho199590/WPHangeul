@@ -6,6 +6,6 @@ public class TestIntroduction : MonoBehaviour
 {
     void Start()
     {
-        LoadingIntroductionManager.LoadScene("Nieun_Form");
+        LoadingIntroductionManager.LoadScene("Lieul_Maze");
     }
 }
