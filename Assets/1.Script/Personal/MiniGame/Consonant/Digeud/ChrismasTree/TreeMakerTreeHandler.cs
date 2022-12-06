@@ -42,6 +42,18 @@ public class TreeMakerTreeHandler : MonoBehaviour
     [SerializeField]
     Transform catchGift;
     #endregion
+
+    Tween CameraRotate;
+
+    Ray ray;
+    RaycastHit hit;
+
+    public bool SiedLock;
+    [SerializeField]
+    Transform starObj;
+
+
+    public int count;
     #endregion
     #region 함수
     private void Awake()
@@ -54,37 +66,45 @@ public class TreeMakerTreeHandler : MonoBehaviour
 
         m_MovementController = FindObjectOfType<TreeMakerMovementController>();
         m_MovementController.CameraTurn += TrunCamera;
+
+        count = 0;
     }
     #region 카메라 관련 함수
     // 카메라 회전
     public void TrunCamera()
-    {
-        if (num == 1) { transform.DORotate(new Vector3(0, -180, 0), 6, RotateMode.LocalAxisAdd); }
-        else { transform.DORotate(new Vector3(0, 180, 0), 6, RotateMode.LocalAxisAdd); }
+    {   
+        if (num == 1) {CameraRotate = transform.DORotate(new Vector3(0, -180, 0), 6, RotateMode.LocalAxisAdd).SetAutoKill(false); }
+        else {CameraRotate = transform.DORotate(new Vector3(0, 180, 0), 6, RotateMode.LocalAxisAdd).SetAutoKill(false); }
 
         num *= -1;
     }
     // 카메라 상하 이동
     public void CameraLift(int num)
     {
-        if((floorCount + num) < 0){return;}
+        CameraRotate.Complete();
+        count += num;
+
+        if ((floorCount + num) < 0){
+            num = floorCount + num;
+            floorCount = 0;            
+        }
         Vector3 Target = new Vector3(camera.position.x, camera.position.y + num, camera.position.z);
         camera.DOKill();
         camera.DOMove(Target, 1f).From(camera.position);
         cameraCurPos = Target;
 
-        if (floorCount + num < floors.Length)
+        if (floorCount + num < floors.Length && floorCount + num >= 0)
         {
             floorCount += num;            
         }
-        else
-        {
-            floorCount = 0;
+        if(count >= 3)
+        {   
+            starObj.DOScale(Vector3.one * 3, 2).From(Vector3.zero);
         }
     }
     // 카메라 리셋
     public void CameraReset()
-    {
+    {   
         camera.DOKill();
         transform.DOKill();
         camera.DOMove(cameraOriginPos, 2);
@@ -92,6 +112,7 @@ public class TreeMakerTreeHandler : MonoBehaviour
         cameraCurPos = cameraOriginPos;
 
         floorCount = 0;
+        count = 0;
     }
     #endregion
     #region 기프트 관련 함수
@@ -113,7 +134,8 @@ public class TreeMakerTreeHandler : MonoBehaviour
         g.transform.DOScale(Vector3.zero, 1f).From(ori);
         gg.transform.DOScale(ori, 1f).From(Vector3.zero);
 
-
+        g.GetComponent<TreeMakerGiftHandler>().Operate?.Invoke();
+        
     }
     #endregion
     #endregion
@@ -135,6 +157,9 @@ public class TreeMakerTreeHandler : MonoBehaviour
     }
     #endregion
 
+    #region 트리 클릭 관련
+
+    #endregion
     #region DEBUG
     private void Update()
     {
@@ -152,15 +177,26 @@ public class TreeMakerTreeHandler : MonoBehaviour
             CameraReset();
         }
 
-        if (Input.GetKeyDown(KeyCode.R))
+        if (Input.GetMouseButtonDown(0))
         {
-            if (catchGift != null)
-            m_MovementController.RemoveBodyPart(catchGift);
+            ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if(Physics.Raycast(ray, out hit))
+            {   
+                if(hit.transform == transform)
+                {
+                    if (catchGift != null)
+                    {
+                        if (!SiedLock)
+                        {
+                            m_MovementController.RemoveBodyPart(catchGift);
+                        }
+                    }
+                }
+            }
         }
 
         FloorLevel = floors[floorCount];
     }
-
     #endregion
 
 }

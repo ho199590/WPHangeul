@@ -5,7 +5,7 @@ using DG.Tweening;
 public class IntroFirstDrag : MonoBehaviour
 {
     [SerializeField]
-    GameObject ob, answerOb,particle;
+    GameObject ob, answerOb, particle;
     private void Start()
     {
         ob.transform.DOLocalMoveX(-503, 3f).SetLoops(-1, LoopType.Restart);
@@ -29,4 +29,5 @@ public class IntroFirstDrag : MonoBehaviour
         par.transform.position = new Vector3(answerOb.transform.position.x, answerOb.transform.position.y + 0.5f, answerOb.transform.position.z);
         Destroy(par, 1.5f);
     }
+
 }

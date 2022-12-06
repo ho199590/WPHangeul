@@ -9,6 +9,8 @@ public class TreeMakerGiftHandler : MonoBehaviour
     TreeMakerTreeHandler tree;
     TreeMakerMovementController train;
     Transform sied;
+
+    ScoreHandler score;
     #endregion
     #region 프로퍼티
     // 0 정답 , 1 오답, 2 폭탄
@@ -36,6 +38,7 @@ public class TreeMakerGiftHandler : MonoBehaviour
         print("Answer");
         tree.CameraLift(1);
 
+        score.SetScore();
     }
     // 오답 => 오답 1층 하강
     public void GiftForWrong()
@@ -61,6 +64,9 @@ public class TreeMakerGiftHandler : MonoBehaviour
     {
         tree = FindObjectOfType<TreeMakerTreeHandler>();
         train = FindObjectOfType<TreeMakerMovementController>();
+        score = FindObjectOfType<ScoreHandler>();
+
+        GiftProperty = giftProperty;
     }
     #endregion
     #region 디버그

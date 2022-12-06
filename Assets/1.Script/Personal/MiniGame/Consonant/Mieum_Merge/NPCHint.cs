@@ -14,7 +14,7 @@ public class NPCHint : MonoBehaviour
     { 
         col = GetComponent<Collider>(); //초기화 
         col.enabled = false;            //첫시작시 콜라이더 끔
-        Hint = () =>{ onOff = true; typingMessage.SetActive(true);};
+        Hint = () =>{ onOff = true; typingMessage.SetActive(true); };
         ColliderOn = () => { ColOn(); };
     }
     private void OnMouseDown()

@@ -48,6 +48,8 @@ public class IntroDrag : MonoBehaviour
             par.transform.position = new Vector3(answerOb.transform.position.x,answerOb.transform.position.y + 0.5f,answerOb.transform.position.z);
             Destroy(par, 1.5f);
             IntroText.PlusIndex();
+            transform.gameObject.SetActive(false);
+            other.gameObject.SetActive(false);
         }
     }
 }

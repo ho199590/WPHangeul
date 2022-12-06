@@ -8,15 +8,16 @@ public class NaviMoveManager : MonoBehaviour
     [Tooltip ("순서대로 도착할 곳의 위치(NavMesh의 타겟)를 넣어주세요")]
     [SerializeField]
     Transform[] target; //순서대로 NavMesh의 도착지점 넣어주기
-
-    Vector3 destination;
-    NavMeshAgent agent;
-
+    [SerializeField]
+    GameObject[] poles; //회전할 이정표
     [SerializeField]
     Camera endCam;
     [SerializeField]
-    GameObject[] poles; //회전할 이정표
+    GameObject minimap; //RawImage
+    public Animation[] stores;
 
+    Vector3 destination;
+    NavMeshAgent agent;
     //골목 회전용
     int index;
     void Start()
@@ -44,6 +45,7 @@ public class NaviMoveManager : MonoBehaviour
         set
         {
             if(value) agent.isStopped = false;
+            for (int i = 0; i < stores.Length; i++) stores[i].GetComponent<Animation>().enabled = true;
         }
     }
     //공이 골목을 지나가면서 투명콜라이더와 만나면 네브 메쉬 스탑
@@ -53,6 +55,8 @@ public class NaviMoveManager : MonoBehaviour
         {
             print("온트리거엔터" + other);
             agent.isStopped = true;
+            for (int i = 0; i < stores.Length; i++) stores[i].GetComponent<Animation>().enabled = false;
+
         }
     }
     //코너에서 만난 투명collider의 설정되어 있는 회전 방향으로 공도 똑같이 회전
@@ -71,7 +75,9 @@ public class NaviMoveManager : MonoBehaviour
                 Camera.main.enabled = false;
                 //endCam.depth = 1;
                 //endCam.enabled = true;
-                endCam.GetComponent<Animator>().enabled = true;            }
+                endCam.GetComponent<Animator>().enabled = true;
+                minimap.SetActive(false);
+            }
         }
     }
 }
