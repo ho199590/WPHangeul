@@ -10,7 +10,7 @@ public class MouseCursor : MonoBehaviour
     Camera m_Camera;       //Canvas Cameraº¯¼ö
     private void Start()
     {
-        Cursor.visible = false;
+        //Cursor.visible = false;
     }
     void Update()
     {
