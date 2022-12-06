@@ -52,6 +52,7 @@ public class TreeMakerTreeHandler : MonoBehaviour
     [SerializeField]
     Transform starObj;
 
+
     public int count;
     #endregion
     #region ÇÔ¼ö
@@ -81,7 +82,8 @@ public class TreeMakerTreeHandler : MonoBehaviour
     public void CameraLift(int num)
     {
         CameraRotate.Complete();
-        
+        count += num;
+
         if ((floorCount + num) < 0){
             num = floorCount + num;
             floorCount = 0;            
@@ -93,11 +95,10 @@ public class TreeMakerTreeHandler : MonoBehaviour
 
         if (floorCount + num < floors.Length && floorCount + num >= 0)
         {
-            floorCount += num;
-            count += num;
+            floorCount += num;            
         }
         if(count >= 3)
-        {
+        {   
             starObj.DOScale(Vector3.one * 3, 2).From(Vector3.zero);
         }
     }
