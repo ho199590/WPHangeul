@@ -197,6 +197,7 @@ public class LoadingIntroductionManager : MonoBehaviour
             objectPosi[index].transform.position = Vector3.Lerp(underPipe.position, new Vector3(underPipe.position.x, underPipe.position.y + 10, underPipe.position.z), currentTime / lerpTime);
             yield return null;
         }
+        objectPosi[index].SetActive(false);
         if (index == objectsLength - 1) 
         {
             StopAllCoroutines();
