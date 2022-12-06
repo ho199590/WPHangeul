@@ -108,7 +108,7 @@ public class LoadingIntroductionManager : MonoBehaviour
             for (i = 0 ; i <  objectsLength; i++)
             {
                 print(objects[i].Object);
-                objects[i].Object.transform.localScale = new Vector3(1.5f, 1.5f, 1.5f); 
+                objects[i].Object.transform.localScale = new Vector3(1.4f, 1.4f, 1.4f); 
                 objectPosi[i] = Instantiate(objects[i].Object, objectPosi[i].transform.position, Quaternion.LookRotation(Vector3.left)); //파괴도 해주기? //objects[i].Object.transform.position = objectPosi[i].transform.position;
                 if (objectPosi[i].GetComponent<Animator>())
                 {
