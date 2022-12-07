@@ -67,7 +67,7 @@ public class TreeMakerMovementController : MonoBehaviour
         {
             timer = (value % 3) switch
             {
-                0 => 12f,
+                0 => 8f,
                 6 => 3,
                 _ => 3
 
