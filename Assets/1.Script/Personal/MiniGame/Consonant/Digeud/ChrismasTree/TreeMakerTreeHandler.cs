@@ -52,6 +52,8 @@ public class TreeMakerTreeHandler : MonoBehaviour
     [SerializeField]
     Transform starObj;
 
+    [SerializeField]
+    Transform PointTest;
 
     public int count;
     #endregion
@@ -89,8 +91,14 @@ public class TreeMakerTreeHandler : MonoBehaviour
             floorCount = 0;            
         }
         Vector3 Target = new Vector3(camera.position.x, camera.position.y + num, camera.position.z);
+        Vector3 PointTarget = new Vector3(PointTest.position.x, PointTest.position.y + num, PointTest.position.z);
+        
         camera.DOKill();
-        camera.DOMove(Target, 1f).From(camera.position);
+        PointTest.DOKill();
+        
+        camera.DOMove(Target, 1f).From(camera.position);        
+        PointTest.DOMove(PointTarget, 1f).From(PointTest.position);
+
         cameraCurPos = Target;
 
         if (floorCount + num < floors.Length && floorCount + num >= 0)
