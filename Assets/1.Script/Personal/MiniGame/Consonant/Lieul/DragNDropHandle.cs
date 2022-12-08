@@ -12,10 +12,12 @@ public class DragNDropHandle : MonoBehaviour
     bool check = false;
     [SerializeField]
     GameObject active;
+    Vector3 originPosi;
   
     private void Start()
     {
         FindObjectOfType<QuizManager>().AddNRemove = gameObject;
+        originPosi = transform.position;
     }
     Vector3 GetMouseWorldPosition() //마우스포인트의 월드좌표값 부여용
     {
@@ -29,20 +31,39 @@ public class DragNDropHandle : MonoBehaviour
         posi = gameObject.transform.position - GetMouseWorldPosition();
         if (GetComponent<Rigidbody>()) 
         { 
-            GetComponent<Rigidbody>().useGravity = false;
-            GetComponent<Rigidbody>().isKinematic = true;
+            //GetComponent<Rigidbody>().useGravity = false;
+            //GetComponent<Rigidbody>().isKinematic = true;
         }
         lieulPosi.SetActive(true);
+        GetComponent<Rigidbody>().useGravity = false;
+
     }
     private void OnMouseDrag()
     {
         transform.position = GetMouseWorldPosition() + posi;
+        Debug.DrawRay(transform.position, transform.right * 5, Color.green);
+        Debug.DrawRay(transform.position, transform.forward * 5, Color.green);
+
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.name == "Cube")
+        {
+            print("벽이랑 직충돌했다");
+            gameObject.SetActive(false);
+            lieulPosi.SetActive(false);
+            //GetComponent<Rigidbody>().useGravity = true;
+        }
+    }
+    private void OnMouseUp()
+    {
+        GetComponent<Rigidbody>().useGravity = true;
         collider = CheckOb();
-        if(collider != null && collider.gameObject == lieulPosi)
+        if (collider != null && collider.gameObject == lieulPosi)
         {
             print("충돌체크확인");
             gameObject.SetActive(false);
-            collider.gameObject.SetActive(false);    
+            collider.gameObject.SetActive(false);
             active.SetActive(true);
             FindObjectOfType<QuizManager>().AddNRemove = gameObject;
         }
