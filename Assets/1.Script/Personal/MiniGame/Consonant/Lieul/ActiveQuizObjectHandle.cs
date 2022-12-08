@@ -11,7 +11,6 @@ public class ActiveQuizObjectHandle : MonoBehaviour
     [SerializeField]
     Rigidbody[] drops; //퀘스트별 퀴즈시작시 떨어뜨려줘야 할 오브젝트
     int count;
-    int checkCount;
     private void OnTriggerEnter(Collider other)
     {
         FindObjectOfType<QuizManager>().QuizOrder = count; //몇번째 퀴즈인지 카운트용 프로퍼티 호출

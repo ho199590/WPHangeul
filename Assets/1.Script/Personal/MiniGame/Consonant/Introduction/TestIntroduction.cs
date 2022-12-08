@@ -6,6 +6,6 @@ public class TestIntroduction : MonoBehaviour
 {
     void Start()
     {
-        LoadingIntroductionManager.LoadScene("Mieum_Merge");
+        LoadingIntroductionManager.LoadScene("Giyeok_Mission");
     }
 }

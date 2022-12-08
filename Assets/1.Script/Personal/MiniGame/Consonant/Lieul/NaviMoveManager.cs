@@ -56,7 +56,6 @@ public class NaviMoveManager : MonoBehaviour
             print("온트리거엔터" + other);
             agent.isStopped = true;
             for (int i = 0; i < stores.Length; i++) stores[i].GetComponent<Animation>().enabled = false;
-
         }
     }
     //코너에서 만난 투명collider의 설정되어 있는 회전 방향으로 공도 똑같이 회전
