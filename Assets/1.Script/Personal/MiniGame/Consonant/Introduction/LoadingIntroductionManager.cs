@@ -66,6 +66,11 @@ public class LoadingIntroductionManager : MonoBehaviour
         }*/
     #endregion
     #region 함수
+    //시연용으로 Intro씬이 너무 길어서 넘기고 싶을 때 스페이스바 누르면 바로 다음 씬으로 전환
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space)) SceneManager.LoadScene(nextScene);
+    }
     //씬호출시 LoadingTutorialManager.LoadScene("호출할 씬의 이름");로 참조
     public static void LoadScene(string sceneName) //객체 생성없이 바로 갖다 쓸수 있는 정적(static) 함수
     {
