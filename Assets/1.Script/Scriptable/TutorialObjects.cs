@@ -1,8 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-//NarrationSetContainer.cs 참고
-//튜토리얼에서 사용될 Scriptable Object
+//NarrationSetContainer.cs 참고한 스크립트
+//Introduction씬에서 사용될 Scriptable Object
 [CreateAssetMenu(menuName = "Scriptable/Tutorial", fileName = "TutorialObjects")]
 [System.Serializable]
 public class IntroductionObjects
