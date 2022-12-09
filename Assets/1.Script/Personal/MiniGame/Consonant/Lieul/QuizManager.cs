@@ -10,7 +10,7 @@ public class Obstacles
 public class QuizManager : MonoBehaviour //퀴즈의 정답처리 관련 총괄 매니저
 {
     //new()로 초기화안해주면 null에러남(public으로 하면 인스펙터창에 보여져야 하기 때문에 초기화가 한번 일어나는데 안해주면 완전 비어있어서 null에러발생)
-    List<GameObject> quizObjects = new(); //활성화된 <QuizTouchHandle>스크립트가 들어있는 오브젝트를 넣었다 뺐다 할 리스트
+    public List<GameObject> quizObjects = new(); //활성화된 <QuizTouchHandle>스크립트가 들어있는 오브젝트를 넣었다 뺐다 할 리스트
     [SerializeField]
     Obstacles[] perQuizObstacles; //퀴즈별 장애물
     int count; //몇번째 퀴즈인지 체크용
@@ -58,7 +58,7 @@ public class QuizManager : MonoBehaviour //퀴즈의 정답처리 관련 총괄 매니저
             }
             FindObjectOfType<NaviMoveManager>().Check = true; //다시 네브메쉬 움직이게 bool값 보내주기
         }
-        else if(quizObjects.Count == 1)
+        else if(quizObjects.Count == 1) //2번 퀘스트에서 정답 오브젝트가 마지막 한개만 남았을 경우
         {
             //QuizTouchHandle 스크립트가 여러 오브젝트에 들어있기 때문에 각각의 모든 스크립트의 프로퍼티에 똑같이 호출해줘야 함
             var finds = FindObjectsOfType<QuizTouchHandle>();

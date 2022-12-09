@@ -8,13 +8,13 @@ public class DragNDropHandle : MonoBehaviour
     private Vector3 posi;
     Collider collider;
     [SerializeField]
-    GameObject lieulPosi;
-    bool check = false;
+    GameObject crashLieul;
     [SerializeField]
-    GameObject active;
+    GameObject resetLieul;
+    [SerializeField]
+    GameObject fakeActive;
     Vector3 originPosi;
-  
-    private void Start()
+    private void OnEnable()
     {
         FindObjectOfType<QuizManager>().AddNRemove = gameObject;
         originPosi = transform.position;
@@ -29,42 +29,36 @@ public class DragNDropHandle : MonoBehaviour
     {
         z_saved = Camera.main.WorldToScreenPoint(gameObject.transform.position).z;
         posi = gameObject.transform.position - GetMouseWorldPosition();
-        if (GetComponent<Rigidbody>()) 
-        { 
-            //GetComponent<Rigidbody>().useGravity = false;
-            //GetComponent<Rigidbody>().isKinematic = true;
-        }
-        lieulPosi.SetActive(true);
+        crashLieul.SetActive(true);
         GetComponent<Rigidbody>().useGravity = false;
-
     }
     private void OnMouseDrag()
     {
         transform.position = GetMouseWorldPosition() + posi;
-        Debug.DrawRay(transform.position, transform.right * 5, Color.green);
-        Debug.DrawRay(transform.position, transform.forward * 5, Color.green);
-
     }
+    //3번째 퀘스트용 //드래그범위를 벗어났을 때 페이크로 두 개의 오브젝트 껐다켰다해서 드래그범위 밖으로 못나가게 하기
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.name == "Cube")
+        if(collision.gameObject.name.Contains("Block"))
         {
-            print("벽이랑 직충돌했다");
-            gameObject.SetActive(false);
-            lieulPosi.SetActive(false);
-            //GetComponent<Rigidbody>().useGravity = true;
+            print("가게랑 충돌했다");
+            resetLieul.SetActive(true);
+            gameObject.transform.position = originPosi;
+            gameObject.GetComponent<Rigidbody>().useGravity = true;
+            FindObjectOfType<QuizManager>().AddNRemove = gameObject;
+            gameObject.SetActive(false);       
         }
     }
     private void OnMouseUp()
     {
         GetComponent<Rigidbody>().useGravity = true;
         collider = CheckOb();
-        if (collider != null && collider.gameObject == lieulPosi)
+        if (collider != null && collider.gameObject == crashLieul)
         {
             print("충돌체크확인");
             gameObject.SetActive(false);
             collider.gameObject.SetActive(false);
-            active.SetActive(true);
+            fakeActive.SetActive(true);
             FindObjectOfType<QuizManager>().AddNRemove = gameObject;
         }
     }
