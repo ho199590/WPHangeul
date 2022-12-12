@@ -10,7 +10,7 @@ public class Obstacles
 public class QuizManager : MonoBehaviour //퀴즈의 정답처리 관련 총괄 매니저
 {
     //new()로 초기화안해주면 null에러남(public으로 하면 인스펙터창에 보여져야 하기 때문에 초기화가 한번 일어나는데 안해주면 완전 비어있어서 null에러발생)
-    public List<GameObject> quizObjects = new(); //활성화된 <QuizTouchHandle>스크립트가 들어있는 오브젝트를 넣었다 뺐다 할 리스트
+    List<GameObject> quizObjects = new(); //활성화된 <QuizTouchHandle>스크립트가 들어있는 오브젝트를 넣었다 뺐다 할 리스트
     [SerializeField]
     Obstacles[] perQuizObstacles; //퀴즈별 장애물
     int count; //몇번째 퀴즈인지 체크용
