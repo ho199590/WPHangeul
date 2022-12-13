@@ -8,7 +8,7 @@ public class LoadingIntroductionManager : MonoBehaviour
 {
     #region 변수
     [SerializeField]
-    TutorialObjects tutorialObjects; //튜토리얼에 등장할 오브젝트들을 가지고 있는 Scriptable Object
+    IntroObjects tutorialObjects; //튜토리얼에 등장할 오브젝트들을 가지고 있는 Scriptable Object
     [SerializeField]
     GameObject[] objectPosi; //오브젝트들의 위치값 지정용
     [SerializeField]

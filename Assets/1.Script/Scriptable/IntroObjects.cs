@@ -1,16 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-//NarrationSetContainer.cs 참고한 스크립트
-//Introduction씬에서 사용될 Scriptable Object
-[CreateAssetMenu(menuName = "Scriptable/Tutorial", fileName = "TutorialObjects")]
+[CreateAssetMenu(fileName = "IntroObjects", menuName = "Scriptable", order = 1)]
 [System.Serializable]
-public class IntroductionObjects
+public class IntroductionObjects 
 {
     public GameObject Object;
     public AudioClip perAudio;
 }
-public class TutorialObjects : ScriptableObject
+public class IntroObjects : ScriptableObject
 {
     [SerializeField]
     IntroductionObjects[] Giyeok, Nieun, Digeud, Lieul, Mieum, Bieub, Sioat, Ieong, Jieuj, Chioat, Kieuk, Tigeut, Pieup, Hieuh;
