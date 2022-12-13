@@ -54,6 +54,9 @@ public class TreeMakerMovementController : MonoBehaviour
 
     [SerializeField]
     int check;
+
+    Tween TrainMove;
+    
     #endregion
     #region 이벤트
     public event System.Action CameraTurn;    
@@ -67,9 +70,9 @@ public class TreeMakerMovementController : MonoBehaviour
         {
             timer = (value % 3) switch
             {
-                0 => 8f,
-                6 => 3,
-                _ => 3
+                0 => 12f,
+                6 => 2,
+                _ => 2
 
             };
 
@@ -116,34 +119,11 @@ public class TreeMakerMovementController : MonoBehaviour
     {
         Transform tr = TrainParts[0];
         int set = num % movePoints.Count;
-        int target = (num + 1) % movePoints.Count;
-
-        tr.DOMove(movePoints[target].position, timer).From(movePoints[set].position).SetEase(Ease.Linear).OnComplete(() => RootNum++);
+        int target = (num + 1) % movePoints.Count;        
+        TrainMove = tr.DOMove(movePoints[target].position, timer).From(movePoints[set].position).SetEase(Ease.Linear).OnComplete(() => RootNum++);        
     }
     #endregion
     #region 기차 구현
-    public void TrainMove()
-    {
-        float curSpeed = speed;
-        for (int i = 1; i < TrainParts.Count; i++)
-        {
-            curBodyParts = TrainParts[i];
-            prevBodyParts = TrainParts[i - 1];
-
-            dis = Vector3.Distance(prevBodyParts.position, curBodyParts.position);
-
-            Vector3 newpos = prevBodyParts.position;
-
-            newpos.y = TrainParts[0].position.y;
-
-            float T = Time.deltaTime * dis / mindistance * curSpeed;
-            if (T > 0.5f) { T = 0.5f; }
-
-            curBodyParts.position = Vector3.Slerp(curBodyParts.position, newpos, T);
-            curBodyParts.rotation = Quaternion.Slerp(curBodyParts.rotation, prevBodyParts.rotation, T);
-        }
-    }
-
     public void FollowTheHead()
     {
         float curSpeed = speed;

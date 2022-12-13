@@ -5,8 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c7a3e565-5927-4136-b1ae-f7d83fa3a89a" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/Assets/0.Scenes/Consonant/2.Digeud/ㄷ/Digeud_Iceberg.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/0.Scenes/Consonant/2.Digeud/ㄷ/Digeud_Iceberg.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.WPHangeul/.idea/shelf/Uncommitted_changes_before_Checkout_at_2022-12-07__9_58__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.WPHangeul/.idea/shelf/Uncommitted_changes_before_Checkout_at_2022-12-07__9_58__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.WPHangeul/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.WPHangeul/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/0.Scenes/Consonant/2.Digeud/ㄷ/Bieub_Christmas tree.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/0.Scenes/Consonant/2.Digeud/ㄷ/Bieub_Christmas tree.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/0.Scenes/ProtoType.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/0.Scenes/ProtoType.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/1.Script/Personal/MiniGame/Consonant/Digeud/ChrismasTree/TreeMakerTreeHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1.Script/Personal/MiniGame/Consonant/Digeud/ChrismasTree/TreeMakerTreeHandler.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -29,20 +32,20 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Discover.Launch.Via.Unity": "true",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "settings.editor.selected.configurable": "preferences.build.unityPlugin",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Discover.Launch.Via.Unity&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.build.unityPlugin&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected="Attach to Unity Editor.Attach to Unity Editor">
     <configuration name="UnitTests (batch mode)" type="RunUnityExe" factoryName="Unity Executable">
       <option name="EXE_PATH" value="C:\Program Files\Unity\Hub\Editor\2021.3.10f1\Editor\Unity.exe" />
@@ -83,6 +86,8 @@
       <updated>1670374523861</updated>
       <workItem from="1670374529536" duration="676000" />
       <workItem from="1670375246305" duration="399000" />
+      <workItem from="1670458928997" duration="1000" />
+      <workItem from="1670458943223" duration="1000" />
     </task>
     <servers />
   </component>
