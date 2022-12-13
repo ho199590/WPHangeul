@@ -13,6 +13,7 @@ public class TreeMakerTreeHandler : MonoBehaviour
 
     Quaternion originRotate;
     Vector3 cameraOriginPos;
+    Vector3 railOriginPos;
     Vector3 cameraCurPos;
     int num = 1;
 
@@ -44,16 +45,19 @@ public class TreeMakerTreeHandler : MonoBehaviour
     #endregion
 
     Tween CameraRotate;
+    Tween CameraLiftTween;
 
     Ray ray;
     RaycastHit hit;
-
+    [HideInInspector]
     public bool SiedLock;
+
     [SerializeField]
     Transform starObj;
 
     [SerializeField]
-    Transform PointTest;
+    Transform railTransform;
+
 
     public int count;
     #endregion
@@ -64,6 +68,7 @@ public class TreeMakerTreeHandler : MonoBehaviour
 
         originRotate = transform.localRotation;
         cameraOriginPos = camera.position;
+        railOriginPos = railTransform.position;
         cameraCurPos = cameraOriginPos;
 
         m_MovementController = FindObjectOfType<TreeMakerMovementController>();
@@ -74,9 +79,10 @@ public class TreeMakerTreeHandler : MonoBehaviour
     #region 카메라 관련 함수
     // 카메라 회전
     public void TrunCamera()
-    {   
-        if (num == 1) {CameraRotate = transform.DORotate(new Vector3(0, -180, 0), 6, RotateMode.LocalAxisAdd).SetAutoKill(false); }
-        else {CameraRotate = transform.DORotate(new Vector3(0, 180, 0), 6, RotateMode.LocalAxisAdd).SetAutoKill(false); }
+    {
+        //CameraLiftTween.Complete();
+        if (num == 1) { CameraRotate = transform.DORotate(new Vector3(0, -180, 0), 6, RotateMode.LocalAxisAdd).SetAutoKill(false); }
+        else { CameraRotate = transform.DORotate(new Vector3(0, 180, 0), 6, RotateMode.LocalAxisAdd).SetAutoKill(false); }
 
         num *= -1;
     }
@@ -84,35 +90,29 @@ public class TreeMakerTreeHandler : MonoBehaviour
     public void CameraLift(int num)
     {
         CameraRotate.Complete();
-        count += num;
 
-        if ((floorCount + num) < 0){
-            num = floorCount + num;
-            floorCount = 0;            
-        }
-        Vector3 Target = new Vector3(camera.position.x, camera.position.y + num, camera.position.z);
-        Vector3 PointTarget = new Vector3(PointTest.position.x, PointTest.position.y + num, PointTest.position.z);
-        
-        camera.DOKill();
-        PointTest.DOKill();
-        
-        camera.DOMove(Target, 1f).From(camera.position);        
-        PointTest.DOMove(PointTarget, 1f).From(PointTest.position);
+        Vector3 CameraTarget = new Vector3(camera.position.x, camera.position.y + (num * 3), camera.position.z);
+        Vector3 RailPos = new Vector3(railTransform.position.x, railTransform.position.y + (num * 3), railTransform.position.z);
 
-        cameraCurPos = Target;
 
-        if (floorCount + num < floors.Length && floorCount + num >= 0)
+        if (count + num < 0)
         {
-            floorCount += num;            
+            CameraTarget = cameraOriginPos;
+            RailPos = railOriginPos;
+
+            count = 0;
         }
-        if(count >= 3)
-        {   
-            starObj.DOScale(Vector3.one * 3, 2).From(Vector3.zero);
+        else
+        {
+            count += num;
         }
+
+        CameraLiftTween = camera.DOMove(CameraTarget, 1).From(camera.position).OnComplete(() => SiedLock = false) ;
+        railTransform.DOMove(RailPos, 1).From(railTransform.position);
     }
     // 카메라 리셋
     public void CameraReset()
-    {   
+    {
         camera.DOKill();
         transform.DOKill();
         camera.DOMove(cameraOriginPos, 2);
@@ -143,7 +143,7 @@ public class TreeMakerTreeHandler : MonoBehaviour
         gg.transform.DOScale(ori, 1f).From(Vector3.zero);
 
         g.GetComponent<TreeMakerGiftHandler>().Operate?.Invoke();
-        
+
     }
     #endregion
     #endregion
@@ -188,9 +188,9 @@ public class TreeMakerTreeHandler : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if(Physics.Raycast(ray, out hit))
-            {   
-                if(hit.transform == transform)
+            if (Physics.Raycast(ray, out hit))
+            {
+                if (hit.transform == transform)
                 {
                     if (catchGift != null)
                     {
