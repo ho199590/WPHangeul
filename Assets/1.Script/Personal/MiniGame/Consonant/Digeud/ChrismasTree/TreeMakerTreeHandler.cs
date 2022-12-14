@@ -58,6 +58,7 @@ public class TreeMakerTreeHandler : MonoBehaviour
     [SerializeField]
     Transform railTransform;
 
+    ScoreHandler scoreHandler;  
 
     public int count;
     #endregion
@@ -75,6 +76,8 @@ public class TreeMakerTreeHandler : MonoBehaviour
         m_MovementController.CameraTurn += TrunCamera;
 
         count = 0;
+
+        scoreHandler = FindObjectOfType<ScoreHandler>();
     }
     #region 카메라 관련 함수
     // 카메라 회전
@@ -104,6 +107,7 @@ public class TreeMakerTreeHandler : MonoBehaviour
         }
         else
         {
+            floorCount += num;
             count += num;
         }
 
@@ -144,6 +148,7 @@ public class TreeMakerTreeHandler : MonoBehaviour
 
         g.GetComponent<TreeMakerGiftHandler>().Operate?.Invoke();
 
+        scoreHandler.SetScore();
     }
     #endregion
     #endregion
