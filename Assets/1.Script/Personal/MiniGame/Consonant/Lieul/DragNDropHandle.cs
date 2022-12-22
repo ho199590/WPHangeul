@@ -19,7 +19,7 @@ public class DragNDropHandle : MonoBehaviour
         FindObjectOfType<QuizManager>().AddNRemove = gameObject;
         originPosi = transform.position;
     }
-    Vector3 GetMouseWorldPosition() //마우스포인트의 월드좌표값 부여용
+    Vector3 GetMouseWorldPosition() //마우스포인트의 월드좌표값 부여용 함수
     {
         Vector3 mousePoint = Input.mousePosition;
         mousePoint.z = z_saved;

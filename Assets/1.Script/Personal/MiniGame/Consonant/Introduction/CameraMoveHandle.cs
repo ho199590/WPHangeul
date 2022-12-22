@@ -15,9 +15,9 @@ public class CameraMoveHandle : MonoBehaviour
     float move;
     void Start()
     {
-        StartCoroutine(Move2());   
+        StartCoroutine(CamMoving());   
     }
-    IEnumerator Move2()
+    IEnumerator CamMoving()
     {
         GetComponent<Camera>().depth = 2;
         startposition = transform.position;

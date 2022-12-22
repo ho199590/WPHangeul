@@ -26,7 +26,7 @@ public class StageParam_minigame : MonoBehaviour
         changer.ChangeScene("Introduction");
         FindObjectOfType<SceneChanger>().IntroductionAction += PlayIntroduction;
     }
-    //HJ_미니게임 시작전에 튜토리얼씬 재생해주는 함수
+    //박현진 추가_미니게임 시작전에 튜토리얼씬 재생해주는 함수
     public void PlayIntroduction()
     {
         LoadingIntroductionManager.LoadScene(SceneName);

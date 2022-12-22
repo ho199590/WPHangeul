@@ -7,7 +7,6 @@ public class AppearHandle : MonoBehaviour
     float lerpTime = 2f; //등장시 소요시간
     float currentTime = 0;
     Vector3 start;
-    Vector3 startrotation;
     [SerializeField]
     Transform arrive; //도착지점
 
