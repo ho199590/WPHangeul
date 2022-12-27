@@ -8,7 +8,7 @@ public class LoadingIntroductionManager : MonoBehaviour
 {
     #region 변수
     [SerializeField]
-    TutorialObjects tutorialObjects; //튜토리얼에 등장할 오브젝트들을 가지고 있는 Scriptable Object
+    IntroObjects tutorialObjects; //인트로에 등장할 오브젝트들을 가지고 있는 Scriptable Object
     [SerializeField]
     GameObject[] objectPosi; //오브젝트들의 위치값 지정용
     [SerializeField]
@@ -29,7 +29,7 @@ public class LoadingIntroductionManager : MonoBehaviour
     AudioSource perAudio; //오브젝트별 자기소개용 
     Animator anim;
 
-    public static string nextScene; //씬재생 지연함수가 끝나면(튜토리얼이 끝나면) 재생할 씬의 이름 저장용
+    public static string nextScene; //씬재생 지연함수가 끝나면(인트로가 끝나면) 재생할 씬의 이름 저장용
 
     public System.Action actionMask; //파이프밑에 도착시(특정조건)에 마스크(돋보기)를 켜주기 위한 이벤트
     #endregion
@@ -66,6 +66,11 @@ public class LoadingIntroductionManager : MonoBehaviour
         }*/
     #endregion
     #region 함수
+    //시연용으로 Intro씬이 너무 길어서 넘기고 싶을 때 스페이스바 누르면 바로 다음 씬으로 전환
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space)) SceneManager.LoadScene(nextScene);
+    }
     //씬호출시 LoadingTutorialManager.LoadScene("호출할 씬의 이름");로 참조
     public static void LoadScene(string sceneName) //객체 생성없이 바로 갖다 쓸수 있는 정적(static) 함수
     {
@@ -73,7 +78,7 @@ public class LoadingIntroductionManager : MonoBehaviour
         nextScene = sceneName;
         SceneManager.LoadScene("Introduction");
     }
-    IEnumerator LoadScene() //씬 재생 전에 튜토리얼 먼저 재생해주는 비동기식 재생 지연 함수
+    IEnumerator LoadScene() //씬 재생 전에 인트로 먼저 재생해주는 비동기식 재생 지연 함수
     {
         yield return null;
         AsyncOperation async = SceneManager.LoadSceneAsync(nextScene);
@@ -109,7 +114,7 @@ public class LoadingIntroductionManager : MonoBehaviour
             {
                 print(objects[i].Object);
                 objects[i].Object.transform.localScale = new Vector3(1.4f, 1.4f, 1.4f); 
-                objectPosi[i] = Instantiate(objects[i].Object, objectPosi[i].transform.position, Quaternion.LookRotation(Vector3.left)); //파괴도 해주기? //objects[i].Object.transform.position = objectPosi[i].transform.position;
+                objectPosi[i] = Instantiate(objects[i].Object, objectPosi[i].transform.position, Quaternion.LookRotation(Vector3.left)); //objects[i].Object.transform.position = objectPosi[i].transform.position;
                 if (objectPosi[i].GetComponent<Animator>())
                 {
                     anim = objectPosi[i].GetComponent<Animator>();

@@ -8,16 +8,18 @@ public class DragNDropHandle : MonoBehaviour
     private Vector3 posi;
     Collider collider;
     [SerializeField]
-    GameObject lieulPosi;
-    bool check = false;
+    GameObject crashLieul;
     [SerializeField]
-    GameObject active;
-  
-    private void Start()
+    GameObject resetLieul;
+    [SerializeField]
+    GameObject fakeActive;
+    Vector3 originPosi;
+    private void OnEnable()
     {
         FindObjectOfType<QuizManager>().AddNRemove = gameObject;
+        originPosi = transform.position;
     }
-    Vector3 GetMouseWorldPosition() //마우스포인트의 월드좌표값 부여용
+    Vector3 GetMouseWorldPosition() //마우스포인트의 월드좌표값 부여용 함수
     {
         Vector3 mousePoint = Input.mousePosition;
         mousePoint.z = z_saved;
@@ -27,23 +29,36 @@ public class DragNDropHandle : MonoBehaviour
     {
         z_saved = Camera.main.WorldToScreenPoint(gameObject.transform.position).z;
         posi = gameObject.transform.position - GetMouseWorldPosition();
-        if (GetComponent<Rigidbody>()) 
-        { 
-            GetComponent<Rigidbody>().useGravity = false;
-            GetComponent<Rigidbody>().isKinematic = true;
-        }
-        lieulPosi.SetActive(true);
+        crashLieul.SetActive(true);
+        GetComponent<Rigidbody>().useGravity = false;
     }
     private void OnMouseDrag()
     {
         transform.position = GetMouseWorldPosition() + posi;
+    }
+    //3번째 퀘스트용 //드래그범위를 벗어났을 때 페이크로 두 개의 오브젝트 껐다켰다해서 드래그범위 밖으로 못나가게 하기
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.name.Contains("Block"))
+        {
+            print("가게랑 충돌했다");
+            resetLieul.SetActive(true);
+            gameObject.transform.position = originPosi;
+            gameObject.GetComponent<Rigidbody>().useGravity = true;
+            FindObjectOfType<QuizManager>().AddNRemove = gameObject;
+            gameObject.SetActive(false);       
+        }
+    }
+    private void OnMouseUp()
+    {
+        GetComponent<Rigidbody>().useGravity = true;
         collider = CheckOb();
-        if(collider != null && collider.gameObject == lieulPosi)
+        if (collider != null && collider.gameObject == crashLieul)
         {
             print("충돌체크확인");
             gameObject.SetActive(false);
-            collider.gameObject.SetActive(false);    
-            active.SetActive(true);
+            collider.gameObject.SetActive(false);
+            fakeActive.SetActive(true);
             FindObjectOfType<QuizManager>().AddNRemove = gameObject;
         }
     }

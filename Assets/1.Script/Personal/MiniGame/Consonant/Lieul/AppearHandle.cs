@@ -21,6 +21,11 @@ public class AppearHandle : MonoBehaviour
             animator.SetInteger("Lieul_Quiz", 1);
         }
     }
+    //void Update()
+    //{
+    //    currentTime += Time.deltaTime;
+    //    transform.rotation = Quaternion.Slerp(transform.rotation, transform.rotation, currentTime / lerpTime);
+    //}
     IEnumerator Appear()
     {
         while (currentTime / lerpTime < 1)
@@ -32,7 +37,10 @@ public class AppearHandle : MonoBehaviour
         if (GetComponent<Animator>())
         {
             animator = GetComponent<Animator>();
-            animator.SetInteger("Lieul_Quiz", 2);
+            if (animator.parameterCount != 0)
+                animator.SetInteger("Lieul_Quiz", 2);
+            else
+                animator.enabled = false;
         }
     }
 }

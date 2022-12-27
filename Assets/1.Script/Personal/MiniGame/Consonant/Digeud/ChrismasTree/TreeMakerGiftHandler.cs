@@ -35,10 +35,9 @@ public class TreeMakerGiftHandler : MonoBehaviour
     // 정답 => 회전하며 달리기 + 1층 상승
     public void GiftForAnswer()
     {
-        print("Answer");
         tree.CameraLift(1);
 
-        score.SetScore();
+        //score.SetScore();
     }
     // 오답 => 오답 1층 하강
     public void GiftForWrong()

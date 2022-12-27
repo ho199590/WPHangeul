@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 [Tooltip("퀴즈순서대로 장애물들을 넣어주세요")]
 [System.Serializable]
-public class obstacles
+public class Obstacles
 {
     public GameObject[] roadObstacles; //배열안에 배열: 퀴즈별 장애물
 }
 public class QuizManager : MonoBehaviour //퀴즈의 정답처리 관련 총괄 매니저
 {
     //new()로 초기화안해주면 null에러남(public으로 하면 인스펙터창에 보여져야 하기 때문에 초기화가 한번 일어나는데 안해주면 완전 비어있어서 null에러발생)
-    List<GameObject> quizObjects = new(); //활성화된 <QuizTouchHandle>스크립트가 들어있는 오브젝트를 넣었다 뺐다 할 리스트
+    public List<GameObject> quizObjects = new(); //활성화된 <QuizTouchHandle>스크립트가 들어있는 오브젝트를 넣었다 뺐다 할 리스트
     [SerializeField]
-    obstacles[] perQuizObstacles; //퀴즈별 장애물
+    Obstacles[] perQuizObstacles; //퀴즈별 장애물
     int count; //몇번째 퀴즈인지 체크용
 
     public event System.Action<GameObject> QuizCheck; //퀴즈 맞췄을 때 발생할 이벤트
@@ -26,13 +26,19 @@ public class QuizManager : MonoBehaviour //퀴즈의 정답처리 관련 총괄 매니저
     {
         set
         {
-            if (!quizObjects.Contains(value)) 
+            if (!quizObjects.Contains(value))
             {
                 quizObjects.Add(value);
                 print("정답 처리 카운트 값" + quizObjects.Count);
+
             }
             else
                 QuizCheck?.Invoke(value);
+            if(quizObjects.Count == 1) //정답처리 오브젝트가 한개뿐일 경우에 정답완료 지연하기
+            {
+                var finds = FindObjectsOfType<QuizTouchHandle>();
+                foreach (var find in finds) find.CompletedQuizOrder = count;
+            }
         }
     }
     //몇번째 퀴즈인지 카운트용 프로퍼티 //퀴즈별 장애물 제거용 인덱스로 사용
@@ -48,16 +54,23 @@ public class QuizManager : MonoBehaviour //퀴즈의 정답처리 관련 총괄 매니저
     //리스트에 들어갈 오브젝트가 활성화될때 이 함수를 이벤트에 추가해주기
     void RemoveObject(GameObject minus)
     {
-        print("정답맞춘 오브젝트 제거");
+        if (quizObjects.Count == 1) //정답처리 오브젝트 제거하다가 마지막 한개가 남은 경우도 정답완료 지연하기
+        {
+            print("정답오브젝트 1개");
+            //QuizTouchHandle 스크립트가 여러 오브젝트에 들어있기 때문에 각각의 모든 스크립트의 프로퍼티에 똑같이 호출해줘야 함
+            var finds = FindObjectsOfType<QuizTouchHandle>();
+            foreach (var find in finds) find.CompletedQuizOrder = count;
+        }
         quizObjects.Remove(minus);
         if (quizObjects.Count == 0) //지울 오브젝트가 다 소진되면 장애물들 다 치우고 네브메쉬 다시 출발
         {
-            for(int i = 0; i < perQuizObstacles[count-1].roadObstacles.Length; i++)
+            for (int i = 0; i < perQuizObstacles[count-1].roadObstacles.Length; i++)
             {
                 perQuizObstacles[count - 1].roadObstacles[i].gameObject.SetActive(false);
             }
             FindObjectOfType<NaviMoveManager>().Check = true; //다시 네브메쉬 움직이게 bool값 보내주기
         }
+        print("정답맞춘 오브젝트 제거완료");
     }
 }
 
