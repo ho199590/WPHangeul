@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+//드래그시 동물 마우스커서에 따라다님
 public class DragDrop : MonoBehaviour
 {
     [SerializeField]

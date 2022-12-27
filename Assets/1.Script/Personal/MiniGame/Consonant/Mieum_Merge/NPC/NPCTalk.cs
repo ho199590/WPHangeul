@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 using System.Security.Permissions;
-
+//게임 첫 대화 기능
 public class NPCTalk : MonoBehaviour
 {
     //Text Effect

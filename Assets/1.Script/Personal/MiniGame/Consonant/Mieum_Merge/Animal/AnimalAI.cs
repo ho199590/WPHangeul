@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-
+//동물이 랜덤하게 이동 
 public class AnimalAI : MonoBehaviour
 {
     [SerializeField]

@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 using System;
+//인트로 대화 기능
 public class IntroText : MonoBehaviour
 {
     [SerializeField]         //text 변수

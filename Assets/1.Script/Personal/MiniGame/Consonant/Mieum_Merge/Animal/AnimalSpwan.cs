@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+//µ¿¹° Spwan
 public class AnimalSpwan : MonoBehaviour
 {
     [SerializeField]

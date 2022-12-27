@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+//동물 정답시 정답 오브젝트 활성화 
 public class MissionList : MonoBehaviour
 {
     [SerializeField]

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+//정답일때 동물 행동
 public class Animation_Controller : MonoBehaviour
 {   
     public static Action plusNum;

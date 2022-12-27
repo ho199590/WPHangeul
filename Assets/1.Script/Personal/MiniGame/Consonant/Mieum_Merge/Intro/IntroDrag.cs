@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+//인트로 동물 드래그
 public class IntroDrag : MonoBehaviour
 {
     [SerializeField]

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+//파티클 기능
 public class StarExplosion : MonoBehaviour
 {
     [SerializeField]

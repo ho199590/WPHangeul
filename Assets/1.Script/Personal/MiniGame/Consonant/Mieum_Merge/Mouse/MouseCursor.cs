@@ -7,7 +7,7 @@ public class MouseCursor : MonoBehaviour
     [SerializeField]
     GameObject magic;
     [SerializeField]
-    Camera m_Camera;      
+    Camera m_Camera;
 
     void Update()
     {

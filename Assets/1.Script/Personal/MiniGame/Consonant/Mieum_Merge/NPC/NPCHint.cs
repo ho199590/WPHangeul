@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+//게임 시작시 NPC 힌트 기능
 public class NPCHint : MonoBehaviour
 {
     Collider col;   //클릭활성화 비활성화할 콜라이더

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-
+//동물 목적지로 가는 스크립트
 public class Animal_Move : MonoBehaviour
 {
     Balloon_Move b_Move;
@@ -61,16 +61,12 @@ public class Animal_Move : MonoBehaviour
     IEnumerator MoveFunction()
     {
         this.transform.LookAt(animalMovePosition.AnimalPoint[this.random_AnimalChoice.number].transform.position);
-        //현재 거리와 목적지가  0.05f 이상이면 실행
         while (Vector3.Distance(transform.position, animalMovePosition.AnimalPoint[this.random_AnimalChoice.number].transform.position) > 0.5f)
         {
-            //지연시키기
             yield return new WaitForSeconds(Time.deltaTime);
             
-            //현재 위치에서 목적지 까지 Lerp로 이동
             transform.position = Vector3.Lerp(transform.position, animalMovePosition.AnimalPoint[this.random_AnimalChoice.number].transform.position, Time.deltaTime);
         }
-        //while문이 끝나면 현재위치는 타겟위치와 같다
         transform.position = animalMovePosition.AnimalPoint[this.random_AnimalChoice.number].transform.position;
         yield break;
     }

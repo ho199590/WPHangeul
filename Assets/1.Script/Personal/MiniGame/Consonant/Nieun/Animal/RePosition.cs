@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.AI;
 using System;
+//동물 정답 , 오답 원위치로 돌아갈때 
 public class RePosition : MonoBehaviour
 {
     [SerializeField]
