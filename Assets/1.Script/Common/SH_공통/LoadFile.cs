@@ -3,18 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using UnityEngine.UI;
+//파일 불러오기 기능
 
 public class LoadFile : MonoBehaviour
 {
     string folderPath;
     string fileName;
-    //
     [SerializeField]
     Slider imageSlider, volumeSlider;
-    //
     [SerializeField]
     AudioSource AudioVolum;
-    //
     [SerializeField]
     Image color;
 

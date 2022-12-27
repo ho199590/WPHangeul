@@ -26,12 +26,10 @@ public class SaveOption : MonoBehaviour
     {
         folderPath = Application.dataPath +"/";
         fileName = "han_setting.json";
-        audioSource = GameObject.Find("Audio Source");/*FindObjectOfType<AudioSource>();*/
+        audioSource = GameObject.Find("Audio Source");
     }
 
     //저장할 함수
-
-
     public void SaveFile()
     {
         //저장할 정보를 임의로 생성 : 값 불러오기 등을 통해 저장할 파일 정보를 갱신
