@@ -7,11 +7,8 @@ public class MouseCursor : MonoBehaviour
     [SerializeField]
     GameObject magic;
     [SerializeField]
-    Camera m_Camera;       //Canvas Camera변수
-    private void Start()
-    {
-        //Cursor.visible = false;
-    }
+    Camera m_Camera;      
+
     void Update()
     {
         float distance = Camera.main.WorldToScreenPoint(transform.position).z; //World 좌표를 스크린 좌표로 전환 , z좌표가 카메라의 표준위치 

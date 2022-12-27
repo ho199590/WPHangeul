@@ -16,7 +16,6 @@ public class MissionList : MonoBehaviour
         scoreHandler = FindObjectOfType<ScoreHandler>();
         ObjectOn = (GameObject ob) =>
         {
-            /*MissionOn(ob);*/
             StartCoroutine(MissionOn2(ob));
         };
     }

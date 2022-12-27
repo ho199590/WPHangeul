@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-//https://bloodstrawberry.tistory.com/992
 public class AnimalAI : MonoBehaviour
 {
     [SerializeField]
@@ -101,7 +100,6 @@ public class AnimalAI : MonoBehaviour
             AnswerAnimal(col);
         }
     }
-    //정답을 맞출시 생성될 동물과 행동 애니메이션 
     private void AnswerAnimal(Collision col)
     {
         speaker.SoundByNum2(2);

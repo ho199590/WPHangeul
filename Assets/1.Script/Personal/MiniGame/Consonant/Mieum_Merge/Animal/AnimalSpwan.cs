@@ -5,14 +5,14 @@ using System;
 public class AnimalSpwan : MonoBehaviour
 {
     [SerializeField]
-    GameObject[] animalOb;  //ai 몬스터 프리팹 저장 변수
+    GameObject[] animalOb;  
     [SerializeField]
-    int obCount;            //인스펙터 창에서 몬스터 갯수를 지정 할수있게 선언
+    int obCount;           
     [SerializeField]
-    GameObject particle;    //오브젝트 충돌시 생성되는 파티클 변수 
-    int num = 1;            //몬스터 생성시 증감 변수
+    GameObject particle;    
+    int num = 1;            
     bool maxMonster;        //몬스터 max치인지 확인 변수
-    public static Action<Vector3> plusCount; //Vector이벤트 변수
+    public static Action<Vector3> plusCount;
     private void Start()
     {
         StartCoroutine(MonsterSpwan()); 
@@ -30,7 +30,6 @@ public class AnimalSpwan : MonoBehaviour
             yield return new WaitForSeconds(5f);    
             if (num == obCount)                     
             {
-                print("갯수제한");
                 maxMonster = true;
                 StopAllCoroutines();
             }

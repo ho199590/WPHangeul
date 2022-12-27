@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-//정답을 맞추면 정답 이미지칸에 오브젝트 이동 
 public class ClearAnimal : MonoBehaviour
 {
     [SerializeField]
