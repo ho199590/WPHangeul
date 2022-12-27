@@ -5,7 +5,7 @@ using UnityEngine;
 public class Animal_AnswerMove : MonoBehaviour
 {
     [SerializeField]
-    GameObject Animal;//µ¿¹°
+    GameObject Animal;
     private float startTime = 1f;
     [Range(1, 100)]
     public float speedX;

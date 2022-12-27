@@ -5,16 +5,11 @@ using System;
 
 public class Animal_Move : MonoBehaviour
 {
-    //풍선 움직임 스크립트 변수
     Balloon_Move b_Move;
-    //풍선 행동 제어 
     bool ismove; 
-    //풍선이 떨어지고 목표 위치 변수 
     [SerializeField]
     AnimalMovePosition animalMovePosition;
-    //랜덤으로 활성화되는 동물의 번호
     Random_AnimalChoice random_AnimalChoice;
-    //이벤트
     public static Action animal_move;
 
     private void Awake()
@@ -36,7 +31,6 @@ public class Animal_Move : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        //기역 농장에 닿였을때
         if (other.gameObject.layer == LayerMask.NameToLayer("GiyeokAnswer"))
         {
             ismove = true;

@@ -4,8 +4,6 @@ using UnityEngine;
 using DG.Tweening;
 using System;
 using UnityEngine.UI;
-//유니티 슬로우모션 팁
-//https://nanalistudios.tistory.com/11?category=934664
 public class CameraMove : MonoBehaviour
 {
     public static Action CameraEvents;
@@ -64,11 +62,9 @@ public class CameraMove : MonoBehaviour
             yield return new WaitForSecondsRealtime(0.2f);
             Time.timeScale = 0.01f;
             yield return new WaitForSecondsRealtime(5f);
-            Time.timeScale = 1f;//잠깐 멈추고 다시 시작되어야 하는 시점 
+            Time.timeScale = 1f;
             CameraMoveReset(ob);
-/*            ClearAnimal.Clear(ob);*/
-            canvas.SetActive(true);//canvas킴
-            //AnswerAnimal(ob);
+            canvas.SetActive(true);
             yield break;
          }
     }
@@ -96,7 +92,7 @@ public class CameraMove : MonoBehaviour
     //카메라 위치 저장
     private void CameraTargetPosition()
     {
-        dePosition = target.transform.position; //원위치 저장 
+        dePosition = target.transform.position;
         deRotation = Quaternion.Euler(m_Camera.transform.eulerAngles);
     }
     IEnumerator IntroMove()
@@ -107,7 +103,7 @@ public class CameraMove : MonoBehaviour
         {
             yield return new WaitForSeconds(5f);
             m_Camera.transform.DOLocalMove(pos, 3f);
-            m_Camera.transform.DOLocalRotate(ros, 3f, RotateMode.Fast).OnComplete(() => { IntroStart(); /*여기서 지도 펼쳐야함*/});
+            m_Camera.transform.DOLocalRotate(ros, 3f, RotateMode.Fast).OnComplete(() => { IntroStart();});
             yield break;
         }
     }

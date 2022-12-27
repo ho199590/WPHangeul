@@ -25,47 +25,47 @@ public class AnimalAI : MonoBehaviour
     {
         GetPoint();
         VariableRest();
-        coroutine = AiMonster(); //Aimonster()코루틴으로 초기화 
-        randomInt = Random.Range(0, movePoint.Length); //랜덤 변수 저장
-        anim.SetInteger(anim.GetParameter(0).name, 5);   //애니메이션 시작
-        transform.position = spawnPoint.transform.position; //첫시작시 위치
+        coroutine = AiMonster(); 
+        randomInt = Random.Range(0, movePoint.Length); 
+        anim.SetInteger(anim.GetParameter(0).name, 5);   
+        transform.position = spawnPoint.transform.position; 
         StartCoroutine(coroutine);
         speaker = FindObjectOfType<SpeakerHandler>();
     }
-    IEnumerator AiMonster()             //Ai몬스터 이동시작
+    IEnumerator AiMonster()
     {
         while (true)
         {
-            agent.SetDestination(movePoint[randomInt].transform.position); //ai몬스터 목적지로 이동 시작
+            agent.SetDestination(movePoint[randomInt].transform.position);
             FreezeVelocity();
             Destination();
             yield return new WaitForSeconds(Time.deltaTime);
         }
     }
-    void FreezeVelocity()   //ai 몬스터 충돌시 뒤로 밀리는 충돌 멈춤 
+    void FreezeVelocity() 
     {
         rigid.velocity = Vector3.zero;
         rigid.angularVelocity = Vector3.zero;
     }
-    void GetPoint()  //Point들의 위치를 인스펙터에 저장한다.
+    void GetPoint()
     {
         movePoint = GameObject.Find("Point").GetComponentsInChildren<Transform>();
         spawnPoint = GameObject.Find("SpwanPoint").GetComponent<Transform>();
     }
-    void VariableRest() //변수 초기화.
+    void VariableRest() 
     {
         agent = GetComponent<NavMeshAgent>();
         rigid = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
     }
-    void Destination() //목적지에 도착하면 목적지 변경
+    void Destination() 
     {
         if (Vector3.Distance(transform.position, movePoint[randomInt].transform.position) < 1f)
         {
             randomInt = Random.Range(0, movePoint.Length);
         }
     }
-    //ai몬스터들 드래그 할시 
+  
     private void OnMouseDown()
     {
         agent.speed = 0f;//몬스터 속도 값
@@ -74,9 +74,9 @@ public class AnimalAI : MonoBehaviour
     }
     private void OnMouseDrag()
     {
-        float distance = Camera.main.WorldToScreenPoint(transform.position).z; //World 좌표를 스크린 좌표로 전환 , z좌표가 카메라의 표준위치 
+        float distance = Camera.main.WorldToScreenPoint(transform.position).z; 
         Vector3 mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, distance);
-        Vector3 objPos = Camera.main.ScreenToWorldPoint(mousePos);             //ScreenToWorldPoint가 다시 스크린의 마우스 좌표를 오브젝트의 좌표로 전환.
+        Vector3 objPos = Camera.main.ScreenToWorldPoint(mousePos);            
         objPos.y = 0f;//y축 고정
         transform.position = objPos;
 
@@ -91,13 +91,13 @@ public class AnimalAI : MonoBehaviour
         monsterDrag = false;
         rigid.isKinematic = true;
     }
-    private void OnCollisionEnter(Collision col) //드래그 중일때 똑같은 몬스터면 삭제
+    private void OnCollisionEnter(Collision col)
     {
         if (monsterDrag && col.transform.name == transform.name)
         {
-            Destroy(col.gameObject);  //두 오브젝트 삭제
+            Destroy(col.gameObject);  
             Destroy(this.gameObject);
-            AnimalSpwan.plusCount(col.contacts[0].point);//몬스터 갯수 Count 늘려줌 , 몬스터가 충돌한 위치 PlusCount에 전달
+            AnimalSpwan.plusCount(col.contacts[0].point);
             AnswerAnimal(col);
         }
     }
@@ -105,7 +105,6 @@ public class AnimalAI : MonoBehaviour
     private void AnswerAnimal(Collision col)
     {
         speaker.SoundByNum2(2);
-        //animator에 파라미터 이름을 알고싶을때 GetParameter(?)을 사용하면된다.
         GameObject animalOb = Instantiate(answerAnimal);
         animalOb.transform.position = col.contacts[0].point;
         animalOb.transform.position = new Vector3(animalOb.transform.position.x, 5f, animalOb.transform.position.z);

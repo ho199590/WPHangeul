@@ -9,10 +9,8 @@ public class Balloon_Touch : MonoBehaviour
     GameObject explosion;//풍선 폭팔 파티클 
     [SerializeField]
     GameObject Animal;//동물 오브젝트
-    //int BalloonTouch=0;//풍선 터치 카운트
     public Vector3 BalloonPosition;
     SpeakerHandler speakerHandler;
-    //[풍선이 터지면 동물작아지는 변수]
     private float size = 0.8f; //원하는 사이즈
     #endregion
     #region
@@ -20,18 +18,8 @@ public class Balloon_Touch : MonoBehaviour
     {
         speakerHandler = FindObjectOfType<SpeakerHandler>(); 
     }
-    //마우스로 풍선을 클릭했을때 발생 
     private void OnMouseDown()
     {
-        /*세번클릭했을때
-          BalloonTouch++;
-                if(BalloonTouch == 3)
-                {
-                    StartCoroutine(Down());
-                    TouchClear();
-                    ColOnOff();
-                    BalloonTouch = 0;
-                }*/
         if(transform.root.GetComponent<Canvas>())
         {
             var te = Instantiate(explosion);
@@ -43,18 +31,18 @@ public class Balloon_Touch : MonoBehaviour
             ColOnOff();
         }
     }
-    protected void TouchClear()//풍선 낙하 
+    protected void TouchClear()
     {
         speakerHandler.SoundByNum2(0);
         Animal.GetComponent<Rigidbody>().isKinematic = false;
         this.gameObject.SetActive(false);
     }
-    private void ColOnOff()//바닦과 충돌 하기위한 함수
+    private void ColOnOff()
     {
         Animal.GetComponent<Collider>().enabled = true;
     }
 
-    private IEnumerator Down()//동물 점점 작아짐 
+    private IEnumerator Down()
     {
         while (Animal.transform.localScale.x >= size)
         {
@@ -64,7 +52,7 @@ public class Balloon_Touch : MonoBehaviour
         yield break;
 
     }
-    public void SizeReset()//실패시 동물 크기 리셋
+    public void SizeReset()
     {
         Animal.transform.localScale = new Vector3(1f, 1f, 1f);
     }

@@ -4,20 +4,12 @@ using UnityEngine;
 
 public class Animal_Ray : MonoBehaviour
 {
-    //particle 위치
     [SerializeField]
     Transform dropPosition;
-    //Ray를 생성한다
     Ray ray = new();
-    //한번 활성화가 되었을때
     private void OnEnable()
     {
         dropPosition.gameObject.SetActive(true);
-    }
-    //비활성화가 되었을때
-    private void OnDisable()
-    {
-/*        dropPosition.gameObject.SetActive(false);*/
     }
     private void Update()
     {
