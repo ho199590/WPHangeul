@@ -11,15 +11,8 @@ public class Balloon_Move : MonoBehaviour
     public float speedX;
     [Range(0, 100)]
     public int speedY;
-
-
     private int sign2 = -1;
-    //풍선 회전
-    public float turnSpeed = 10;
-    [SerializeField]
-    GameObject Balloon;//풍차
-    [SerializeField]
-    GameObject Animal;//동물
+    public float turnSpeed = 10;    //풍선 회전 스피드
     [SerializeField]
     int sign1;
 
@@ -38,8 +31,7 @@ public class Balloon_Move : MonoBehaviour
                 sign2 *= -1;
             }
         }
-        //풍선 회전 
-        Balloon.transform.Rotate(new Vector3(0,turnSpeed * Time.deltaTime, 0));
-        Animal.transform.Rotate(new Vector3(0, turnSpeed * Time.deltaTime, 0));
+        //오브젝트 회전
+        transform.Rotate(new Vector3(0,turnSpeed * Time.deltaTime, 0));
     }
 }

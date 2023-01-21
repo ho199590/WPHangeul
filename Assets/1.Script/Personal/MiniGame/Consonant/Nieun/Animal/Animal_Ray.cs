@@ -14,11 +14,6 @@ public class Animal_Ray : MonoBehaviour
     {
         dropPosition.gameObject.SetActive(true);
     }
-    //비활성화가 되었을때
-    private void OnDisable()
-    {
-/*        dropPosition.gameObject.SetActive(false);*/
-    }
     private void Update()
     {
         //자신의 위치를 저장한다(origin : 자기자신 시작점)
