@@ -11,8 +11,6 @@ public class SaveFileFormat
     public float volume; 
     public Color color;
 }
-
-
 public class SaveOption : MonoBehaviour
 {
     string folderPath = "";

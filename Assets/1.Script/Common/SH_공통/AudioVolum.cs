@@ -11,7 +11,6 @@ public class AudioVolum : MonoBehaviour
     public AudioSource audioSource;
     public void AudioControl()
     {
-        float sound = audioSlider.value;
         audioSource.volume = audioSlider.value;
         PlayerPrefs.SetFloat("audioSlider", audioSlider.value);
     }
