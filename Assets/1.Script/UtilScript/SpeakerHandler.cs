@@ -16,7 +16,6 @@ public class SpeakerHandler : MonoBehaviour
     private void Start()
     {
         audioSource = GetComponent<AudioSource>();
-        
     }
     
     public void SoundByNum(int num)

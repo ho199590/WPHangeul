@@ -30,7 +30,7 @@ public class SaveOption : MonoBehaviour
     //저장할 함수
 
 
-    public void SaveFile()
+    public void SaveFile() //데이터 저장
     {
         //저장할 정보를 임의로 생성 : 값 불러오기 등을 통해 저장할 파일 정보를 갱신
         SaveFileFormat savefileFormat = new SaveFileFormat();

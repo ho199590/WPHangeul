@@ -27,9 +27,9 @@ public class LoadFile : MonoBehaviour
 
     public void LoadData()
     {
-        if(File.Exists(folderPath+fileName))
+        if(File.Exists(folderPath+fileName)) //파일이 존재여부 검사
         {
-            var fileData = File.ReadAllText(folderPath+fileName);
+            var fileData = File.ReadAllText(folderPath+fileName); //데이터 읽기
             var fileData2 = JsonUtility.FromJson<SaveFileFormat>(fileData);
             //오디오 처리
             AudioVolum.volume = fileData2.volume;
